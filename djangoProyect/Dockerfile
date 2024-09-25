@@ -2,7 +2,7 @@ FROM python:3.12.5
 WORKDIR /app
 COPY requirements.txt ./
 RUN pip install -r requirements.txt --no-cache-dir
-#COPY wait-for-it.sh ./
+
 RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*

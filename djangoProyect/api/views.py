@@ -15,3 +15,5 @@ class PostUserView(ModelViewSet):
     serializer_class = PostSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    
+
