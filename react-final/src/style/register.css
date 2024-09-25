@@ -1,0 +1,73 @@
+.backgroundcolor{
+    
+    background-color: #e6e7e8; /* Color específico para el login */
+    height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Estilos para el formulario de registro */
+  .register {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+  }
+  
+  /* Estilos para el título */
+  .iniciarsesion {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para los inputs de registro */
+  .inputregister {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  /* Botón de registro */
+  .buttonregister {
+    background-color: #5c3a4b; /* Color de fondo del botón */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+  
+  .buttonregister:hover {
+    background-color: #3e2631; /* Efecto hover */
+  }
+
+
+  /* Para el texto de redirección al login */
+.text-login {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .login-link {
+    color: #5c3a4b;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .login-link:hover {
+    color: #3e2631;
+    text-decoration: underline;
+  }
+  
