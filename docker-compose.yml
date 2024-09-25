@@ -1,0 +1,35 @@
+services:
+  react:
+    container_name: react_proyect
+    image: react_proyect
+    build:
+      context: ./react-final
+    volumes:
+      - ./react-final:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+  django:
+    image: django_proyect
+    container_name: django_proyect
+    build:
+      context: ./djangoProyect
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./djangoProyect:/app
+    command: ["./wait-for-it.sh", "-t", "30", "mysql:3306", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    depends_on:
+      - mysql
+  mysql:
+    image: mysql:latest
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=RestaurApp
+    volumes:
+      - djangoProyect_data:/data/db
+      - ./dumps:/docker-entrypoint-initdb.d:ro
+volumes:
+  djangoProyect_data:   
