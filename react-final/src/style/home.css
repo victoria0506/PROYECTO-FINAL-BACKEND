@@ -1,85 +1,78 @@
-#root {
-    max-width: 1280px;
-    margin: 0 auto;
+/* Estilos generales para la página de inicio */
+.home-page {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
   }
   
-  body{
-    background-color: #511b1b;
-    font-family: "Dosis", sans-serif;
-    font-optical-sizing: auto;
-    font-size: large;
-    font-style: normal;
+  /* Video de fondo */
+  .background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Para asegurar que cubra toda la pantalla */
+    z-index: -1; /* Asegura que el video esté detrás del contenido */
     
   }
-
-.imglogohome{
+  
+  /* Estilos previos para las imágenes y texto */
+  .imglogohome {
     width: 800px;
-    margin-top: 85px;
-    margin-left: 8%;
+    margin-top: 120px;
   }
   
-  .parrafohome{
+  .imglogohomecenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .parrafohome {
+    font-family: "Dosis", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
     color: white;
     text-align: center;
-    font-family: "Dosis", sans-serif;
-    font-optical-sizing: auto;
-    font-size: large;
-    font-style: normal;
-    margin-left: -10%;
   }
   
-  .carrusel{
-    margin-top: 80px;
-  }
-
-
-  /*IMAGEN SOL HOME*/
-.solhome {
-    margin-left: 893px;
-    margin-top: -385px;
+  /* Imagen Sol */
+  .solhome {
+    margin-left: 890px;
+    margin-top: -300px;
     filter: drop-shadow(0 7px 8px rgba(0, 0, 0, 0.5));
-    z-index: 1; /* Asegura que la imagen esté por debajo */
-    position: relative; /* Asegura que el z-index funcione correctamente */
-  }
-
-
-/*CARDS DEBAJO DE CARRUSEL*/
-#cardHome1{
-    background-color: transparent;
-    border-color: rgb(181, 160, 106);
-    width: 350px;
-    border-radius: 130px;
-    
+    position: relative;
   }
   
-
-  #cardHome2{
+  /* Ajustes para el z-index de otros elementos */
+  #cardHome1, #cardHome2, #cardHome3 {
     background-color: transparent;
     border-color: rgb(181, 160, 106);
     width: 350px;
     border-radius: 130px;
+  }
+  
+  #cardHome2 {
     transform: rotate(90deg);
   }
-
-  #cardHome3{
-    background-color: transparent;
-    border-color: rgb(181, 160, 106);
-    width: 350px;
-    border-radius: 130px;
+  
+  #cardHome3 {
     transform: scaleX(-1);
   }
-
-/*TEXTO DENTRO DE CARD*/
-.contenedor{
+  
+  .contenedor {
     position: relative;
     display: inline-block;
     text-align: center;
-}
-.centrado{
+  }
+  
+  .centrado {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #ffffff;
-}
-
+  }
+  

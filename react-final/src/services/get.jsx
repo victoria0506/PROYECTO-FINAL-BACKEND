@@ -1,6 +1,6 @@
 const userGET = async () => { // funcion del metodo GET
     try {
-        const response = await fetch('http://localhost:3002/users', {
+        const response = await fetch('http://localhost:8000/api/users/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

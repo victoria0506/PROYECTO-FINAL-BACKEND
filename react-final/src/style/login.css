@@ -1,6 +1,6 @@
 .backgroundcolor{
     
-    background-color: #e6e7e8; /* Color específico para el login */
+    background-color: #d5d7c4; /* Color específico para el login */
     height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
     display: flex;
     justify-content: center;
@@ -39,7 +39,7 @@
   
   /* Botones */
   .btnlog {
-    background-color: #5c3a4b; /* Color de fondo similar al del botón en la imagen */
+    background-color: #5c483a; /* Color de fondo similar al del botón en la imagen */
     color: white;
     padding: 10px 20px;
     border: none;

@@ -1,13 +1,14 @@
-const userPost = async (name, email) => { // funcion del metodo POST
+const userPost = async (nombre_usuario, email, contrasena) => { // funcion del metodo POST
     try {
-        const response = await fetch('http://localhost:3002/users', {
+        const response = await fetch('http://localhost:8000/api/users/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
             body: JSON.stringify({
-             name : name,
-             email : email
+             nombre_usuario : nombre_usuario,
+             email : email,
+             contrasena : contrasena
             })
         });
         const data = await response.json();

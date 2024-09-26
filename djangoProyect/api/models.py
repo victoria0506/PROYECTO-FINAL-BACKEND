@@ -5,7 +5,7 @@ class TipoUsuario(models.Model):
     descripcion= models.CharField(max_length=25)
     
 class Usuarios(models.Model):
-    usuario_id = models.AutoField(primary_key=True)                                                                                                                
+    usuario_id = models.AutoField(primary_key=True)
     nombre_usuario= models.CharField(max_length=100)
     email= models.CharField(max_length=225,unique=True)
     contrasena= models.CharField(max_length=200)
@@ -39,11 +39,11 @@ class favoritos(models.Model):
     restaurante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE)
     
 class calendario(models.Model):
-    calendario_id= models.AutoField(primary_key=True),
-    restaurante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE),
-    dia= models.DateField(auto_now_add=True),
+    calendario_id= models.AutoField(primary_key=True)
+    restaurante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE)
+    dia= models.DateField(auto_now_add=True)
     alta_demanada= models.BooleanField()
     
 class tipo_especialidad(models.Model):
-    id_especialidad= models.AutoField(primary_key=True),
+    id_especialidad= models.AutoField(primary_key=True)
     descripcion= models.CharField(max_length=50)
