@@ -80,23 +80,16 @@
   }
   
 .carrusel{
-  margin-top: 80px;
+  margin-top: 40px;
 }
 
 
-/* Estilo para la imagen parallax */
+
 .parallax {
   background-image: url('src/img/textoadi4.png');
-  height: 530px; /* Ajusta el tamaño que desees */
+  height: 540px; /* Ajusta el tamaño que desees */
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-/* Estilo para el contenido */
-.content {
-  height: 1000px; /* El contenido regular para que haya scroll */
-  text-align: center;
-  padding: 50px;
 }

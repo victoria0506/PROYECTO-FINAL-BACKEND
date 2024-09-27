@@ -1,3 +1,5 @@
+
+
 const Home = () => {
   return (
     <div className="home-page">
@@ -10,7 +12,7 @@ const Home = () => {
         el restaurante perfecto sea más fácil que nunca.
       </p>
       <img className="solhome" src="src/img/solhome.png" alt="" />
-      
+
     </div>
   );
 };
