@@ -8,7 +8,8 @@
     grid-template-columns: auto repeat(3, auto);
     align-items: center;
     padding: 5px 65px;
-    background-color: #511b1b;
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(2px);
     box-shadow: 0 2px rgba(0, 0, 0, 0.2);
     z-index: 10; /* Asegura que el navbar esté por encima */
     width: 100%;
@@ -19,7 +20,8 @@
     grid-template-columns: auto repeat(3, auto);
     align-items: center;
     padding: 0.8rem;
-    background-color: #511b1b;
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(2px);
     margin-top: 1px;
   }
   .navbar-brand {
@@ -49,7 +51,7 @@
   }
   
   .menu-item:hover {
-    background-color: #391313;
+    background-color: #6c5f53;
     color: white;
   }
   
@@ -70,7 +72,7 @@
     height: 38px;
     width: 50px;
     border-radius: 8px;
-    background-color: #391313;
+    background-color: #6c5f53;
     color: #ffffff;
     border-color: #ffffff;
     font-size: small;
@@ -83,12 +85,29 @@
     border-radius: 0.5rem;
     background-color: white;
     margin: 2px;
-    height: 30px;
+    height: 35px;
     text-align: center;
     font-size: 70%;
-    width: 50px;
+    width: 60px;
     font-weight: 700;
   }
+
+  .btnlogin{
+    padding: 0.1rem ;
+    color: #000000;
+    border-radius: 0.5rem;
+    background-color: white;
+    margin: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35px;
+    text-align: center;
+    font-size: 70%;
+    width: 60px;
+    font-weight: 700;
+  }
+  
   
   .btn:hover {
     background-color: #391313;
@@ -147,8 +166,13 @@
   /*toggle*/
   .toggleContainer {
     position: relative;
-    width: 50px;
+    width: 280px;
     height: 30px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   .language-toggle {
@@ -179,7 +203,7 @@
     height: 35px;
     top: 50%;
     transform: translateY(-50%);
-    background: #320c0c;
+    background: #6c5f53;
     border-radius: 50%;
     margin: 0px 2px;
     left: 0%;
@@ -223,3 +247,5 @@
   
   
  
+
+  
