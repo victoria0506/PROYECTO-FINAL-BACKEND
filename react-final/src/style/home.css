@@ -1,7 +1,11 @@
+*{
+  font-family: 'Atteron Personal Use', sans-serif;
+}
+
 /* Estilos generales para la página de inicio */
 .home-page {
     position: relative;
-    width: 100vw;
+    width: 98.7vw;
     height: 100vh;
     overflow: hidden;
   }
@@ -31,7 +35,6 @@
   }
   
   .parrafohome {
-    font-family: "Dosis", sans-serif;
     font-weight: 500;
     font-size: 20px;
     color: white;
@@ -40,7 +43,7 @@
   
   /* Imagen Sol */
   .solhome {
-    margin-left: 890px;
+    margin-left: 920px;
     margin-top: -300px;
     filter: drop-shadow(0 7px 8px rgba(0, 0, 0, 0.5));
     position: relative;
@@ -76,3 +79,24 @@
     color: #ffffff;
   }
   
+.carrusel{
+  margin-top: 80px;
+}
+
+
+/* Estilo para la imagen parallax */
+.parallax {
+  background-image: url('src/img/textoadi4.png');
+  height: 530px; /* Ajusta el tamaño que desees */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Estilo para el contenido */
+.content {
+  height: 1000px; /* El contenido regular para que haya scroll */
+  text-align: center;
+  padding: 50px;
+}

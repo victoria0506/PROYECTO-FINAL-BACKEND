@@ -1,12 +1,11 @@
 
 import {useState } from "react"
 import { Link } from "react-router-dom"
-import userPost from "../service/userPost"
+import userGET from "../services/get"
 import { useNavigate } from "react-router-dom"
-import "../css/registro.css"
 import SweetAlert2 from 'react-sweetalert2';
-import userGET from "../service/userGET"
-function FormRegistro() {
+import userPost from "../services/post"
+function RegistroForm() {
   // declaramos los hooks
     const [usuario, setUsuario] = useState("")
     const [correo, setCorreo] = useState("")
@@ -44,18 +43,15 @@ const mostrar = async ()=>{
        <div className="logn6">
         <h2>Registro</h2>
        <h5>{mensaje}</h5>
-        <label htmlFor="">Usuario : </label>
-        <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder="Nom. Usuario"/>
-        <br /><br />
-        <label htmlFor="">Correo : </label>
+        <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder="Usuario"/>
+
         <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder="Correo"/>
-        <br /><br />
-        <label htmlFor="">contraseña : </label>
+        
         <input type="text" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder="Contraseña"/>
-        <br /><br />
+        
         <div className="botones">
         <button onClick={mostrar}>Registar Usuario</button>
-        <button><Link to='/login'>Ir al login</Link></button>
+        <p>Ya tienes una cuenta? <Link to='/login'>Login</Link></p>
         </div>
        </div>
        <div>
@@ -64,7 +60,7 @@ const mostrar = async ()=>{
     </div>
   )
 }
-export default FormRegistro
+export default RegistroForm
 
 
 

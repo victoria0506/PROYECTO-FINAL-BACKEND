@@ -70,6 +70,7 @@ function LoginForm() {
 
     return (
         <div className="login-page">
+         <img className="background-video" src="src/img/imagenlogin.jpg" alt="" />
             <div className="login">
                 <h2 className="iniciarsesion">Login</h2>
                 <input
