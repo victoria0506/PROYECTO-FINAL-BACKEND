@@ -1,4 +1,6 @@
+from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from .serializers import (TipoUserSerializer,UsuariosSerializer,ubicacionSerializer,
 restaurantesSerializer,
@@ -19,8 +21,11 @@ class UsuarioView(ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
-    
-    
+    def login(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+          
 class ubicacionView(ModelViewSet):
     queryset=ubicacion.objects.all()
     serializer_class= ubicacionSerializer

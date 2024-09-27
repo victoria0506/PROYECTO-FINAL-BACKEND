@@ -1,9 +1,11 @@
-const userPost = async (nombre_usuario, email, contrasena) => { // funcion del metodo POST
+
+const userPost = async (nombre_usuario, email, contrasena, token) => { // funcion del metodo POST
     try {
         const response = await fetch('http://localhost:8000/api/users/', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${"414e16e23b7c7755b7eb60d338737826a8d6c0ba"}`
         },
             body: JSON.stringify({
              nombre_usuario : nombre_usuario,

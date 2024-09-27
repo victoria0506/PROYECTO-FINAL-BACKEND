@@ -8,7 +8,7 @@ function Rutas() {
       <div>
           <Router>
               <Routes>
-                       <Route path='/' element={< Home/>}   />
+                       <Route path='/home' element={< Home/>}   />
                        <Route path='/register' element={< Registro/>}   />
                        <Route path='/login' element={<Login/>}   />
               </Routes>

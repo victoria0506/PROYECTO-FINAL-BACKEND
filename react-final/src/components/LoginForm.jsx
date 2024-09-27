@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import userGET from "../services/get";
 import SweetAlert2 from 'react-sweetalert2';
+import GETuser from "../services/get";
 
 function LoginForm() {
     const [swalProps, setSwalProps] = useState({});
@@ -9,6 +9,7 @@ function LoginForm() {
     const [correo, setcorreo] = useState("");
     const [contrasena, setcontrasena] = useState("");
     const [cargando, setcargando] = useState(false);
+    const [mensaje, setMensaje] = useState("")
     const navigate = useNavigate();
 
     const validarEmail = (correo) => {
@@ -17,56 +18,32 @@ function LoginForm() {
     };
 
     const Inicio = async () => {
-        if (usuario.trim() === "" || correo.trim() === "" || contrasena.trim() === "") {
-            setSwalProps({
+        if (usuario.trim() === "" && correo.trim() === "" && contrasena.trim("") === "") { // validar que no se pueda loguear con estacios vacios
+            setSwalProps({ // SweetAlert
+              show: true,
+              title: 'Error',
+              text: 'Ingrese sus datos',
+          });
+            //console.log("no encontrado");
+              return
+          }else{
+           const UserObte = await GETuser()
+           console.log(UserObte);// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
+           const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena) // El .find va a buscar
+           if (validarUser) { 
+              console.log("encontrado");
+              setMensaje("Logueo Exitoso") // Mensaje para que el usuraio este informado que su logueo fue exitoso
+              setTimeout(() => {
+                  navigate("/home") // Navegacion hacia la pagina de Home, despues de un segundo
+              }, 1000);
+           } else {
+              setSwalProps({ // SweetAlert para informar al usuario que sus datos son incorrectos
                 show: true,
-                title: 'Todos los campos son obligatorios',
+                title: 'Error',
+                text: 'Correo o/y Contraseña incorrectas',
             });
-            return;
-        }
-
-        if (!validarEmail(correo)) {
-            setSwalProps({
-                show: true,
-                title: 'Ingrese un correo electrónico válido',
-            });
-            return;
-        }
-
-        setcargando(true);
-        try {
-            const comparar = await userGET();
-            console.log(comparar);
-
-            if (!comparar || !Array.isArray(comparar)) {
-                setSwalProps({
-                    show: true,
-                    title: 'Error al obtener los datos de usuarios',
-                });
-                return;
-            }
-
-            const encontrarUsuario = comparar.find((e) => e.usuario === usuario && e.correo === correo && e.contrasena === contrasena);
-            
-            if (encontrarUsuario) {
-                alert("Usuario encontrado");
-                navigate("/");
-            } else {
-                setSwalProps({
-                    show: true,
-                    title: 'Usuario o contraseña incorrectos',
-                });
-            }
-        } catch (error) {
-            console.error("Error al obtener los usuarios:", error);
-            setSwalProps({
-                show: true,
-                title: 'Error en la solicitud',
-            });
-        } finally {
-            setcargando(false);
-        }
-    }
+           }
+    }   }
 
     return (
         <div className="login-page">

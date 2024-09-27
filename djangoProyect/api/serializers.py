@@ -16,8 +16,7 @@ class UsuariosSerializer(ModelSerializer):
         user.set_password(validated_data['contrasena']) 
         user.save()
         return user
-        
-        
+          
 class ubicacionSerializer(ModelSerializer):
     class Meta:
         model = ubicacion
