@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SweetAlert2 from 'react-sweetalert2';
 import GETuser from "../services/get";
+import { useTranslation } from "react-i18next";
 
 function LoginForm() {
     const [swalProps, setSwalProps] = useState({});
@@ -11,6 +12,7 @@ function LoginForm() {
     const [cargando, setcargando] = useState(false);
     const [mensaje, setMensaje] = useState("")
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const validarEmail = (correo) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,17 +20,15 @@ function LoginForm() {
     };
 
     const Inicio = async () => {
-        if (usuario.trim() === "" && correo.trim() === "" && contrasena.trim("") === "") { // validar que no se pueda loguear con estacios vacios
+        if (usuario.trim() === "" && correo.trim() === "" && contrasena.trim("") === "" && !validarEmail(correo) || contrasena.length < 5) { // validar que no se pueda loguear con estacios vacios
             setSwalProps({ // SweetAlert
               show: true,
               title: 'Error',
-              text: 'Ingrese sus datos',
+              text: 'Ingrese sus datos de manera correcta',
           });
-            //console.log("no encontrado");
               return
           }else{
-           const UserObte = await GETuser()
-           console.log(UserObte);// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
+           const UserObte = await GETuser()// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
            const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena) // El .find va a buscar
            if (validarUser) { 
               console.log("encontrado");
@@ -47,25 +47,26 @@ function LoginForm() {
 
     return (
         <div className="login-page">
+         <img className="background-video" src="src/img/imagenlogin.jpg" alt="" />
             <div className="login">
                 <h2 className="iniciarsesion">Login</h2>
                 <input
                     type="text"
-                    placeholder="Usuario"
+                    placeholder={t('User')}
                     className="input"
                     value={usuario}
                     onChange={e => setUsu(e.target.value)}
                 />
                 <input
                     type="text"
-                    placeholder="Correo"
+                    placeholder={t('Email')}
                     className="input"
                     value={correo}
                     onChange={e => setcorreo(e.target.value)}
                 />
                 <input
                     type="password"
-                    placeholder="Contraseña"
+                    placeholder={t('Password')}
                     className="input"
                     value={contrasena}
                     onChange={e => setcontrasena(e.target.value)}
@@ -74,7 +75,7 @@ function LoginForm() {
                 <button className="btnlog" onClick={Inicio} disabled={cargando}>
                     {cargando ? "Cargando..." : "Login"}
                 </button>
-                <p>No tienes una cuenta? <Link to='/register'>Regístrate</Link></p>
+                <p>{t('You dont have an account?')} <Link to='/register'>{t('Register')}</Link></p>
             </div>
             <SweetAlert2 {...swalProps} />
         </div>

@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from .views import TipouserView,UsuarioView,ubicacionView,RestauranteView,CalificacionView,favoritosView, calendarioView, especialidadesView
+from .views import TipouserView,UsuarioView,RestauranteView,CalificacionView,favoritosView, calendarioView, especialidadesView, CantonView, distritoView
 
 router = DefaultRouter()
 
@@ -12,7 +12,11 @@ router.register(
 )
 
 router.register(
-    prefix='ubicacion', basename="ubicacion", viewset=ubicacionView
+    prefix='canton', basename="canton", viewset=CantonView
+)
+
+router.register(
+    prefix='distrito', basename="distrito", viewset=distritoView
 )
 
 router.register(

@@ -1,17 +1,19 @@
 import './App.css'
-
 import Rutas from './routes/Rutas'
 import Nav from './components/Nav'
-//import Home from './components/Home'
+import Intro from './components/Intro'
 
 function App() {
 
 
   return (
     <>
-    
     <Rutas/>
+
+    <Intro/>
     <Nav/>
+
+
     </>
   )
 }

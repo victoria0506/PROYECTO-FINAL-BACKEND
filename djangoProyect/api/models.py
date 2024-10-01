@@ -11,21 +11,24 @@ class Usuarios(models.Model):
     contrasena= models.CharField(max_length=200)
     id_tipoUsuario= models.ForeignKey(TipoUsuario, on_delete=models.CASCADE, default=1)
     
-class ubicacion(models.Model):
-    id_ubicacion= models.AutoField(primary_key=True)
-    canton= models.CharField(max_length=100)
-    distrito= models.CharField(max_length=100)
-    direccion_exacta= models.CharField(max_length=250)
+class Canton(models.Model):
+    id_canton= models.AutoField(primary_key=True)
+    nombre_canton= models.CharField(max_length=100)
     
+class distrito(models.Model):
+    id_distrito= models.AutoField(primary_key=True)
+    nombre_distrito= models.CharField(max_length=100)
+    id_canton=models.ForeignKey(Canton, on_delete=models.CASCADE, default=1)
+
 class restaurantes(models.Model):
     restaurante_id= models.AutoField(primary_key=True)
     nombre_restaurante= models.CharField(max_length=150)
     precio_promedio= models.DecimalField(max_digits=5, decimal_places=2)
     especialidad= models.CharField(max_length=100)
-    calificacion_promedio= models.DecimalField(max_digits=5, decimal_places=1)
+    calificacion_promedio= models.DecimalField(max_digits=5, decimal_places=1, default=0)
     capacidad= models.IntegerField()
-    accesibilidad= models.BooleanField()
-    id_ubicacion= models.ForeignKey(ubicacion, on_delete=models.CASCADE)
+    accesibilidad= models.BooleanField(default=True)
+    id_distrito= models.ForeignKey(distrito, on_delete=models.CASCADE)
     
 class calificaciones(models.Model):
     calificacion_id= models.AutoField(primary_key=True)
@@ -42,7 +45,7 @@ class calendario(models.Model):
     calendario_id= models.AutoField(primary_key=True)
     restaurante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE)
     dia= models.DateField(auto_now_add=True)
-    alta_demanada= models.BooleanField()
+    alta_demanada= models.BooleanField(default=True)
     
 class tipo_especialidad(models.Model):
     id_especialidad= models.AutoField(primary_key=True)
