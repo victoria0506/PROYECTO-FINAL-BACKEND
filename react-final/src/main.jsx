@@ -10,6 +10,7 @@ import './style/login.css'
 import './style/register.css'
 import './style/intro.css'
 import './i18n';
+import './style/contact.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

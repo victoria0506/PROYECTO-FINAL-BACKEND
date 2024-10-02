@@ -46,11 +46,11 @@ function LoginForm() {
                 return;
             }
 
-            const encontrarUsuario = comparar.find((e) => e.usuario === usuario && e.correo === correo && e.contrasena === contrasena);
+            const encontrarUsuario = comparar.find((e) => e.nombre_usuario === usuario && e.email === correo && e.contrasena === contrasena);
             
             if (encontrarUsuario) {
                 alert("Usuario encontrado");
-                navigate("/");
+                navigate("/home");
             } else {
                 setSwalProps({
                     show: true,
@@ -69,36 +69,35 @@ function LoginForm() {
     }
 
     return (
-        <div className="login-page">
-         <img className="background-video" src="src/img/imagenlogin.jpg" alt="" />
-            <div className="login">
+        <div className="contenedor-login">
+            <div className="formulario-login">
                 <h2 className="iniciarsesion">Login</h2>
                 <input
                     type="text"
                     placeholder="Usuario"
-                    className="input"
+                    className="input-login"
                     value={usuario}
                     onChange={e => setUsu(e.target.value)}
                 />
                 <input
                     type="text"
                     placeholder="Correo"
-                    className="input"
+                    className="input-login"
                     value={correo}
                     onChange={e => setcorreo(e.target.value)}
                 />
                 <input
                     type="password"
                     placeholder="Contraseña"
-                    className="input"
+                    className="input-login"
                     value={contrasena}
                     onChange={e => setcontrasena(e.target.value)}
                 />
                 
-                <button className="btnlog" onClick={Inicio} disabled={cargando}>
+                <button className="boton-login" onClick={Inicio} disabled={cargando}>
                     {cargando ? "Cargando..." : "Login"}
                 </button>
-                <p>No tienes una cuenta? <Link to='/register'>Regístrate</Link></p>
+                <p className="texto-login">No tienes una cuenta? <Link to='/register'>Regístrate</Link></p>
             </div>
             <SweetAlert2 {...swalProps} />
         </div>
@@ -106,4 +105,3 @@ function LoginForm() {
 }
 
 export default LoginForm;
-
