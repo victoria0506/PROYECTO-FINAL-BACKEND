@@ -1,0 +1,89 @@
+/* Estilo para el contenedor del formulario */
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem auto;
+    padding: 2rem;
+    max-width: 400px;
+    background-color: #f7f7f7; /* Fondo suave */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 110px;
+  }
+  
+  /* Encabezado del formulario */
+  h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  
+  /* Elementos del formulario */
+  .formElement {
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+  
+  label {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Estilo para los campos de entrada */
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #fff;
+    box-sizing: border-box;
+  }
+  
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: #6c5f53; /* Color de borde en foco */
+  }
+  
+  /* Botón de enviar */
+  .formButton {
+    background-color: #6c5f53; /* Color principal */
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+  }
+  
+  .formButton:hover {
+    background-color: #554d44; /* Color más oscuro al pasar el mouse */
+  }
+  
+  /* Ajustes responsivos */
+  @media (max-width: 600px) {
+    .formContainer {
+      padding: 1.5rem;
+    }
+  
+    h2 {
+      font-size: 1.5rem;
+    }
+  
+    .formButton {
+      font-size: 0.9rem;
+    }
+  }
+  
+  

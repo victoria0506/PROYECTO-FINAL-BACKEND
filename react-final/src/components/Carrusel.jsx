@@ -20,30 +20,48 @@ const Carrusel2 = () => {
 
       <Carousel data-bs-theme="dark">
         <Carousel.Item>
+          <div className="overlay"></div> {/* Overlay para oscurecer la imagen */}
           <img
             className="d-block w-100"
-            src="src/img/rest.jpg"
+            src="https://www.denia.com/wp-content/uploads/2012/07/mariscos-restaurante-mena.jpg"
             alt="First slide"
           />
-          <Carousel.Caption>
+          <Carousel.Caption className="caption-centered">
+            <div className="caption-content">
+              <h3>¿Eres amantes de los mariscos?</h3>
+              <p>Aqui hay algunas opciones donde podrás encontrar lo que buscas.</p>
+              <button className="btn btn-primary">Descubrir</button>
+            </div>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
+          <div className="overlay"></div>
           <img
             className="d-block w-100"
             src="src/img/rest.jpg"
             alt="Second slide"
           />
-          <Carousel.Caption>
+          <Carousel.Caption className="caption-centered">
+            <div className="caption-content">
+              <h3>Segunda Imagen</h3>
+              <p>Este es un breve texto para describir la segunda imagen.</p>
+              <button className="btn btn-primary">Ver más</button>
+            </div>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
+          <div className="overlay"></div>
           <img
             className="d-block w-100"
             src="src/img/rest.jpg"
             alt="Third slide"
           />
-          <Carousel.Caption>
+          <Carousel.Caption className="caption-centered">
+            <div className="caption-content">
+              <h3>Tercera Imagen</h3>
+              <p>Este es un breve texto para describir la tercera imagen.</p>
+              <button className="btn btn-primary">Ver más</button>
+            </div>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>

@@ -1,5 +1,6 @@
 
   .navbar {
+    display: flex;
     position: fixed;
     top: 0;
     left: 0;
@@ -7,13 +8,14 @@
     display: grid;
     grid-template-columns: auto repeat(3, auto);
     align-items: center;
-    padding: 5px 65px;
-    -webkit-backdrop-filter: blur(1px);
-    backdrop-filter: blur(2px);
-    box-shadow: 0 2px rgba(0, 0, 0, 0.2);
-    z-index: 10; /* Asegura que el navbar esté por encima */
+    padding: 1px;
+    background-color: transparent;
+    /*backdrop-filter: blur(15px);*/
+  
+    z-index: 1; /* Asegura que el navbar esté por encima */
     width: 100%;
   }
+  
   
   .navbartoggle{
     display: grid;
@@ -106,11 +108,16 @@
     font-size: 70%;
     width: 60px;
     font-weight: 700;
+    text-decoration: none;
   }
   
   
   .btn:hover {
-    background-color: #391313;
+    background-color: #322b2584;
+    color: white;
+  }
+  .btnlogin:hover {
+    background-color: #322b2584;
     color: white;
   }
   
@@ -118,44 +125,10 @@
     justify-content: end; /* Centra los botones horizontalmente */
     justify-self: end;
   }
-  
-  @media (max-width: 768px) {
-    .navbar {
-      grid-template-columns: 1fr;
-      text-align: center; /* Centra todo el contenido de la barra */
-    }
-  
-    .menu {
-      display: block; /* Cambia el menú a bloque para apilar los enlaces */
-      text-align: center;
-    }
-  
-    .menu-item {
-      padding: 0.5rem 0; /* Espaciado vertical entre los ítems del menú */
-    }
-  
-    .actions {
-      flex-direction: column; /* Apila los botones en vez de ponerlos en línea */
-      gap: 1rem; /* Espacio entre botones */
-      width: 100%; /* Asegura que ocupen todo el ancho en pantallas pequeñas */
-    }
-  
-    .btn {
-      width: 100%; /* Haz que los botones ocupen todo el ancho en pantallas pequeñas */
-      margin: 0.5rem 0; /* Añade espacio vertical entre los botones */
-    }
-  
-    .logonav {
-      width: 100%; /* Ajusta el tamaño del logo */
-      margin-left: 0; /* Centra el logo en pantallas pequeñas */
-    }
-  
-    img {
-    max-width: 100%;
-    height: auto;
-  }
-  }
-  
+
+
+
+
 
   .logonav{
     width: 120px;
