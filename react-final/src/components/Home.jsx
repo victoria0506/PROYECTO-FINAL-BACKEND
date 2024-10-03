@@ -8,7 +8,7 @@ const Home = () => {
       <div className="imglogohomecenter">
         <img className="imglogohome" src="src/img/file.png" alt="" />
       </div>
-      <p className="parrafohome">Bienvenido a RestaurApp, la plataforma que hace que encontrar <br />
+      <p className="parrafohome">Bienvenido a RestaurApp, la plataforma que hace que <br /> encontrar
         el restaurante perfecto sea más fácil que nunca.
       </p>
       <img className="solhome" src="src/img/solhome.png" alt="" />

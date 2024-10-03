@@ -14,6 +14,7 @@ i18n
           discover: "Discover",
           contact: "Contact",
           search: "Search",
+          "about us": "About Us",
         },
       },
       es: {
@@ -24,6 +25,7 @@ i18n
           discover: "Descubre",
           contact: "Contacto",
           search: "Buscar",
+          "about us": "Sobre Nosotros",
         },
       },
     },

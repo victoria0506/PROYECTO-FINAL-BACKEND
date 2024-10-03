@@ -1,5 +1,8 @@
 *{
   font-family: 'Atteron Personal Use', sans-serif;
+  font-family: "Merriweather", serif;
+  font-weight: 300;
+  font-style: normal;
 }
 
 /* Estilos generales para la página de inicio */
@@ -41,6 +44,9 @@
     font-size: 20px;
     color: white;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
   /* Imagen Sol */

@@ -11,6 +11,9 @@ import './style/register.css'
 import './style/intro.css'
 import './i18n';
 import './style/contact.css'
+import './style/Book.css'
+import 'leaflet/dist/leaflet.css';
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

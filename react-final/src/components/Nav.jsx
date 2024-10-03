@@ -21,6 +21,7 @@ function Nav() {
       <div className="menu">
         <a href="/" className="menu-item">{t('home')}</a>
         <a href="/descubre" className="menu-item">{t('discover')}</a>
+        <a href="/about" className="menu-item">{t('about us')}</a>
         <a href="/contacto" className="menu-item">{t('contact')}</a>
       </div>
       <div className="search-bar">
