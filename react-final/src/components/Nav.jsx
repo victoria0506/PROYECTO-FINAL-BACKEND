@@ -19,7 +19,7 @@ function Nav() {
         <img className="logonav" src="src/img/logonav.png" alt="Logo" />
       </div>
       <div className="menu">
-        <a href="/" className="menu-item">{t('home')}</a>
+        <a href="/home" className="menu-item">{t('home')}</a>
         <a href="/descubre" className="menu-item">{t('discover')}</a>
         <a href="/contacto" className="menu-item">{t('contact')}</a>
       </div>

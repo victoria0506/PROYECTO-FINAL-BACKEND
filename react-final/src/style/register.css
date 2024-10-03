@@ -1,74 +1,81 @@
-/* Centrar el contenedor del formulario y ocupar toda la pantalla */
+/* Estilos para la página de registro */
 .login4 {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
-  align-items: center; /* Centrar verticalmente */
-  height: 110vh; /* Ocupa toda la altura de la ventana */
-  background-color: #EBECF0; /* Fondo del contenedor */
+  align-items: center;
 }
 
-/* Estilos del formulario */
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Asegura que cubra toda la pantalla */
+  z-index: -1; /* Asegura que el video esté detrás del contenido */
+}
+
+/* Estilos para el formulario de registro */
 .logn6 {
-  padding: 16px;
-  width: 320px;
-  background-color: transparent; /* Fondo transparente para que se vea el fondo de la página */
-  text-align: center;
+  background-color: #fff; /* Fondo blanco para el formulario */
+  padding: 30px;
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
+  text-align: center; /* Centrar el texto */
+  width: 300px; /* Ancho fijo del formulario */
 }
 
-/* Estilos para los inputs y el botón de registro */
-.input.inRegi {
-  border: 0;
-  outline: 0;
-  font-size: 16px;
-  border-radius: 320px; /* Bordes redondeados */
-  padding: 16px;
-  background-color: #EBECF0; /* Fondo de los inputs */
-  text-shadow: 1px 1px 0 #FFF;
-  margin-bottom: 16px; /* Espaciado inferior */
-  width: 100%; /* Ocupa todo el ancho */
-  box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF; /* Sombra de entrada */
-  box-sizing: border-box;
-  transition: all 0.2s ease-in-out;
-  appearance: none;
-  -webkit-appearance: none;
-}
-
-.input.inRegi:focus {
-  box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF; /* Efecto al enfocar */
-}
-
-.boton-registro {
-  color: #61677C;
+/* Estilos para el título */
+h2 {
+  font-size: 24px;
   font-weight: bold;
-  box-shadow: -5px -5px 20px #FFF, 5px 5px 20px #BABECC; /* Sombra del botón */
-  transition: all 0.2s ease-in-out;
+  margin-bottom: 20px;
+  color: #5c483a;
+}
+p{
+  color: #5c483a;
+}
+
+/* Estilos para los inputs */
+.inRegi {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* Botones */
+.botones button {
+  background-color: #5c483a; /* Color de fondo similar al del botón en la imagen */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
-  border: 0;
-  outline: 0;
-  border-radius: 320px; /* Bordes redondeados para el botón */
-  padding: 16px;
-  background-color: #EBECF0; /* Fondo del botón */
-  width: 100%; /* Ocupa todo el ancho */
+  font-size: 16px;
+  width: 100%;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
 }
 
-.boton-registro:hover {
-  box-shadow: -2px -2px 5px #FFF, 2px 2px 5px #BABECC; /* Efecto al pasar el ratón */
+.botones button:hover {
+  background-color: #3e2631; /* Color más oscuro al pasar el ratón */
 }
 
-.boton-registro:active {
-  box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF; /* Efecto al hacer clic */
+/* Estilo para el enlace de login */
+a {
+  color: #5c3a4b; /* Mismo color que el botón */
+  text-decoration: none;
+  font-size: 14px;
 }
 
-.texto-registro {
-  margin-top: 16px; /* Espacio superior */
-  font-size: 14px; /* Tamaño de fuente */
-}
-
-.texto-registro a {
-  color: #AE1100; /* Color del enlace */
-  text-decoration: none; /* Sin subrayado */
-}
-
-.texto-registro a:hover {
-  text-decoration: underline; /* Subrayar al pasar el ratón */
+a:hover {
+  text-decoration: underline;
 }
