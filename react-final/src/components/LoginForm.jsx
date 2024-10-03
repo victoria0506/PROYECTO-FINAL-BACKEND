@@ -71,8 +71,7 @@ function LoginForm() {
                     value={contrasena}
                     onChange={e => setcontrasena(e.target.value)}
                 />
-                
-                <button className="btnlog" onClick={Inicio} disabled={cargando}>
+                <button className="boton-login" onClick={Inicio} disabled={cargando}>
                     {cargando ? "Cargando..." : "Login"}
                 </button>
                 <p>{t('You dont have an account?')} <Link to='/register'>{t('Register')}</Link></p>
@@ -83,4 +82,3 @@ function LoginForm() {
 }
 
 export default LoginForm;
-

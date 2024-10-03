@@ -1,14 +1,13 @@
 
 import Home from "../components/Home"
 import Carrusel2 from "../components/Carrusel"
-import CardsRestaurantes from "../components/cardRestaurant"
-
+import Map from "../components/Map"
 function HomePage() {
   return (
     <div>
      <Home/>
      <Carrusel2/>
-     <CardsRestaurantes/>
+     <Map/>
     </div>
   )
 }

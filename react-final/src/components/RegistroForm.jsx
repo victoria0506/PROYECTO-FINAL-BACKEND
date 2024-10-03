@@ -1,6 +1,6 @@
-
 import {useState } from "react"
 import { Link } from "react-router-dom"
+import userGET from "../services/get"
 import userGET from "../services/get"
 import { useNavigate } from "react-router-dom"
 import SweetAlert2 from 'react-sweetalert2';
