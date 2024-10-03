@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import  TipoUsuario,Usuarios,restaurantes, calificaciones, favoritos, calendario, tipo_especialidad, Canton, distrito
+from .models import  TipoUsuario,Usuarios,restaurantes, calificaciones, favoritos, calendario, tipo_especialidad, Canton, distrito, RestaEspecialidades
 from rest_framework import serializers
 
 class TipoUserSerializer(ModelSerializer):
@@ -36,6 +36,16 @@ class restaurantesSerializer(ModelSerializer):
     class Meta:
       model= restaurantes
       fields= '__all__'
+      
+class especialidadSerializer(ModelSerializer):
+    class Meta:
+       model= tipo_especialidad
+       fields= '__all__'
+       
+class RestaEspeciSerializer(ModelSerializer):
+    class Meta:
+        model= RestaEspecialidades
+        fields= '__all__'
     
 class CalificacionSerializer(ModelSerializer):
     class Meta:
@@ -52,7 +62,3 @@ class calendarioSerializer(ModelSerializer):
       model= calendario
       fields= '__all__'
     
-class especialidadSerializer(ModelSerializer):
-    class Meta:
-       model= tipo_especialidad
-       fields= '__all__'

@@ -26,7 +26,11 @@ i18n
           "You dont have an account?": "You dont have an account?",
           Register: "Register",
           "Register User": "Register User",
-          "Do you have an account?": "Do you have an account?"
+          "Do you have an account?": "Do you have an account?",
+          Edit: "Edit",
+          Eliminate: "Eliminate",
+          "Discover your next favorite restaurant." : "Discover your next favorite restaurant.",
+          Qualification:"Qualification"
         },
       },
       es: {
@@ -49,7 +53,11 @@ i18n
           "You dont have an account?": "No tienes una cuenta?",
           Register: "Registro",
           "Register User": "Registrar Usuario",
-          "Do you have an account?": "Tienes una cuenta?"
+          "Do you have an account?": "Tienes una cuenta?",
+          Edit: "Editar",
+          Eliminate: "Eliminar",
+          "Discover your next favorite restaurant." :"Descubre tu próximo restaurante favorito.",
+          Qualification:"Calificacion"
         },
       },
     },

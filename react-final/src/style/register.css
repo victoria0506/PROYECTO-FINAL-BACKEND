@@ -34,6 +34,10 @@ h2 {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
+  color: #5c483a;
+}
+p{
+  color: #5c483a;
 }
 
 /* Estilos para los inputs */

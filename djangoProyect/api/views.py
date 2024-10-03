@@ -4,8 +4,8 @@ from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from .serializers import (TipoUserSerializer,UsuariosSerializer,
 restaurantesSerializer,
-CalificacionSerializer,favoritosSerializer,calendarioSerializer,especialidadSerializer, CantonSerializer, distritoSerializer)
-from .models import TipoUsuario,Usuarios,restaurantes,calificaciones,favoritos,calendario,tipo_especialidad, Canton, distrito
+CalificacionSerializer,favoritosSerializer,calendarioSerializer,especialidadSerializer, CantonSerializer, distritoSerializer, RestaEspeciSerializer)
+from .models import TipoUsuario,Usuarios,restaurantes,calificaciones,favoritos,calendario,tipo_especialidad, Canton, distrito, RestaEspecialidades
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 
@@ -45,6 +45,18 @@ class RestauranteView(ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
+class especialidadesView(ModelViewSet):
+    queryset=tipo_especialidad.objects.all()
+    serializer_class=especialidadSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+class RestaEspecilidadesView(ModelViewSet):
+    queryset= RestaEspecialidades.objects.all()
+    serializer_class= RestaEspeciSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
 class CalificacionView(ModelViewSet):
     queryset=calificaciones.objects.all()
     serializer_class=CalificacionSerializer
@@ -62,10 +74,3 @@ class calendarioView(ModelViewSet):
     serializer_class=calendarioSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-    
-class especialidadesView(ModelViewSet):
-    queryset=tipo_especialidad.objects.all()
-    serializer_class=especialidadSerializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    
