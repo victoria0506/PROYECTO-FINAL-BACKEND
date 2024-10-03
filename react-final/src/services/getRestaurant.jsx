@@ -1,8 +1,7 @@
-
 const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
-const userGET = async () => { // funcion del metodo GET
+const RestaGet = async () => { // funcion del metodo GET
     try {
-        const response = await fetch('http://localhost:8000/api/users/', {
+        const response = await fetch('http://localhost:8000/api/admiRestaur/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -15,4 +14,4 @@ const userGET = async () => { // funcion del metodo GET
         console.log(error)
     }
 }
-export default userGET
+export default RestaGet

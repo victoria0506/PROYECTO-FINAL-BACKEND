@@ -1,9 +1,12 @@
 import {useState } from "react"
 import { Link } from "react-router-dom"
 import userGET from "../services/get"
+import userGET from "../services/get"
 import { useNavigate } from "react-router-dom"
 import SweetAlert2 from 'react-sweetalert2';
 import userPost from "../services/post"
+import { useTranslation } from "react-i18next";
+
 function RegistroForm() {
   // declaramos los hooks
     const [usuario, setUsuario] = useState("")
@@ -12,12 +15,13 @@ function RegistroForm() {
     const [mensaje, setMensaje] = useState("")
     const [swalProps, setSwalProps] = useState({});
     const navigate = useNavigate(); // hookpara navegar entre paginas
+    const { t } = useTranslation();
 
     const validarEmail = (correo) => {
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return re.test(correo);
     };
-
+    
     const mostrar = async () => {
       if (usuario.trim() === "" || contraseña.trim() === "" || correo.trim() === "" || !validarEmail(correo) || contraseña.length < 5) {
         setSwalProps({ // SweetAlert para informar al usuario
@@ -27,18 +31,15 @@ function RegistroForm() {
         });
         return;
       } else {
-        const UserObte = await userGET();
-
-        const validarRegistro = UserObte.find(user =>
+        const UserObte = await userGET(); 
+        const validarRegistro = UserObte.find(user => 
           user.nombre_usuario === usuario && user.email === correo && user.contrasena === contraseña
-        );
-        if (!validarRegistro) {
-          console.log(validarRegistro);
-          console.log(UserObte);
+        ); 
+        if (!validarRegistro) { 
           await userPost(usuario, correo, contraseña);
-          setMensaje("Registro exitoso");
+          setMensaje("Registro exitoso"); 
           setTimeout(() => {
-            navigate("/login");
+            navigate("/login"); 
           }, 1000);
         } else {
           setSwalProps({
@@ -52,14 +53,17 @@ function RegistroForm() {
   return (
     <div className="login4">
        <div className="logn6">
-        <h2>Registro</h2>
+        <h2>{t('Register')}</h2>
        <h5>{mensaje}</h5>
-        <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder="Usuario"/>
-        <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder="Correo"/>
-        <input type="text" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder="Contraseña"/>
+        <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder={t('User')}/>
+
+        <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder={t('Email')}/>
+        
+        <input type="text" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder={t('Password')}/>
+        
         <div className="botones">
-        <button onClick={mostrar}>Registar Usuario</button>
-        <p>Ya tienes una cuenta? <Link to='/login'>Login</Link></p>
+        <button onClick={mostrar}>{t('Register User')}</button>
+        <p>{t('Do you have an account?')} <Link to='/login'>Login</Link></p>
         </div>
        </div>
        <div>

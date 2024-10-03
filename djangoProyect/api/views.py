@@ -1,9 +1,11 @@
+from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
-from .serializers import (TipoUserSerializer,UsuariosSerializer,ubicacionSerializer,
+from .serializers import (TipoUserSerializer,UsuariosSerializer,
 restaurantesSerializer,
-CalificacionSerializer,favoritosSerializer,calendarioSerializer,especialidadSerializer)
-from .models import TipoUsuario,Usuarios,ubicacion,restaurantes,calificaciones,favoritos,calendario,tipo_especialidad
+CalificacionSerializer,favoritosSerializer,calendarioSerializer,especialidadSerializer, CantonSerializer, distritoSerializer, RestaEspeciSerializer)
+from .models import TipoUsuario,Usuarios,restaurantes,calificaciones,favoritos,calendario,tipo_especialidad, Canton, distrito, RestaEspecialidades
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 
@@ -19,17 +21,39 @@ class UsuarioView(ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)  
+        self.perform_create(serializer) 
+        return Response(serializer.data, status=201)
+        
+class CantonView(ModelViewSet):
+    queryset= Canton.objects.all()
+    serializer_class= CantonSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     
-    
-class ubicacionView(ModelViewSet):
-    queryset=ubicacion.objects.all()
-    serializer_class= ubicacionSerializer
+class distritoView(ModelViewSet):
+    queryset= distrito.objects.all()
+    serializer_class= distritoSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
 class RestauranteView(ModelViewSet):
     queryset= restaurantes.objects.all()
     serializer_class= restaurantesSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+class especialidadesView(ModelViewSet):
+    queryset=tipo_especialidad.objects.all()
+    serializer_class=especialidadSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+class RestaEspecilidadesView(ModelViewSet):
+    queryset= RestaEspecialidades.objects.all()
+    serializer_class= RestaEspeciSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
@@ -50,10 +74,3 @@ class calendarioView(ModelViewSet):
     serializer_class=calendarioSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-    
-class especialidadesView(ModelViewSet):
-    queryset=tipo_especialidad.objects.all()
-    serializer_class=especialidadSerializer
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    

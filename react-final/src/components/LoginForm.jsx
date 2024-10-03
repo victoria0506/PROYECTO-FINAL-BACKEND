@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import userGET from "../services/get";
 import SweetAlert2 from 'react-sweetalert2';
+import GETuser from "../services/get";
+import { useTranslation } from "react-i18next";
 
 function LoginForm() {
     const [swalProps, setSwalProps] = useState({});
@@ -9,7 +10,9 @@ function LoginForm() {
     const [correo, setcorreo] = useState("");
     const [contrasena, setcontrasena] = useState("");
     const [cargando, setcargando] = useState(false);
+    const [mensaje, setMensaje] = useState("")
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const validarEmail = (correo) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -17,87 +20,61 @@ function LoginForm() {
     };
 
     const Inicio = async () => {
-        if (usuario.trim() === "" || correo.trim() === "" || contrasena.trim() === "") {
-            setSwalProps({
+        if (usuario.trim() === "" && correo.trim() === "" && contrasena.trim("") === "" && !validarEmail(correo) || contrasena.length < 5) { // validar que no se pueda loguear con estacios vacios
+            setSwalProps({ // SweetAlert
+              show: true,
+              title: 'Error',
+              text: 'Ingrese sus datos de manera correcta',
+          });
+              return
+          }else{
+           const UserObte = await GETuser()// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
+           const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena) // El .find va a buscar
+           if (validarUser) { 
+              console.log("encontrado");
+              setMensaje("Logueo Exitoso") // Mensaje para que el usuraio este informado que su logueo fue exitoso
+              setTimeout(() => {
+                  navigate("/home") // Navegacion hacia la pagina de Home, despues de un segundo
+              }, 1000);
+           } else {
+              setSwalProps({ // SweetAlert para informar al usuario que sus datos son incorrectos
                 show: true,
-                title: 'Todos los campos son obligatorios',
+                title: 'Error',
+                text: 'Correo o/y Contraseña incorrectas',
             });
-            return;
-        }
-
-        if (!validarEmail(correo)) {
-            setSwalProps({
-                show: true,
-                title: 'Ingrese un correo electrónico válido',
-            });
-            return;
-        }
-
-        setcargando(true);
-        try {
-            const comparar = await userGET();
-            console.log(comparar);
-
-            if (!comparar || !Array.isArray(comparar)) {
-                setSwalProps({
-                    show: true,
-                    title: 'Error al obtener los datos de usuarios',
-                });
-                return;
-            }
-
-            const encontrarUsuario = comparar.find((e) => e.nombre_usuario === usuario && e.email === correo && e.contrasena === contrasena);
-            
-            if (encontrarUsuario) {
-                alert("Usuario encontrado");
-                navigate("/home");
-            } else {
-                setSwalProps({
-                    show: true,
-                    title: 'Usuario o contraseña incorrectos',
-                });
-            }
-        } catch (error) {
-            console.error("Error al obtener los usuarios:", error);
-            setSwalProps({
-                show: true,
-                title: 'Error en la solicitud',
-            });
-        } finally {
-            setcargando(false);
-        }
-    }
+           }
+    }   }
 
     return (
-        <div className="contenedor-login">
-            <div className="formulario-login">
+        <div className="login-page">
+         <img className="background-video" src="src/img/imagenlogin.jpg" alt="" />
+            <div className="login">
                 <h2 className="iniciarsesion">Login</h2>
                 <input
                     type="text"
-                    placeholder="Usuario"
-                    className="input-login"
+                    placeholder={t('User')}
+                    className="input"
                     value={usuario}
                     onChange={e => setUsu(e.target.value)}
                 />
                 <input
                     type="text"
-                    placeholder="Correo"
-                    className="input-login"
+                    placeholder={t('Email')}
+                    className="input"
                     value={correo}
                     onChange={e => setcorreo(e.target.value)}
                 />
                 <input
                     type="password"
-                    placeholder="Contraseña"
-                    className="input-login"
+                    placeholder={t('Password')}
+                    className="input"
                     value={contrasena}
                     onChange={e => setcontrasena(e.target.value)}
                 />
-                
                 <button className="boton-login" onClick={Inicio} disabled={cargando}>
                     {cargando ? "Cargando..." : "Login"}
                 </button>
-                <p className="texto-login">No tienes una cuenta? <Link to='/register'>Regístrate</Link></p>
+                <p>{t('You dont have an account?')} <Link to='/register'>{t('Register')}</Link></p>
             </div>
             <SweetAlert2 {...swalProps} />
         </div>
