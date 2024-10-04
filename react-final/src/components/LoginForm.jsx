@@ -32,10 +32,18 @@ function LoginForm() {
            const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena) // El .find va a buscar
            if (validarUser) { 
               console.log("encontrado");
-              setMensaje("Logueo Exitoso") // Mensaje para que el usuraio este informado que su logueo fue exitoso
-              setTimeout(() => {
-                  navigate("/home") // Navegacion hacia la pagina de Home, despues de un segundo
-              }, 1000);
+              if (validarUser.id_tipoUsuario === 2) {
+                setMensaje("Bienvenido Admi")
+                setTimeout(() => {
+                    navigate("/Admi") // Navegacion hacia la pagina de Home, despues de un segundo
+                }, 1000);
+                
+              } else {
+                setMensaje("Logueo Exitoso") // Mensaje para que el usuraio este informado que su logueo fue exitoso
+                setTimeout(() => {
+                    navigate("/home") // Navegacion hacia la pagina de Home, despues de un segundo
+                }, 1000);
+              }
            } else {
               setSwalProps({ // SweetAlert para informar al usuario que sus datos son incorrectos
                 show: true,
