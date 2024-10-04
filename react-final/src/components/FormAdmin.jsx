@@ -1,60 +1,24 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import SweetAlert2 from 'react-sweetalert2';
 import PostResta from '../services/postResta';
-import distritos2 from '../services/distritoFech';
 import { useTranslation } from 'react-i18next';
 import "../style/admi.css"
-import canton2 from '../services/cantonFech';
-import RestaGet from '../services/getRestaurant';
-import Card from 'react-bootstrap/Card';
-import especiali from '../services/especialidades';
-//import RestaEspe from '../services/ResEspeci';
 import Select from 'react-select';
+import UsedataRest from './UsedataRest';
 
 const FormAdmin = () => {
-    const [nomResta, setNomresta] = useState("")
-    const [precioPro, setPrecioPro] = useState("")
-    const [capacidad, setCapacidad] = useState("")
-    const [calificacion, setCalificacio] = useState("")
-    const [swalProps, setSwalProps] = useState({})
-    const [ubicacion, setUbicacion] = useState({canton: "", distrito: ""})
-    const [especialidades, setEspecialidades] = useState([])
-    const [especiSelect, setEspeciSelect] = useState([])
-    const [distritos, setDistritos] = useState([])
-    const [cantones, setCantones] = useState([])
-    const { t } = useTranslation();
-    const [restaurantes, setRestaurantes] = useState([])
+  const [nomResta, setNomresta] = useState("");
+  const [precioPro, setPrecioPro] = useState("");
+  const [capacidad, setCapacidad] = useState("");
+  const [calificacion, setCalificacio] = useState("");
+  const [swalProps, setSwalProps] = useState({});
+  const [ubicacion, setUbicacion] = useState({ canton: "", distrito: "" });
+  const [especiSelect, setEspeciSelect] = useState([]);
+  const { t } = useTranslation();
+
+  const {distritos, cantones, especialidades} = UsedataRest(ubicacion.canton)
   
-    useEffect(() => {
-      const loadDistritos = async () => {
-          if (ubicacion.canton) {
-              const distritosData = await distritos2(ubicacion.canton); 
-              setDistritos(distritosData);
-          } else {
-              setDistritos([]);
-          }
-      };
-      loadDistritos();
-    }, [ubicacion.canton]);
-
-  useEffect(() => {
-    const loadCantones = async () => {
-            const CantonesData = await canton2();
-            setCantones(CantonesData);
-    };
-    loadCantones();
-  }, []);
-
-  useEffect(() => {
-    const loadEspecialidades = async () => {
-      const EspecilityData = await especiali()
-      setEspecialidades(EspecilityData)
-      //console.log(EspecilityData);
-    }
-    loadEspecialidades()
-  }, [])
-
   const CambiosDistritos = (e) => {
     console.log("estan ocurriendo cambios");
     setUbicacion({ ...ubicacion, distrito: e.target.value })
@@ -89,10 +53,6 @@ const FormAdmin = () => {
             text: 'Restaurante añadido exitosamente',
           });
         }
-    }
-    const obtenerRestaurant = async () => {
-        const restaurantObte = await RestaGet()
-        setRestaurantes(restaurantObte)
     }
 
   return (
@@ -155,22 +115,6 @@ const FormAdmin = () => {
 
           <br /><br />
           <button onClick={Añadir}>{t('Add')}</button>
-        </div>
-        <div>
-          {restaurantes.map((restau, index) => (
-            <li key={index}>
-              <Card style={{ width: '14rem'}}>
-              {/* <Card.Img variant="top" src= {produc.ImgUrl} /> */}
-                <Card.Body>
-                  <Card.Title>{restau.nombre_restaurante}</Card.Title>
-                    <Card.Text>
-                    </Card.Text>
-                    <button>{t('Edit')}</button>
-                    <button>{t('Eliminate')}</button>
-                </Card.Body>
-              </Card>
-          </li>
-          ))}
         </div>
       </div>
       <SweetAlert2 {...swalProps} />

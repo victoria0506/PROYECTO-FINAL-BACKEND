@@ -30,7 +30,8 @@ i18n
           Edit: "Edit",
           Eliminate: "Eliminate",
           "Discover your next favorite restaurant." : "Discover your next favorite restaurant.",
-          Qualification:"Qualification"
+          Qualification:"Qualification",
+          "About Us": "About Us"
         },
       },
       es: {
@@ -57,7 +58,8 @@ i18n
           Edit: "Editar",
           Eliminate: "Eliminar",
           "Discover your next favorite restaurant." :"Descubre tu próximo restaurante favorito.",
-          Qualification:"Calificacion"
+          Qualification:"Calificacion",
+          "About Us": "Sobre Nosotros"
         },
       },
     },

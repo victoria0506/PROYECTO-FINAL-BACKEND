@@ -1,4 +1,5 @@
 
+import CardAdmi from "../components/CardAdmi"
 import FormAdmin from "../components/FormAdmin"
 
 const Admi = () => {
@@ -6,6 +7,7 @@ const Admi = () => {
   return (
     <div>
       <FormAdmin />
+      <CardAdmi/>
     </div>
   )
 }
