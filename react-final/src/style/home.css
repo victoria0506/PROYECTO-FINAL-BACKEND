@@ -91,7 +91,6 @@
   .carrusel{
     margin-top: 20px;
   }
-  
   .parallax {
     background-image: url('src/img/textoadi4.png');
     height: 540px; /* Ajusta el tamaño que desees */
@@ -100,11 +99,9 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
-  
   .carousel-item {
     position: relative;
   }
-  
   .overlay {
     position: absolute;
     top: 0;
@@ -114,11 +111,9 @@
     background-color: rgba(0, 0, 0, 0.5); /* Capa semitransparente */
     z-index: 1; /* Coloca la capa por encima de la imagen */
   }
-  
   .carousel-item img {
     z-index: 0; /* Imagen en el fondo */
   }
-  
   .caption-centered {
     position: absolute;
     top: 50%;
@@ -128,22 +123,18 @@
     z-index: 2; /* Asegura que el texto esté por encima de la capa oscura */
     width: 100%;
   }
-  
   .caption-content {
     padding: 20px;
     border-radius: 10px;
     color: white;
     text-align: center;
   }
-  
   .carousel-control-prev,
   .carousel-control-next {
     z-index: 3; /* Por encima de la superposición */
   }
-  
   .carousel-item img {
     width: 100%; /* Ajusta el ancho al 100% del contenedor */
     height: 400px; /* Puedes ajustar esta altura según tus necesidades */
     object-fit: cover; /* Corta la imagen para llenar el área sin deformarla */
   }
-  

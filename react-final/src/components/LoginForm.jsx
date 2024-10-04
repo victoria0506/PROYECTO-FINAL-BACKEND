@@ -9,7 +9,6 @@ function LoginForm() {
     const [usuario, setUsu] = useState("");
     const [correo, setcorreo] = useState("");
     const [contrasena, setcontrasena] = useState("");
-    const [cargando, setcargando] = useState(false);
     const [mensaje, setMensaje] = useState("")
     const navigate = useNavigate();
     const { t } = useTranslation();
@@ -32,10 +31,18 @@ function LoginForm() {
            const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena) // El .find va a buscar
            if (validarUser) { 
               console.log("encontrado");
-              setMensaje("Logueo Exitoso") // Mensaje para que el usuraio este informado que su logueo fue exitoso
-              setTimeout(() => {
-                  navigate("/home") // Navegacion hacia la pagina de Home, despues de un segundo
-              }, 1000);
+              if (validarUser.id_tipoUsuario === 2) {
+                setMensaje("Bienvenido Admi")
+                setTimeout(() => {
+                    navigate("/Admi") // Navegacion hacia la pagina de Home, despues de un segundo
+                }, 1000);
+                
+              } else {
+                setMensaje("Logueo Exitoso") // Mensaje para que el usuraio este informado que su logueo fue exitoso
+                setTimeout(() => {
+                    navigate("/home") // Navegacion hacia la pagina de Home, despues de un segundo
+                }, 1000);
+              }
            } else {
               setSwalProps({ // SweetAlert para informar al usuario que sus datos son incorrectos
                 show: true,
@@ -71,8 +78,7 @@ function LoginForm() {
                     value={contrasena}
                     onChange={e => setcontrasena(e.target.value)}
                 />
-                <button className="boton-login" onClick={Inicio} disabled={cargando}>
-                    {cargando ? "Cargando..." : "Login"}
+                <button className="boton-login" onClick={Inicio}>
                 </button>
                 <p>{t('You dont have an account?')} <Link to='/register'>{t('Register')}</Link></p>
             </div>
