@@ -1,7 +1,6 @@
 import {useState } from "react"
 import { Link } from "react-router-dom"
 import userGET from "../services/get"
-import userGET from "../services/get"
 import { useNavigate } from "react-router-dom"
 import SweetAlert2 from 'react-sweetalert2';
 import userPost from "../services/post"
@@ -14,6 +13,7 @@ function RegistroForm() {
     const [contraseña, setContraseña] = useState("")
     const [mensaje, setMensaje] = useState("")
     const [swalProps, setSwalProps] = useState({});
+    const [cargando, setcargando] = useState(false);
     const navigate = useNavigate(); // hookpara navegar entre paginas
     const { t } = useTranslation();
 
@@ -31,6 +31,7 @@ function RegistroForm() {
         });
         return;
       } else {
+        setcargando(true); 
         const UserObte = await userGET(); 
         const validarRegistro = UserObte.find(user => 
           user.nombre_usuario === usuario && user.email === correo && user.contrasena === contraseña
@@ -62,7 +63,9 @@ function RegistroForm() {
         <input type="text" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder={t('Password')}/>
         
         <div className="botones">
-        <button onClick={mostrar}>{t('Register User')}</button>
+        <button onClick={mostrar}>
+          {cargando ? "Cargando..." : "Iniciar Sesión"}
+        </button>
         <p>{t('Do you have an account?')} <Link to='/login'>Login</Link></p>
         </div>
        </div>

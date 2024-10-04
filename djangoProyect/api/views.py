@@ -45,6 +45,9 @@ class RestauranteView(ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
+    def update(self, request, *args, **kwargs):
+        return super().update(request, *args, **kwargs)
+    
 class especialidadesView(ModelViewSet):
     queryset=tipo_especialidad.objects.all()
     serializer_class=especialidadSerializer
