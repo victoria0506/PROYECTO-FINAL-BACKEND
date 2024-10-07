@@ -2,7 +2,6 @@
 import HTMLFlipBook from 'react-pageflip';
 
 
-
 const Book = () => {
   return (
     <div className="flipbook-container">

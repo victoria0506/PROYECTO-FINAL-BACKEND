@@ -1,9 +1,9 @@
 import {useState } from "react"
 import { Link } from "react-router-dom"
-import userGET from "../services/get"
+import userGET from "../services/getUser";
 import { useNavigate } from "react-router-dom"
 import SweetAlert2 from 'react-sweetalert2';
-import userPost from "../services/post"
+import userPost from "../services/postUser";
 import { useTranslation } from "react-i18next";
 
 function RegistroForm() {

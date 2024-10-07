@@ -52,6 +52,10 @@ const FormAdmin = () => {
             title: 'Exito!',
             text: 'Restaurante añadido exitosamente',
           });
+          setNomresta(""),
+          precioPro(""),
+          setCapacidad(""),
+          setCalificacio("")
         }
     }
 

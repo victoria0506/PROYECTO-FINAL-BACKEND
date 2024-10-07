@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import canton2 from "../services/cantonFech";
 import distritos2 from "../services/distritoFech";
-import especiali from "../services/especialidades";
+import especiali from "../services/especialidadesGet";
 
 const UsedataRest = (canton) => {
     const [distritos, setDistritos] = useState([]);

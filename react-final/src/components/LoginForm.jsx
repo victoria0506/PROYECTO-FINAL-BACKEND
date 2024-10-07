@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SweetAlert2 from 'react-sweetalert2';
-import GETuser from "../services/get";
+import userGET from "../services/getUser";
 import { useTranslation } from "react-i18next";
 
 function LoginForm() {
@@ -28,7 +28,7 @@ function LoginForm() {
           });
               return
           }else{
-           const UserObte = await GETuser()// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
+           const UserObte = await userGET()// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
            const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena) // El .find va a buscar
            if (validarUser) { 
               console.log("encontrado");
