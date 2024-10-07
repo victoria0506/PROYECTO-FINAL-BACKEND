@@ -5,6 +5,7 @@ import HomePage from '../pages/HomePage';
 import Admi from "../pages/Admi"
 import ContactoPage from '../pages/ContactoPage';
 import AboutPage from '../pages/AboutPage';
+import CardLasBrisas from '../pages/CardLasBrisas';
 
 function Rutas() {
     return (
@@ -16,10 +17,8 @@ function Rutas() {
                        <Route path='/contacto' element={< ContactoPage/>}   />
                        <Route path='/register' element={< Registro/>}   />
                        <Route path='/login' element={<Login/>}   />
-                       <Route path='/admi' 
-                       element={
-                          <Admi/>
-                       }/>
+                       <Route path='/admi' element={<Admi/>}  />
+                       <Route path='/lasbrisas' element={<CardLasBrisas/>}   />
               </Routes>
           </Router>
       </div>

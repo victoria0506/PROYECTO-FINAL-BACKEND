@@ -4,12 +4,12 @@ import SweetAlert2 from 'react-sweetalert2';
 import GETuser from "../services/get";
 import { useTranslation } from "react-i18next";
 
-function LoginForm() {
+function LoginForm () {
     const [swalProps, setSwalProps] = useState({});
     const [usuario, setUsu] = useState("");
     const [correo, setcorreo] = useState("");
     const [contrasena, setcontrasena] = useState("");
-    const [mensaje, setMensaje] = useState("")
+    const [/*mensaje*/, setMensaje] = useState("")
     const navigate = useNavigate();
     const { t } = useTranslation();
 
@@ -31,6 +31,7 @@ function LoginForm() {
            const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena) // El .find va a buscar
            if (validarUser) { 
               console.log("encontrado");
+              
               if (validarUser.id_tipoUsuario === 2) {
                 setMensaje("Bienvenido Admi")
                 setTimeout(() => {
@@ -54,7 +55,7 @@ function LoginForm() {
 
     return (
         <div className="login-page">
-         <img className="background-video" src="src/img/imagenlogin.jpg" alt="" />
+         <img className="background-video" src="src/img/.jpg" alt="" />
             <div className="login">
                 <h2 className="iniciarsesion">Login</h2>
                 <input
@@ -78,7 +79,7 @@ function LoginForm() {
                     value={contrasena}
                     onChange={e => setcontrasena(e.target.value)}
                 />
-                <button className="boton-login" onClick={Inicio}>
+                <button className="boton-login" onClick={Inicio}> {t('Login')}
                 </button>
                 <p>{t('You dont have an account?')} <Link to='/register'>{t('Register')}</Link></p>
             </div>

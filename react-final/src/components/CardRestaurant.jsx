@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import RestaGet from "../services/getRestaurant";
 import "../style/cardRestaurantes.css"
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const CardsRestaurantes = () => {
-
+    const navigate = useNavigate();
     const [restaurantes, setRestaurantes] = useState([])
     const { t } = useTranslation();
 
@@ -33,11 +34,10 @@ const CardsRestaurantes = () => {
                         <div className="card__content--container flow">
                             <h2 className="card__title">{restau.nombre_restaurante}</h2>
                             <p className="card__description">
-                              {restau.precio_promedio} <br /> {restau.especialidad} <br /> {restau.calificacio_promedio} <br />
-                              {restau.capacidad}
+                             hotel hotel fffgfgfgfsdsd dvfssvf fddf
                             </p>
                         </div>
-                         <button className="card__button">Read more</button>
+                         <button onClick={() => navigate("/lasbrisas")} className="card__button">Read more</button>
                         </div>
                         </article>
                     </div>

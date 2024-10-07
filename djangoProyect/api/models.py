@@ -9,7 +9,7 @@ class Usuarios(models.Model):
     nombre_usuario= models.CharField(max_length=100)
     email= models.CharField(max_length=225,unique=True)
     contrasena= models.CharField(max_length=200)
-    id_tipoUsuario= models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
+    id_tipoUsuario= models.ForeignKey(TipoUsuario, on_delete=models.CASCADE, default=1)
     
 class Canton(models.Model):
     id_canton= models.AutoField(primary_key=True)

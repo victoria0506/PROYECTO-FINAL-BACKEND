@@ -1,8 +1,6 @@
 *{
-  font-family: 'Atteron Personal Use', sans-serif;
-  font-family: "Merriweather", serif;
-  font-weight: 300;
-  font-style: normal;
+  font-family: 'Montserrat', sans-serif;
+  
 }
 
 /* Estilos generales para la página de inicio */
@@ -23,55 +21,39 @@
     height: 100%;
     object-fit: cover; /* Para asegurar que cubra toda la pantalla */
     z-index: -1; /* Asegura que el video esté detrás del contenido */
-    filter: brightness(70%);
+    filter: brightness(50%);
   }
 
   
   /* Estilos previos para las imágenes y texto */
   .imglogohome {
-    width: 800px;
-    margin-top: 120px;
+    width: 900px;
+    margin-top: 140px;
   }
   
   .imglogohomecenter {
     display: flex;
     justify-content: center;
     align-items: center;
+    
   }
   
   .parrafohome {
-    font-weight: 500;
     font-size: 20px;
-    color: white;
+    color: #dad7d7;
     text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: 'Raleway', sans-serif;
+    margin-top: 30px;
   }
   
   /* Imagen Sol */
   .solhome {
     margin-left: 920px;
-    margin-top: -300px;
+    margin-top: -380px;
     filter: drop-shadow(0 7px 8px rgba(0, 0, 0, 0.5));
-    position: relative;
+    position: absolute;
   }
   
-  /* Ajustes para el z-index de otros elementos */
-  #cardHome1, #cardHome2, #cardHome3 {
-    background-color: transparent;
-    border-color: rgb(181, 160, 106);
-    width: 350px;
-    border-radius: 130px;
-  }
-  
-  #cardHome2 {
-    transform: rotate(90deg);
-  }
-  
-  #cardHome3 {
-    transform: scaleX(-1);
-  }
   
   .contenedor {
     position: relative;
@@ -120,7 +102,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    z-index: 2; /* Asegura que el texto esté por encima de la capa oscura */
+    z-index: 1; /* Asegura que el texto esté por encima de la capa oscura */
     width: 100%;
   }
   .caption-content {
@@ -131,7 +113,7 @@
   }
   .carousel-control-prev,
   .carousel-control-next {
-    z-index: 3; /* Por encima de la superposición */
+    z-index: 1; /* Por encima de la superposición */
   }
   .carousel-item img {
     width: 100%; /* Ajusta el ancho al 100% del contenedor */

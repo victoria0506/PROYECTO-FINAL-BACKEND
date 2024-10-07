@@ -31,7 +31,7 @@ const Map = () => {
             }),
         }).addTo(map);
 
-        // Popup del marcador con un enlace a Wikipedia
+        // Popup del marcador con un enlace
         HotelLasBrisasMarker.bindPopup(
             `<b>Hotel Las Brisas</b><br><a href="https://es.wikipedia.org/wiki/Torre_Eiffel" target="_blank">Más información</a>`
         ).openPopup();
