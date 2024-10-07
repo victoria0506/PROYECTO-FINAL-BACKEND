@@ -32,7 +32,6 @@ const Intro = () => {
   return (
     <div className="intro" ref={introRef}>
       <img className='logointro' src="src/img/logonav.png" alt="clarkode logo" />
-
     </div>
   );
 };

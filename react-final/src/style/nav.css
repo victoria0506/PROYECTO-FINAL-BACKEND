@@ -1,21 +1,36 @@
 
-  .navbar {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: grid;
-    grid-template-columns: auto repeat(3, auto);
-    align-items: center;
-    padding: 1px;
-    background-color: transparent;
-    /*backdrop-filter: blur(15px);*/
+.navbar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: auto repeat(3, auto);
+  align-items: center;
+  padding: 1px;
+  background-color: transparent;
   
-    z-index: 1; /* Asegura que el navbar esté por encima */
-    width: 100%;
-  }
-  
+  z-index: 1;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+/* Navbar con fondo blanco al hacer scroll */
+.navbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(15px);
+}
+
+.navbar.scrolled .menu-item {
+  color: #484038; /* Cambia el color del texto */
+}
+
+.navbar.scrolled .btnbuscar {
+  background-color: black;
+  color: white;
+}
+
   
   .navbartoggle{
     display: grid;
@@ -40,7 +55,7 @@
     justify-content: center; /* Centra el menú horizontalmente */
   }
   .menu > a{
-    text-decoration: none;
+    text-decoration: double;
     color: white;
   }
   
@@ -53,7 +68,7 @@
   }
   
   .menu-item:hover {
-    background-color: #6c5f53;
+    /*background-color: #6c5f53;*/
     color: white;
   }
   
@@ -64,13 +79,13 @@
   }
   
   .search-bar input {
-    border: 2px solid #E5E7EB;
+    border: 1px solid #E5E7EB;
     padding: 0.2rem;
-    border-radius: 0.30rem;
-  
+    border-radius: 0.80rem;
+    
   }
 
-  .btnbuscar{
+  /*.btnbuscar{
     height: 38px;
     width: 50px;
     border-radius: 8px;
@@ -78,14 +93,14 @@
     color: #ffffff;
     border-color: #ffffff;
     font-size: small;
-  }
+  }*/
   
   
   .btn{
     padding: 0.3rem ;
-    color: #000000;
-    border-radius: 0.5rem;
-    background-color: white;
+    color: #ffffff;
+    border-radius: 1rem;
+    background-color: rgb(0, 0, 0);
     margin: 2px;
     height: 35px;
     text-align: center;
@@ -96,9 +111,9 @@
 
   .btnlogin{
     padding: 0.1rem ;
-    color: #000000;
-    border-radius: 0.5rem;
-    background-color: white;
+    color: #ffffff;
+    border-radius: 1rem;
+    background-color: rgb(0, 0, 0);
     margin: 2px;
     display: flex;
     justify-content: center;
@@ -176,7 +191,7 @@
     height: 35px;
     top: 50%;
     transform: translateY(-50%);
-    background: #6c5f53;
+    background: #000000;
     border-radius: 50%;
     margin: 0px 2px;
     left: 0%;
@@ -216,6 +231,8 @@
     opacity: 0;
   }
 
+
+  
   
   
   

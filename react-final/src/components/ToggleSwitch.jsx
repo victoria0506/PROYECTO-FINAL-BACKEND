@@ -11,6 +11,7 @@ const ToggleSwitch = () => {
     <div className="toggleContainer">
       <button className="btn">{i18n.t('help')}</button>
       <a className='btnlogin' href="login">{i18n.t('login')}</a>
+    
       <input
         type="checkbox"
         id="language-switch"

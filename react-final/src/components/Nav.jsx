@@ -1,20 +1,35 @@
-// src/components/Nav.js
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import '../style/nav.css'
 import ToggleSwitch from './ToggleSwitch';
 import { useTranslation } from 'react-i18next';
 
 function Nav() {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleSearch = (e) => {
-    if (e.key === 'Enter' || e.type === 'click') {
+    if (e.key === 'Enter') {
       alert(`Searching for: ${searchQuery}`);
     }
   };
 
+  // Detectar scroll para cambiar el color del navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-brand">
         <img className="logonav" src="src/img/logonav.png" alt="Logo" />
       </div>
@@ -33,7 +48,6 @@ function Nav() {
           onKeyDown={handleSearch}
           className="search-input"
         />
-        <button className="btnbuscar" onClick={handleSearch}>{t('search')}</button>
       </div>
       <div className="actions">
         <ToggleSwitch />
@@ -43,4 +57,5 @@ function Nav() {
 }
 
 export default Nav;
+
 
