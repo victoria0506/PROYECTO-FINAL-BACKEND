@@ -8,11 +8,11 @@ function Nav() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const handleSearch = (e) => {
+  /*const handleSearch = (e) => {
     if (e.key === 'Enter') {
       alert(`Searching for: ${searchQuery}`);
     }
-  };
+  };*/
 
   // Detectar scroll para cambiar el color del navbar
   useEffect(() => {
@@ -45,7 +45,7 @@ function Nav() {
           placeholder={t('search')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={handleSearch}
+          /*onKeyDown={handleSearch}*/
           className="search-input"
         />
       </div>
