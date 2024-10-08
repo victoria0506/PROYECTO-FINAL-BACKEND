@@ -9,8 +9,9 @@ function LoginForm () {
     const [usuario, setUsu] = useState("");
     const [correo, setcorreo] = useState("");
     const [contrasena, setcontrasena] = useState("");
-    const [/*mensaje*/, setMensaje] = useState("")
+    const [mensaje, setMensaje] = useState("")
     const navigate = useNavigate();
+    const [cargando, setcargando] = useState(false);
     const { t } = useTranslation();
 
     const validarEmail = (correo) => {
@@ -24,27 +25,18 @@ function LoginForm () {
               show: true,
               title: 'Error',
               text: 'Ingrese sus datos de manera correcta',
-          });
+            });
               return
-          }else{
-           const UserObte = await userGET()// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
-           const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena) // El .find va a buscar
-           if (validarUser) { 
-              console.log("encontrado");
-              
-              if (validarUser.id_tipoUsuario === 2) {
-                setMensaje("Bienvenido Admi")
-                setTimeout(() => {
-                    navigate("/Admi") // Navegacion hacia la pagina de Home, despues de un segundo
-                }, 1000);
-                
-              } else {
-                setMensaje("Logueo Exitoso") // Mensaje para que el usuraio este informado que su logueo fue exitoso
+            }else{
+                const UserObte = await userGET()// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
+                const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena) // El .find va a buscar
+                if (validarUser) { 
+                setcargando(true)
                 setTimeout(() => {
                     navigate("/home") // Navegacion hacia la pagina de Home, despues de un segundo
                 }, 1000);
-              }
-           } else {
+                setMensaje("Logueo Exitoso")
+            }else{
               setSwalProps({ // SweetAlert para informar al usuario que sus datos son incorrectos
                 show: true,
                 title: 'Error',
@@ -58,6 +50,7 @@ function LoginForm () {
          <img className="background-video" src="src/img/.jpg" alt="" />
             <div className="login">
                 <h2 className="iniciarsesion">Login</h2>
+                <h5>{mensaje}</h5>
                 <input
                     type="text"
                     placeholder={t('User')}
@@ -79,7 +72,8 @@ function LoginForm () {
                     value={contrasena}
                     onChange={e => setcontrasena(e.target.value)}
                 />
-                <button className="boton-login" onClick={Inicio}> {t('Login')}
+                <button className="boton-login" onClick={Inicio}>
+                     {cargando ? t('Charging') : t('Login')}
                 </button>
                 <p>{t('You dont have an account?')} <Link to='/register'>{t('Register')}</Link></p>
             </div>

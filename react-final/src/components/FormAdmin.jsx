@@ -18,7 +18,16 @@ const FormAdmin = () => {
   const { t } = useTranslation();
 
   const {distritos, cantones, especialidades} = UsedataRest(ubicacion.canton)
+
+  const validatePrecioPromedio = (precio) => {
+    const regex = /^\d{1,4}(\.\d{1,3})?$/; 
+    return regex.test(precio);
+  };
   
+  const validateCalificacionPromedio = (calificacion) => {
+    const number = parseFloat(calificacion);
+    return number >= 0 && number <= 10 && /^\d(\.\d)?$/.test(calificacion);
+  }
   const CambiosDistritos = (e) => {
     console.log("estan ocurriendo cambios");
     setUbicacion({ ...ubicacion, distrito: e.target.value })
@@ -37,7 +46,7 @@ const FormAdmin = () => {
   } 
 
     const Añadir = async () =>{
-        if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || !ubicacion.canton || !ubicacion.distrito) {
+        if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || !ubicacion.canton || !ubicacion.distrito || !validatePrecioPromedio || !validateCalificacionPromedio) {
             setSwalProps({ 
               show: true,
               title: 'Error',
@@ -52,10 +61,6 @@ const FormAdmin = () => {
             title: 'Exito!',
             text: 'Restaurante añadido exitosamente',
           });
-          setNomresta(""),
-          precioPro(""),
-          setCapacidad(""),
-          setCalificacio("")
         }
     }
 

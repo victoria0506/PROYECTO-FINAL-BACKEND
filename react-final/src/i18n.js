@@ -31,6 +31,7 @@ i18n
           "Discover your next favorite restaurant." : "Discover your next favorite restaurant.",
           Qualification:"Qualification",
           "About Us": "About Us",
+          "Charging...  ": "Cargando" 
           
         },
       },
@@ -60,7 +61,8 @@ i18n
           "Discover your next favorite restaurant." :"Descubre tu próximo restaurante favorito.",
           Qualification:"Calificacion",
           "About Us": "Sobre Nosotros",
-          "Does that question 'where do we eat' sound familiar to you? At RestaurApp, finding an answer is very easy. Start searching now!" : "Te suena esa pregunta de 'dónde comemos? En RestaurApp, encontrar respuesta es facilísimo. ¡Empieza a buscar ahora!"
+          "Does that question 'where do we eat' sound familiar to you? At RestaurApp, finding an answer is very easy. Start searching now!" : "Te suena esa pregunta de 'dónde comemos? En RestaurApp, encontrar respuesta es facilísimo. ¡Empieza a buscar ahora!",
+          "charging...": "Cargando" 
         },
       },
     },

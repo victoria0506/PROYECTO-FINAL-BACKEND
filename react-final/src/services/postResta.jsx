@@ -1,9 +1,8 @@
 
-const Token= "d58379a2f75349bbb55f641fd6c323527b1f495a"
+const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
 
 const PostResta = async (nombre_restaurante,precio_promedio,capacidad,calificacion_promedio ,id_distrito,especiSelect) => {
-    console.log(especiSelect);
-    
+    console.log(especiSelect)
     try {
         const response = await fetch('http://localhost:8000/api/admiRestaur/', {
         method: 'POST',
