@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RestaGet from "../services/getRestaurant";
+import '../style/paginarestaurantes.css'
 
 const RestaurantsDetail = () => {
     const { restaurante_id } = useParams();
@@ -22,14 +23,18 @@ const RestaurantsDetail = () => {
     }, [restaurante_id]);
 
     if(!restaurantDetail){
-        return <div>No se encontró el restaurante.</div>;
+        return <div>No se encontró el restaurante.</div> 
+        
     } 
 
     return (
         <div>
-            <h1>Detalles del Restaurante</h1>
             <div>
-                <h3>{restaurantDetail.nombre_restaurante}</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaAa9L1yFoQ_pjEdmRvVMzD97BCVNHGUTRBA&s" alt="Logo" />
+                <video className="videoanuncio" controls autoPlay muted>
+                <source src="src/img/videofaro.mp4" type="video/mp4" />
+                </video>
+                <h3 className="nombrerestaurante">{restaurantDetail.nombre_restaurante}</h3>
                 <h3>Precio Promedio: {restaurantDetail.precio_promedio}</h3>
                 <h3>Calificación Promedio: {restaurantDetail.calificacion_promedio}</h3>
             </div>

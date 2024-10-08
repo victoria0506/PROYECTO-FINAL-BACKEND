@@ -6,21 +6,21 @@ const Book = () => {
   return (
     <div className="flipbook-container">
       <HTMLFlipBook
-        width={400}
-        height={500}
-        size="fixed"
-        minWidth={315}
-        maxWidth={1000}
-        minHeight={400}
-        maxHeight={1533}
-        maxShadowOpacity={0.5}
-        showCover={true}
-        mobileScrollSupport={true}
-        drawShadow={true}
-        useMouseEvents={true}
-        autoSize={true}
-        clickEventForward={true}
-        flippingTime={2000}
+                width={400}  // Ancho del libro en píxeles
+                height={500}  // Altura del libro en píxeles
+                size="fixed"  // El tamaño es fijo, pero se adapta en un rango con los minWidth/maxWidth
+                minWidth={315}  // Ancho mínimo del libro
+                maxWidth={1000}  // Ancho máximo del libro
+                minHeight={400}  // Altura mínima del libro
+                maxHeight={1533}  // Altura máxima del libro
+                maxShadowOpacity={0.5}  // Opacidad máxima de la sombra en las páginas al pasarlas
+                showCover={true}  // Indica que se debe mostrar una portada del libro
+                mobileScrollSupport={true}  // Soporte de scroll para móviles
+                drawShadow={true}  // Habilita la sombra alrededor de las páginas
+                useMouseEvents={true}  // Permite pasar páginas con el mouse
+                autoSize={true}  // Ajusta automáticamente el tamaño del libro a la pantalla
+                clickEventForward={true}  // Pasa la página al hacer clic en ella
+                flippingTime={2000}  // Tiempo que tarda en pasar una página (2000 ms = 2 segundos)
         className="flipbook"
       >
         {/* Página de portada con el logo */}
