@@ -1,4 +1,4 @@
-const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
+const Token= "d58379a2f75349bbb55f641fd6c323527b1f495a"
 const PutRestaur = async (restaurante_id,nombre_restaurante,precio_promedio,capacidad,calificacion_promedio ,id_distrito, especiSelect) => { 
     try {
         const response = await fetch(`http://localhost:8000/api/admiRestaur/${restaurante_id}/`, {

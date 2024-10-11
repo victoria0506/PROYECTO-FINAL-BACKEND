@@ -6,6 +6,7 @@ import Admi from "../pages/Admi"
 import ContactoPage from '../pages/ContactoPage';
 import AboutPage from '../pages/AboutPage';
 import RestaurantsDetail from '../components/RestaurantsDetail';
+import DescubrePage from '../pages/DescubrePage';
 
 function Rutas() {
     return (
@@ -14,6 +15,7 @@ function Rutas() {
               <Routes>
                       <Route path='/home' element={< HomePage/>}   />
                       <Route path='/about' element={< AboutPage/>}   />
+                      <Route path='/descubre' element={< DescubrePage/>}   />
                       <Route path='/contacto' element={< ContactoPage/>}   />
                       <Route path='/register' element={< Registro/>}   />
                       <Route path='/login' element={<Login/>}   />

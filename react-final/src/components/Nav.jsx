@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import '../style/nav.css'
+import '../style/nav.css';
 import ToggleSwitch from './ToggleSwitch';
 import { useTranslation } from 'react-i18next';
 
@@ -7,12 +7,15 @@ function Nav() {
   const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isWhitePage, setIsWhitePage] = useState(false); // Nuevo estado para fondo de página
 
-  /*const handleSearch = (e) => {
-    if (e.key === 'Enter') {
-      alert(`Searching for: ${searchQuery}`);
+  // Detectar si la página tiene fondo blanco desde el inicio
+  useEffect(() => {
+    const backgroundColor = window.getComputedStyle(document.body).backgroundColor;
+    if (backgroundColor === 'rgb(255, 255, 255)') {
+      setIsWhitePage(true);
     }
-  };*/
+  }, []);
 
   // Detectar scroll para cambiar el color del navbar
   useEffect(() => {
@@ -29,7 +32,7 @@ function Nav() {
   }, []);
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isWhitePage ? 'white-page' : ''}`}>
       <div className="navbar-brand">
         <img className="logonav" src="src/img/logonav.png" alt="Logo" />
       </div>
@@ -45,7 +48,6 @@ function Nav() {
           placeholder={t('search')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          /*onKeyDown={handleSearch}*/
           className="search-input"
         />
       </div>

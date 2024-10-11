@@ -30,10 +30,8 @@ const RestaurantsDetail = () => {
     return (
         <div>
             <div>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQaAa9L1yFoQ_pjEdmRvVMzD97BCVNHGUTRBA&s" alt="Logo" />
-                <video className="videoanuncio" controls autoPlay muted>
-                <source src="src/img/videofaro.mp4" type="video/mp4" />
-                </video>
+                <img className="img-normalizada" src="https://visitachihuahuacapital.com/wp-content/uploads/2023/06/restaurantes-mariscos-chihuahua-9.jpg" alt="Logo" />
+                <img className="logorestaurante" src="https://www.designevo.com/res/templates/thumb_small/lobster-in-circle-banner.webp" alt="" />
                 <h3 className="nombrerestaurante">{restaurantDetail.nombre_restaurante}</h3>
                 <h3>Precio Promedio: {restaurantDetail.precio_promedio}</h3>
                 <h3>Calificación Promedio: {restaurantDetail.calificacion_promedio}</h3>
