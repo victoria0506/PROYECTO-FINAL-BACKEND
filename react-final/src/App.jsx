@@ -5,12 +5,11 @@ import Intro from './components/Intro';
 import { useState } from 'react';
 import Footer from './components/Footer';
 function App() {
-  const [siInicioSesion, setsiInicioSesion] = useState(false);
 
   return (
     <>
-      <Nav siInicioSesion={siInicioSesion} setsiInicioSesion={setsiInicioSesion} />
-      <Rutas siInicioSesion={siInicioSesion} />
+      <Nav/>
+      <Rutas />
       <Intro />
       <Footer />
     </>

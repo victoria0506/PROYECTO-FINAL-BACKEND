@@ -27,7 +27,6 @@ class UsuarioView(ModelViewSet):
     def login(self, request):
         email = request.data.get('email')
         contrasena = request.data.get('contrasena')
-        
         try:
             usuario = Usuarios.objects.get(email=email)
             if check_password(contrasena, usuario.contrasena):

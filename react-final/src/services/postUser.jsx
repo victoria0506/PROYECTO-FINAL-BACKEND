@@ -16,7 +16,7 @@ const userPost = async (nombre_usuario, email, contrasena) => { // funcion del m
         });
         const data = await response.json();
         return data
-        } catch(error) {
+    } catch(error) {
         console.log(error)
     }
 }

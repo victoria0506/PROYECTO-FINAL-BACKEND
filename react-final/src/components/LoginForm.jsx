@@ -3,6 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import SweetAlert2 from 'react-sweetalert2';
 import userGET from "../services/getUser";
 import { useTranslation } from "react-i18next";
+import { use } from "i18next";
+import { compartirContexto } from "../context/contextProvider";
+import "../style/login.css"
+
 
 function LoginForm () {
     const [swalProps, setSwalProps] = useState({});
@@ -13,6 +17,7 @@ function LoginForm () {
     const navigate = useNavigate();
     const [cargando, setcargando] = useState(false);
     const { t } = useTranslation();
+    const {actualizador, setActu, apiData, setApiData} = compartirContexto()
 
     const validarEmail = (correo) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -20,7 +25,7 @@ function LoginForm () {
     };
 
     const Inicio = async () => {
-        if (usuario.trim() === "" && correo.trim() === "" && contrasena.trim("") === "" && !validarEmail(correo) || contrasena.length < 5) { // validar que no se pueda loguear con estacios vacios
+        if (usuario.trim() === "" && correo.trim() === "" && contrasena.trim() === "" && !validarEmail(correo) || contrasena.length < 5) { // validar que no se pueda loguear con estacios vacios
             setSwalProps({ // SweetAlert
               show: true,
               title: 'Error',
@@ -29,21 +34,31 @@ function LoginForm () {
               return
             }else{
                 const UserObte = await userGET()// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
-                const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena) // El .find va a buscar
-                if (validarUser) { 
-                setcargando(true)
-                setTimeout(() => {
-                    navigate("/home") // Navegacion hacia la pagina de Home, despues de un segundo
-                }, 1000);
-                setMensaje("Logueo Exitoso")
-            }else{
-              setSwalProps({ // SweetAlert para informar al usuario que sus datos son incorrectos
-                show: true,
-                title: 'Error',
-                text: 'Correo o/y Contraseña incorrectas',
-            });
-           }
-    }   }
+                const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena)
+                if(validarUser) { 
+                    if (validarUser.nombre_usuario === "Administrador" && validarUser.email === "Admi@RestaurApp.com") {
+                        navigate("/admi")
+                        localStorage.setItem("Admi-id", validarUser.nombre_usuario) // en localStorage gusrdamos el id del administrador, para que se pueda cerrar la secion si es necesario
+                        alert("Bienvenido Administrador") 
+                    }else{
+                        setcargando(true)
+                        localStorage.setItem("Usuario Autenticado_id", validarUser.usuario_id)
+                        setActu(actualizador + 1)
+                        setTimeout(() => {
+                            navigate("/home") // Navegacion hacia la pagina de Home, despues de un segundo
+                        }, 1000);
+                        setMensaje("Logueo Exitoso")
+                    }
+                }else{
+                    setSwalProps({ // SweetAlert para informar al usuario que sus datos son incorrectos
+                    show: true,
+                    title: 'Error',
+                    text: 'Correo o/y Contraseña incorrectas',
+                    });
+    
+                }
+        }
+    }
 
     return (
         <div className="login-page">
@@ -75,7 +90,7 @@ function LoginForm () {
                 <button className="boton-login" onClick={Inicio}>
                      {cargando ? t('Charging') : t('Login')}
                 </button>
-                <p>{t('You dont have an account?')} <Link to='/register'>{t('Register')}</Link></p>
+                <p className="text">{t('You dont have an account?')} <Link to='/register'>{t('Register')}</Link></p>
             </div>
             <SweetAlert2 {...swalProps} />
         </div>

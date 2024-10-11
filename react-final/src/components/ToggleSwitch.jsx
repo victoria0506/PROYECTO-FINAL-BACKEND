@@ -1,7 +1,15 @@
 import { useTranslation } from 'react-i18next';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import "../style/toggle.css"
+
 
 const ToggleSwitch = () => {
   const { i18n } = useTranslation();
+  const usuario_id = localStorage.getItem("Usuario Autenticado_id") 
+  console.log("id usuario : ", usuario_id);
+  
+   
   const handleToggle = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';
     i18n.changeLanguage(newLang);
@@ -10,8 +18,15 @@ const ToggleSwitch = () => {
   return (
     <div className="toggleContainer">
       <button className="btn">{i18n.t('help')}</button>
-      <a className='btnlogin' href="login">{i18n.t('login')}</a>
-    
+      {usuario_id ? (
+        <div className="user-container">
+          <a className='btnlogin' href={`/Perfilusuario/${usuario_id}`}>
+            <FontAwesomeIcon icon={faUser} />
+          </a>
+        </div>
+      ):(
+        <a className='btnlogin' href="login">{i18n.t('login')}</a>
+      )}
       <input
         type="checkbox"
         id="language-switch"
@@ -25,5 +40,4 @@ const ToggleSwitch = () => {
     </div>
   );
 };
-
 export default ToggleSwitch;

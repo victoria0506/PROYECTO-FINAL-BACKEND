@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import canton2 from "../services/cantonFech";
 import distritos2 from "../services/distritoFech";
 import especiali from "../services/especialidadesGet";
+import userGET from "../services/getUser";
 
 const UsedataRest = (canton) => {
     const [distritos, setDistritos] = useState([]);
     const [cantones, setCantones] = useState([]);
     const [especialidades, setEspecialidades] = useState([]);
-
+    
     useEffect(() => {
         const loadCantones = async () => {
             const CantonesData = await canton2();

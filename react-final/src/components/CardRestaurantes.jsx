@@ -38,7 +38,7 @@ const CardsRestaurantes = () => {
                               {restau.capacidad}
                             </p>
                         </div>
-                         <button className="card__button"><Link to={`/Restaurant/${restau.restaurante_id}`}>Read more</Link></button>
+                         <button className="card__button"><Link to={`/Restaurant/${restau.restaurante_id}`}>{t('See more')}</Link></button>
                         </div>
                         </article>
                     </div>

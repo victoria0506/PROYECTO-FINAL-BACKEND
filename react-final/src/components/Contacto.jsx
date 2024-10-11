@@ -1,7 +1,10 @@
 import emailjs from 'emailjs-com'
+import '../style/contact.css'
+
 const SERVICE_ID = "service_x7ea73l";  // ID del servicio de emailjs que se usará para enviar el correo.
 const TEMPLATE_ID = "template_le3437r";  // ID de la plantilla de emailjs que define cómo se verá el correo.
-const PUBLIC_KEY = "VVjiHxNPozqznvBzM";  // Clave pública de emailjs para autenticar las solicitudes.
+const PUBLIC_KEY = "VVjiHxNPozqznvBzM"; // Clave pública de emailjs para autenticar las solicitudes.
+
 
 function Contacto() {
     const  handleOnSubmit = ( e ) => { 

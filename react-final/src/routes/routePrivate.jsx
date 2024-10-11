@@ -1,8 +1,18 @@
+import { Navigate, useLocation } from "react-router-dom";
 
-// import { Route, Navigate } from "react-router-dom";
+const PrivateRoute = ({ children }) => {
+    const location = useLocation();
+    console.log(location);
+    const Admi = localStorage.getItem("Admi-id");
+    console.log(Admi);
+    
+    const isLogged = location.state?.logged || false;
 
-// const routePrivate = ({children, isAdmi}) => {
-//   return isAdmi ? children : <Navigate to={"/home"}/>
-// }
+    if (!Admi) {
+        return isLogged ? children : <Navigate to="/home" />;
+    }
+    return children;
+};
 
-// export default routePrivate
+export default PrivateRoute;
+

@@ -1,9 +1,8 @@
 
 import Home from "../components/Home"
 import Carrusel2 from "../components/Carrusel"
-
-import CardsRestaurantes from "../components/CardRestaurant"
 import VideoAnuncio from "../components/VideoAnuncio"
+import CardsRestaurantes from "../components/CardRestaurantes"
 
 function HomePage() {
   return (

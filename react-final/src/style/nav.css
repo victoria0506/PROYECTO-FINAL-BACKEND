@@ -72,18 +72,6 @@
     color: white;
   }
   
-  .search-bar {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-  }
-  
-  .search-bar input {
-    border: 1px solid #E5E7EB;
-    padding: 0.2rem;
-    border-radius: 0.80rem;
-    
-  }
 
   /*.btnbuscar{
     height: 38px;
@@ -140,9 +128,6 @@
     justify-content: end; /* Centra los botones horizontalmente */
     justify-self: end;
   }
-
-
-
 
 
   .logonav{

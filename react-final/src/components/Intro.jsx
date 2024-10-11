@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import '../style/intro.css'
 
 const Intro = () => {
   const introRef = useRef(null);

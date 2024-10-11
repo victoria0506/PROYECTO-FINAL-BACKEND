@@ -1,5 +1,5 @@
 
-import '../style/Footer.css'; // Opcional, para estilos adicionales
+import '../style/Footer.css'; 
 
 const Footer = () => {
     return (
@@ -7,7 +7,7 @@ const Footer = () => {
             <div className="footer-content">
                 <ul className="footer-links">
                     <li><a href="/about">Sobre Nosotros</a></li>
-                    <li><a href="/contact">Contacto</a></li>
+                    <li><a href="/contacto">Contacto</a></li>
                     <li><a href="/ayuda">Ayuda</a></li>
                 </ul>
                 <img className='logofooter' src="src/img/logonav.png" alt="" />
