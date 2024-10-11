@@ -49,12 +49,26 @@ p {
 .card {
   display: grid;
   place-items: center;
-  width: 60vw; /* Ancho más pequeño */
+  width: 50vw; /* Ancho más pequeño */
   max-width: 15rem; /* Ancho máximo más pequeño */
   height: 20rem; /* Altura más pequeña */
   overflow: hidden;
   border-radius: 0.625rem;
   box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 470px){
+.card{
+  display: grid;
+
+  width: 25vw; /* Ancho más pequeño */
+  max-width: 15rem; /* Ancho máximo más pequeño */
+  height: 9rem; /* Altura más pequeña */
+  gap: 10rem;
+  overflow: hidden;
+  border-radius: 0.625rem;
+  box-shadow: 0.25rem 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+}
 }
 
 .card > * {
