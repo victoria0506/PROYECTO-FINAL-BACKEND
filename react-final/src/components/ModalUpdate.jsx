@@ -5,6 +5,7 @@ import Select from 'react-select';
 import UsedataRest from "./UsedataRest";
 import { useTranslation } from 'react-i18next';
 import SweetAlert2 from 'react-sweetalert2';
+import { compartirContexto } from "../context/contextProvider";
 
 const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
     const [nomRestaur, setNomrestaur] = useState(restaurant?.nombre_restaurante || '');
@@ -12,15 +13,15 @@ const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
     const [capacidad, setCapacidad] = useState(restaurant?.capacidad || '');
     const [califiPromedio, setCalifiPromedio] = useState(restaurant?.calificacion_promedio || '');
     const [ubicacion, setUbicacion] = useState({ canton: "", distrito: "" });
-    const [especiSelect, setEspeciSelect] = useState([]);
+    const [especiSelect, setEspeciSelect] = useState(restaurant?.especialidades || []);
     const { t } = useTranslation();
     const [swalProps, setSwalProps] = useState({});
-
-
     const {distritos, cantones, especialidades} = UsedataRest(ubicacion.canton)
+    const {actualizador, setActu, apiData, setApiData} = compartirContexto()
 
 
     const EnvioActu = async (e) => {
+        e.preventDefault();
 
         if (nomRestaur.trim() === "" || precioPro.trim() === capacidad.trim() === "" || !ubicacion.canton || !ubicacion.distrito || !especialidades) {
             setSwalProps({ // SweetAlert
@@ -29,8 +30,9 @@ const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
                 text: 'Ingrese sus datos de manera correcta',
             });
         }else{
-            e.preventDefault();
-            const Actuali = await PutRestaur(restaurant.restaurante_id,nomRestaur, precioPro, capacidad, califiPromedio, ubicacion)
+            const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
+            const Actuali = await PutRestaur(restaurant.restaurante_id,nomRestaur, precioPro, capacidad, califiPromedio, ubicacion, especialidadesValues)
+            setActu(prev => prev + 1)
             actualizar(Actuali)
             ModalCierre()
         }

@@ -8,6 +8,9 @@ CalificacionSerializer,favoritosSerializer,calendarioSerializer,especialidadSeri
 from .models import TipoUsuario,Usuarios,restaurantes,calificaciones,favoritos,calendario,tipo_especialidad, Canton, distrito, RestaEspecialidades
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
+from django.http import JsonResponse
+from django.contrib.auth.hashers import make_password, check_password
+
 
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
@@ -21,11 +24,26 @@ class UsuarioView(ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)  
-        self.perform_create(serializer) 
-        return Response(serializer.data, status=201)
+    def login(self, request):
+        email = request.data.get('email')
+        contrasena = request.data.get('contrasena')
+        try:
+            usuario = Usuarios.objects.get(email=email)
+            if check_password(contrasena, usuario.contrasena):
+                request.session['usuario_id'] = usuario.usuario_id
+                return JsonResponse({"message": "Logueo Exitoso", "user_id": usuario.usuario_id}, status=200)
+            else:
+                return JsonResponse({"message": "Contraseña incorrecta"}, status=400)
+        except Usuarios.DoesNotExist:
+            return JsonResponse({"message": "Usuario no encontrado"}, status=404)
+
+    def register(self, request):
+        serializer = UsuariosSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.validated_data['contrasena'] = make_password(serializer.validated_data['contrasena'])
+            serializer.save()
+            return JsonResponse({"message": "Registro exitoso"}, status=201)
+        return JsonResponse(serializer.errors, status=400)
         
 class CantonView(ModelViewSet):
     queryset= Canton.objects.all()

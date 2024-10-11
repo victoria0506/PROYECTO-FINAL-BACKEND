@@ -1,4 +1,3 @@
-// src/i18n.js
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -14,7 +13,7 @@ i18n
           discover: "Discover",
           contact: "Contact",
           search: "Search",
-          "Restaurant name" : "Restaurnat name",
+          "Restaurant name" : "Restaurant name",
           Ability: "Ability",
           Specialty: "Specialty",
           "Average price": "Average price",
@@ -31,7 +30,13 @@ i18n
           Eliminate: "Eliminate",
           "Discover your next favorite restaurant." : "Discover your next favorite restaurant.",
           Qualification:"Qualification",
-          "About Us": "About Us"
+          "About Us": "About Us",
+          "Charging...  ": "Cargando",
+          "Does that question of \"where do we eat\" sound familiar to you?": "Does that question of \"where do we eat\" sound familiar to you?",
+          "At RestaurApp, finding an answer is very easy." : "At RestaurApp, finding an answer is very easy.",
+          "Start searching now!" : "Start searching now!",
+          "See more" : "See more"
+
         },
       },
       es: {
@@ -59,7 +64,13 @@ i18n
           Eliminate: "Eliminar",
           "Discover your next favorite restaurant." :"Descubre tu próximo restaurante favorito.",
           Qualification:"Calificacion",
-          "About Us": "Sobre Nosotros"
+          "About Us": "Sobre Nosotros",
+          "Does that question 'where do we eat' sound familiar to you? At RestaurApp, finding an answer is very easy. Start searching now!" : "Te suena esa pregunta de 'dónde comemos? En RestaurApp, encontrar respuesta es facilísimo. ¡Empieza a buscar ahora!",
+          "Charging...": "Cargando", 
+          "Does that question of \"where do we eat\" sound familiar to you?": "¿Te suena esa pregunta de \"dónde comemos\"?",
+          "At RestaurApp, finding an answer is very easy." : "En RestaurApp, encontrar respuesta es facilísimo.",
+          "Start searching now!" : "¡Empieza a buscar ahora!",
+          "See more" : "Ver más"
         },
       },
     },

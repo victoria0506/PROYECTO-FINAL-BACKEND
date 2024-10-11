@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import '../style/intro.css'
 
 const Intro = () => {
   const introRef = useRef(null);
@@ -32,7 +33,6 @@ const Intro = () => {
   return (
     <div className="intro" ref={introRef}>
       <img className='logointro' src="src/img/logonav.png" alt="clarkode logo" />
-
     </div>
   );
 };

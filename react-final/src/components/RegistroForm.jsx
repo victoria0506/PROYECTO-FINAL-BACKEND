@@ -1,10 +1,11 @@
 import {useState } from "react"
 import { Link } from "react-router-dom"
-import userGET from "../services/get"
+import userGET from "../services/getUser";
 import { useNavigate } from "react-router-dom"
 import SweetAlert2 from 'react-sweetalert2';
-import userPost from "../services/post"
+import userPost from "../services/postUser";
 import { useTranslation } from "react-i18next";
+import '../style/register.css'
 
 function RegistroForm() {
   // declaramos los hooks
@@ -24,7 +25,7 @@ function RegistroForm() {
     
     const mostrar = async () => {
       if (usuario.trim() === "" || contraseña.trim() === "" || correo.trim() === "" || !validarEmail(correo) || contraseña.length < 5) {
-        setSwalProps({ // SweetAlert para informar al usuario
+        setSwalProps({ 
           show: true,
           title: 'Error',
           text: 'Ingrese todos los datos correctamente, incluyendo un correo válido y una contraseña de al menos 5 caracteres.',
@@ -55,18 +56,16 @@ function RegistroForm() {
     <div className="login4">
        <div className="logn6">
         <h2>{t('Register')}</h2>
-       <h5>{mensaje}</h5>
+        <h5>{mensaje}</h5>
         <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder={t('User')}/>
-
         <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder={t('Email')}/>
-        
         <input type="text" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder={t('Password')}/>
         
         <div className="botones">
         <button onClick={mostrar}>
-          {cargando ? "Cargando..." : "Iniciar Sesión"}
+          {cargando ? t('Charging...') : t('Register')}
         </button>
-        <p>{t('Do you have an account?')} <Link to='/login'>Login</Link></p>
+        <p className="text">{t('Do you have an account?')}<Link to='/login'>Login</Link></p>
         </div>
        </div>
        <div>

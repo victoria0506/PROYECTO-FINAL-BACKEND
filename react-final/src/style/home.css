@@ -1,77 +1,96 @@
 *{
-  font-family: 'Atteron Personal Use', sans-serif;
-  font-family: "Merriweather", serif;
-  font-weight: 300;
-  font-style: normal;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
 }
 
-/* Estilos generales para la página de inicio */
 .home-page {
-    position: relative;
-    width: 98.7vw;
-    height: 100vh;
-    overflow: hidden;
-  }
-  
-  /* Video de fondo */
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Asegura que la página ocupe toda la altura de la pantalla */
+  overflow: hidden; /* Evita que haya desbordamiento de contenido */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centrar en el eje vertical */
+  align-items: center; /* Centrar en el eje horizontal */
+  padding: 0;
+  margin: 0;
+}
+
+/* Imagen de fondo */
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw; /* Asegura que cubra todo el ancho de la pantalla */
+  height: 100vh; /* Asegura que cubra toda la altura de la pantalla */
+  object-fit: cover; /* Hace que la imagen cubra el área completa sin distorsión */
+  z-index: -1; /* Mantiene la imagen detrás del contenido */
+  filter: brightness(50%);
+}
+
+@media (max-width: 768px) {
   .background-video {
-    display: flex;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Para asegurar que cubra toda la pantalla */
-    z-index: -1; /* Asegura que el video esté detrás del contenido */
-    filter: brightness(70%);
+      height: auto; /* Permitir que la altura se ajuste automáticamente */
+      top: 50%; /* Mueve la imagen al centro verticalmente */
+     
   }
+
+
+}
+
 
   
   /* Estilos previos para las imágenes y texto */
   .imglogohome {
-    width: 800px;
-    margin-top: 120px;
+    max-width: 70%;
+    height: auto; /* Mantener proporción */
+  margin: 20px auto; 
+    margin-top: 140px;
   }
+
+
   
   .imglogohomecenter {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
   }
   
   .parrafohome {
-    font-weight: 500;
     font-size: 20px;
-    color: white;
+    color: #dad7d7;
     text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: 'Raleway', sans-serif;
+    margin-top: 30px;
   }
+  @media (max-width: 768px) {
+    .parrafohome {
+        font-size: 1.5rem; /* Reduce el tamaño del texto en pantallas pequeñas */
+    }
+}
   
   /* Imagen Sol */
   .solhome {
-    margin-left: 920px;
-    margin-top: -300px;
-    filter: drop-shadow(0 7px 8px rgba(0, 0, 0, 0.5));
-    position: relative;
-  }
-  
-  /* Ajustes para el z-index de otros elementos */
-  #cardHome1, #cardHome2, #cardHome3 {
-    background-color: transparent;
-    border-color: rgb(181, 160, 106);
-    width: 350px;
-    border-radius: 130px;
-  }
-  
-  #cardHome2 {
-    transform: rotate(90deg);
-  }
-  
-  #cardHome3 {
-    transform: scaleX(-1);
-  }
+    max-width: 60%; /* Ajusta el tamaño para pantallas más grandes */
+    height: auto; /* Mantiene la proporción de la imagen */
+    margin: 0; /* Elimina los márgenes */
+    filter: drop-shadow(0 7px 8px rgba(0, 0, 0, 0.5)); /* Añade una sombra */
+    position: absolute; /* Posiciona la imagen de forma absoluta */
+    bottom: 0; /* Coloca la imagen al final de la pantalla */
+    right: 0; /* Alinea la imagen al borde derecho */
+    top: 150px;
+}
+
+/* Ajustes para pantallas más pequeñas (mobile) */
+@media (max-width: 768px) {
+    .solhome {
+        max-width: 50%; /* La imagen ocupa todo el ancho en pantallas pequeñas */
+    
+        margin-top: 30px; /* Mantén el margen superior */
+    }
+}
+
   
   .contenedor {
     position: relative;
@@ -109,10 +128,11 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Capa semitransparente */
-    z-index: 1; /* Coloca la capa por encima de la imagen */
+    z-index: 0; /* Coloca la capa por encima de la imagen */
   }
   .carousel-item img {
     z-index: 0; /* Imagen en el fondo */
+  
   }
   .caption-centered {
     position: absolute;
@@ -120,7 +140,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
-    z-index: 2; /* Asegura que el texto esté por encima de la capa oscura */
+    z-index: 0; /* Asegura que el texto esté por encima de la capa oscura */
     width: 100%;
   }
   .caption-content {
@@ -131,10 +151,37 @@
   }
   .carousel-control-prev,
   .carousel-control-next {
-    z-index: 3; /* Por encima de la superposición */
+    z-index: 1; /* Por encima de la superposición */
   }
   .carousel-item img {
     width: 100%; /* Ajusta el ancho al 100% del contenedor */
     height: 400px; /* Puedes ajustar esta altura según tus necesidades */
     object-fit: cover; /* Corta la imagen para llenar el área sin deformarla */
   }
+
+
+  .videoanuncio{
+    display: flex;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Para asegurar que cubra toda la pantalla */
+    z-index: -1; /* Asegura que el video esté detrás del contenido */
+    margin-top: 140px;
+  }
+
+
+  
+/* Importa la fuente */
+
+@import url('https://fonts.cdnfonts.com/css/frostbites');
+.titulotextobajohome {
+  font-family: 'Frostbites', sans-serif;
+                                                
+    text-align: center; 
+    width: 330px; /* Ancho del contenedor */
+    font-size: 7rem; /* Aumenta el tamaño de la fuente aquí */
+    color: black;
+}
+                                       

@@ -1,224 +1,212 @@
+/* Estilos generales */
+.navbar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: auto repeat(3, auto);
+  align-items: center;
+  padding: 1px;
+  background-color: transparent;
+  z-index: 1;
+  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-  .navbar {
-    display: flex;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    display: grid;
-    grid-template-columns: auto repeat(3, auto);
-    align-items: center;
-    padding: 1px;
-    background-color: transparent;
-    /*backdrop-filter: blur(15px);*/
-  
-    z-index: 1; /* Asegura que el navbar esté por encima */
-    width: 100%;
-  }
-  
-  
-  .navbartoggle{
-    display: grid;
-    grid-template-columns: auto repeat(3, auto);
-    align-items: center;
-    padding: 0.8rem;
-    -webkit-backdrop-filter: blur(1px);
-    backdrop-filter: blur(2px);
-    margin-top: 1px;
-  }
-  .navbar-brand {
-    font-size: 1.25rem;
-    color: #1F2937;
-    padding-left: 2rem; /* Espacio a la izquierda del logo */
-  }
-  
-  .menu {
-    color: white;
-    display: grid;
-    grid-template-columns: repeat(4, auto);
-    align-items: center;
-    justify-content: center; /* Centra el menú horizontalmente */
-  }
-  .menu > a{
-    text-decoration: none;
-    color: white;
-  }
-  
-  .menu-item {
-    padding: 0.5rem 1rem;
-    font-weight: bold;
-  
-    border-radius: 0.25rem;
-    text-decoration: none;
-  }
-  
-  .menu-item:hover {
-    background-color: #6c5f53;
-    color: white;
-  }
-  
-  .search-bar {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-  }
-  
-  .search-bar input {
-    border: 2px solid #E5E7EB;
-    padding: 0.2rem;
-    border-radius: 0.30rem;
-  
-  }
+/* Navbar con fondo blanco al hacer scroll */
+.navbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(15px);
+}
 
-  .btnbuscar{
-    height: 38px;
-    width: 50px;
-    border-radius: 8px;
-    background-color: #6c5f53;
-    color: #ffffff;
-    border-color: #ffffff;
-    font-size: small;
-  }
-  
-  
-  .btn{
-    padding: 0.3rem ;
-    color: #000000;
-    border-radius: 0.5rem;
-    background-color: white;
-    margin: 2px;
-    height: 35px;
-    text-align: center;
-    font-size: 70%;
-    width: 60px;
-    font-weight: 700;
-  }
+.navbar.scrolled .menu-item {
+  color: #484038; /* Cambia el color del texto a oscuro */
+}
 
-  .btnlogin{
-    padding: 0.1rem ;
-    color: #000000;
-    border-radius: 0.5rem;
-    background-color: white;
-    margin: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 35px;
-    text-align: center;
-    font-size: 70%;
-    width: 60px;
-    font-weight: 700;
-    text-decoration: none;
-  }
-  
-  
-  .btn:hover {
-    background-color: #322b2584;
-    color: white;
-  }
-  .btnlogin:hover {
-    background-color: #322b2584;
-    color: white;
-  }
-  
-  .actions {
-    justify-content: end; /* Centra los botones horizontalmente */
-    justify-self: end;
-  }
+.navbar.scrolled .search-input {
+  color: #484038; /* Cambia el color del texto en el input de búsqueda */
+  border-color: #484038; /* Cambia el borde del input */
+}
 
+.navbar.scrolled .btnlogin, .navbar.scrolled .btn {
+  background-color: #484038; /* Botones oscuros con fondo blanco */
+  color: white;
+}
 
+.navbar.scrolled .logonav {
+  filter: invert(1); /* Invertir el logo si es necesario para que sea visible en fondo blanco */
+}
 
+.navbar-brand {
+  font-size: 1.25rem;
+  color: white; /* Logo y marca en blanco */
+  padding-left: 2rem;
+}
 
+/* Ajustar el color del logo según el estado */
+.navbar.scrolled .navbar-brand {
+  color: #484038; /* Cambia el color de la marca a oscuro */
+}
 
-  .logonav{
-    width: 120px;
-    margin-left: -15px;
-  }
-  
+.menu {
+  color: white;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  align-items: center;
+  justify-content: center;
+}
 
-  /*toggle*/
-  .toggleContainer {
-    position: relative;
-    width: 280px;
-    height: 30px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .language-toggle {
-    position: absolute;
-    width: 0;
-    height: 0;
-  }
-  
-  .language-toggle + .language-switch {
-    position: relative;
-    display: block;
-    background: rgba(211, 211, 211, 0.434);
-    width: 90px;
-    height: 30px;
-    cursor: pointer;
-    border-radius: 30px;
-    transition: 0.2s;
-  }
-  
-  .language-toggle:checked + .language-switch {
-    background: rgba(223, 217, 217, 0.308);
-  }
-  
-  .language-toggle + .language-switch:before {
-    content: "";
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #6c5f53;
-    border-radius: 50%;
-    margin: 0px 2px;
-    left: 0%;
-    transition: 1s;
-  }
-  
-  .language-toggle:checked + .language-switch:before {
-    left: 100%;
-    transform: translate(calc(-100% - 2px), -50%);
-  }
-  
-  .lang-label {
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    top: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    transition: 0.5s;
-  }
-  
-  .lang-label.es {
-    left: 0;
-  }
-  
-  .lang-label.en {
-    right: 0;
-  }
-  
-  .lang-label.active {
-    opacity: 1;
-  }
-  
-  .lang-label {
-    opacity: 0;
-  }
+.menu-item {
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  color: white; /* Letra en blanco en fondo transparente */
+}
 
-  
-  
-  
- 
+.menu-item:hover {
+  color: white;
+}
 
-  
+.search-bar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
+
+.search-bar input {
+  border: 1px solid #E5E7EB;
+  padding: 0.2rem;
+  border-radius: 0.80rem;
+  background-color: transparent;
+  color: white; /* Texto en blanco para el fondo transparente */
+  transition: color 0.3s ease;
+}
+
+/* Botones */
+.btn {
+  padding: 0.3rem;
+  color: #ffffff;
+  border-radius: 1rem;
+  background-color: rgb(0, 0, 0);
+  margin: 2px;
+  height: 35px;
+  text-align: center;
+  font-size: 70%;
+  width: 60px;
+  font-weight: 700;
+}
+
+.btnlogin {
+  padding: 0.1rem;
+  color: #ffffff;
+  border-radius: 1rem;
+  background-color: rgb(0, 0, 0);
+  margin: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35px;
+  text-align: center;
+  font-size: 70%;
+  width: 60px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn:hover, .btnlogin:hover {
+  background-color: #322b2584;
+  color: white;
+}
+
+.actions {
+  justify-content: end;
+  justify-self: end;
+}
+
+.logonav {
+  width: 120px;
+  margin-left: -15px;
+}
+
+.toggleContainer {
+  position: relative;
+  width: 280px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.language-toggle {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.language-toggle + .language-switch {
+  position: relative;
+  display: block;
+  background: rgba(211, 211, 211, 0.434);
+  width: 90px;
+  height: 30px;
+  cursor: pointer;
+  border-radius: 30px;
+  transition: 0.2s;
+}
+
+.language-toggle:checked + .language-switch {
+  background: rgba(223, 217, 217, 0.308);
+}
+
+.language-toggle + .language-switch:before {
+  content: "";
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #000000;
+  border-radius: 50%;
+  margin: 0px 2px;
+  left: 0%;
+  transition: 1s;
+}
+
+.language-toggle:checked + .language-switch:before {
+  left: 100%;
+  transform: translate(calc(-100% - 2px), -50%);
+}
+
+.lang-label {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: 0.5s;
+}
+
+.lang-label.es {
+  left: 0;
+}
+
+.lang-label.en {
+  right: 0;
+}
+
+.lang-label.active {
+  opacity: 1;
+}
+
+.lang-label {
+  opacity: 0;
+}
+
+/* Responsividad */
+

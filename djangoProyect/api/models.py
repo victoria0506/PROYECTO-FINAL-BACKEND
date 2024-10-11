@@ -9,7 +9,7 @@ class Usuarios(models.Model):
     nombre_usuario= models.CharField(max_length=100)
     email= models.CharField(max_length=225,unique=True)
     contrasena= models.CharField(max_length=200)
-    id_tipoUsuario= models.ForeignKey(TipoUsuario, on_delete=models.CASCADE)
+    id_tipoUsuario= models.ForeignKey(TipoUsuario, on_delete=models.CASCADE, default=1)
     
 class Canton(models.Model):
     id_canton= models.AutoField(primary_key=True)
@@ -23,8 +23,8 @@ class distrito(models.Model):
 class restaurantes(models.Model):
     restaurante_id= models.AutoField(primary_key=True)
     nombre_restaurante= models.CharField(max_length=150)
-    precio_promedio= models.DecimalField(max_digits=5, decimal_places=2)
-    calificacion_promedio= models.DecimalField(max_digits=5, decimal_places=1, default=0)
+    precio_promedio = models.DecimalField(max_digits=7, decimal_places=3) 
+    calificacion_promedio = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     capacidad= models.IntegerField()
     accesibilidad= models.BooleanField(default=True)
     id_distrito= models.ForeignKey(distrito, on_delete=models.CASCADE)
@@ -37,6 +37,14 @@ class RestaEspecialidades(models.Model):
     id_RestaEspeciali= models.AutoField(primary_key=True)
     restaurante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE)
     id_especialidad= models.ForeignKey(tipo_especialidad, on_delete=models.CASCADE)
+    
+# class Imagenes(models.Model):
+#     id_imagen = models.AutoField(primary_key=True)
+#     logo = models
+#     portada= models
+#     platillos = models
+#     lugar= models
+#     resturante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE)
     
 class calificaciones(models.Model):
     calificacion_id= models.AutoField(primary_key=True)

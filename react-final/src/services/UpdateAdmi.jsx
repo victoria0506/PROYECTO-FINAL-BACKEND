@@ -1,5 +1,5 @@
-const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
-const PutRestaur = async (restaurante_id,nombre_restaurante,precio_promedio,capacidad,calificacion_promedio ,id_distrito,especiSelect) => { 
+const Token= "d58379a2f75349bbb55f641fd6c323527b1f495a"
+const PutRestaur = async (restaurante_id,nombre_restaurante,precio_promedio,capacidad,calificacion_promedio ,id_distrito, especiSelect) => { 
     try {
         const response = await fetch(`http://localhost:8000/api/admiRestaur/${restaurante_id}/`, {
         method: 'PUT',
@@ -16,8 +16,24 @@ const PutRestaur = async (restaurante_id,nombre_restaurante,precio_promedio,capa
             })
         });
         const data = await response.json();
+        const restauranteId = data.restaurante_id; 
+        await Promise.all(
+            especiSelect.map(async (especialidadId) => {
+                await fetch(`http://localhost:8000/api/RestaEspecialidades/${restaurante_id}/`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Token ${Token}`
+                },
+                body: JSON.stringify({
+                        restaurante_id: restauranteId,
+                        id_especialidad: especialidadId
+                    })
+                });
+            })
+        );
         return (data)
-        } catch(error) {
+    } catch(error) {
         console.log(error)
         alert("Error del servidor, por favor intente después")
     } 

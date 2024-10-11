@@ -1,0 +1,102 @@
+
+
+.perfil-container {
+    max-width: 600px; /* Ancho máximo del contenedor */
+    margin: 20px auto; 
+    padding: 20px; 
+    border: 1px solid #ddd; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
+    background-color: #f9f9f9; 
+    margin-top: 15%;
+}
+
+.perfil-titulo {
+    font-size: 24px; 
+    color: #333; 
+    margin-bottom: 10px; 
+    text-align: center;
+}
+
+.perfil-email {
+    font-size: 18px; 
+    color: #555; 
+    margin-bottom: 20px; 
+    text-align: center;
+}
+
+.error-message {
+    color: red; /* Color rojo para mensajes de error */
+    text-align: center; 
+    margin-top: 20px; 
+    font-size: 16px; 
+}
+
+/* PerfilUsuario.css */
+
+.perfil-container {
+    max-width: 600px; /* Ancho máximo del contenedor */
+    margin: 20px auto; /* Centrar horizontalmente */
+    padding: 20px; /* Espaciado interno */
+    border: 1px solid #ddd; /* Borde sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    background-color: #f9f9f9; /* Fondo claro */
+}
+
+.foto-perfil {
+    width: 100px; /* Ancho del circulito */
+    height: 100px; /* Alto del circulito */
+    border-radius: 50%; /* Borde redondeado para crear un círculo */
+    border: 2px solid #ddd; /* Borde sutil */
+    background-color: #f0f0f0; /* Color de fondo si no hay imagen */
+    display: flex; /* Para centrar el icono o imagen dentro del círculo */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    margin: 0 auto 20px; /* Centrar el circulito y añadir espaciado inferior */
+    cursor: pointer; /* Cambiar el cursor al pasar por encima */
+}
+
+.foto-perfil img {
+    width: 100%; /* Asegura que la imagen llene el círculo */
+    height: 100%; /* Asegura que la imagen llene el círculo */
+    border-radius: 50%; /* Borde redondeado para que la imagen sea circular */
+}
+
+.icono-agregar {
+    font-size: 24px; /* Tamaño del icono de agregar */
+    color: #888; /* Color del icono */
+}
+
+.error-message {
+    color: red; /* Color rojo para mensajes de error */
+    text-align: center; /* Centrar texto */
+    margin-top: 20px; /* Margen superior */
+    font-size: 16px; /* Tamaño de fuente */
+}
+.cerrar-secion {
+    padding: 10px 15px; 
+    margin: 5px; 
+    background-color: #5c483a; 
+    color: white; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    text-align: center; 
+    width: auto; 
+    min-width: 100px; 
+    
+}
+    
+
+.cerrar-secion:hover {
+    background-color: #5c483a; 
+}
+
+.btn-container{
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column; 
+    gap: 10px; 
+}

@@ -3,13 +3,14 @@ import Card from 'react-bootstrap/Card';
 import { useState, useEffect } from 'react'
 import { useTranslation } from "react-i18next";
 import ModalUpdate from "./ModalUpdate";
-
+import { compartirContexto } from "../context/contextProvider";
 
 const CardAdmi = () => {
     const [restaurantes, setRestaurantes] = useState([])
     const [restauranteSeleccionado, setRestauranteSeleccionado] = useState(null);
     const [mostrarModal, setMostrarModal] = useState(false);
     const { t } = useTranslation();
+    const {actualizador, setActu, apiData, setApiData} = compartirContexto()
 
     const obtenerRestaurant = async () => {
         const restaurantObte = await RestaGet()
@@ -36,7 +37,7 @@ const CardAdmi = () => {
 
     useEffect(() => {
       obtenerRestaurant()
-    }, [])
+    }, [actualizador])
 
   return (
     <div>
