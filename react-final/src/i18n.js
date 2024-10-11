@@ -32,9 +32,7 @@ i18n
           Qualification:"Qualification",
           "About Us": "About Us",
           "Charging...  ": "Cargando",
-          "Does that question of \"where do we eat\" sound familiar to you?": "Does that question of \"where do we eat\" sound familiar to you?",
-          "At RestaurApp, finding an answer is very easy." : "At RestaurApp, finding an answer is very easy.",
-          "Start searching now!" : "Start searching now!",
+  
           "See more" : "See more"
 
         },
@@ -67,9 +65,7 @@ i18n
           "About Us": "Sobre Nosotros",
           "Does that question 'where do we eat' sound familiar to you? At RestaurApp, finding an answer is very easy. Start searching now!" : "Te suena esa pregunta de 'dónde comemos? En RestaurApp, encontrar respuesta es facilísimo. ¡Empieza a buscar ahora!",
           "Charging...": "Cargando", 
-          "Does that question of \"where do we eat\" sound familiar to you?": "¿Te suena esa pregunta de \"dónde comemos\"?",
-          "At RestaurApp, finding an answer is very easy." : "En RestaurApp, encontrar respuesta es facilísimo.",
-          "Start searching now!" : "¡Empieza a buscar ahora!",
+          "Would you like to visit new restaurants?" : "Would you like to visit new restaurants?",
           "See more" : "Ver más"
         },
       },

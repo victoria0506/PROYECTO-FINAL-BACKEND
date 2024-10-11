@@ -1,4 +1,4 @@
-import CardsRestaurantes from "../components/CardRestaurant"
+import CardsRestaurantes from "../components/CardRestaurantes"
 import Nav from "../components/Nav"
 
 function DescubrePage() {

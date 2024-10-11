@@ -10,19 +10,17 @@ const Map = () => {
         const map = L.map('map', {
             center: [9.974891256683694, -84.84748927705085], // Coordenadas de Hotel Las Brisas
             zoom: 30, // Nivel de zoom
-            dragging: true, // Habilitar arrastre
-            scrollWheelZoom: true, // Permitir zoom con la rueda del mouse
-            touchZoom: true, // Permitir zoom táctil
-         
+            dragging: true,
+            scrollWheelZoom: true,
+            touchZoom: true,
         });
 
-        
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
 
-        //marcador para el Hotel Las Brisas con el icono de Google
+        // Marcador para el Hotel Las Brisas
         const HotelLasBrisasMarker = L.marker([9.974891256683694, -84.84748927705085], {
             icon: L.icon({
                 iconUrl: googleMarkerIcon,
@@ -30,15 +28,12 @@ const Map = () => {
             }),
         }).addTo(map);
 
-        //Popup del marcador con un enlace
         HotelLasBrisasMarker.bindPopup(
             `<b>Hotel Las Brisas</b><br><a href="https://es.wikipedia.org/wiki/Torre_Eiffel" target="_blank">Más información</a>`
         ).openPopup();
 
-        //limpiar el mapa al desmontar el componente
         return () => {
-            map.remove();
-            
+            map.remove(); // Limpiar el mapa al desmontar el componente
         };
     }, []);
 
@@ -46,5 +41,3 @@ const Map = () => {
 };
 
 export default Map;
-
-
