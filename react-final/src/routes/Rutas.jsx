@@ -5,11 +5,11 @@ import HomePage from '../pages/HomePage';
 import Admi from "../pages/Admi"
 import ContactoPage from '../pages/ContactoPage';
 import AboutPage from '../pages/AboutPage';
-import RestaurantsDetail from '../components/RestaurantsDetail';
 import PrivateRoute from './routePrivate';
-import PerfilUsuario from '../components/PerfilUsuario';
 import ToggleSwitch from "../components/ToggleSwitch";
 import DescubrePage from '../pages/DescubrePage';
+import Usuarios from "../pages/Usuarios";
+import Restaurantes from "../pages/Restaurantes"
 
 function Rutas() {
     return (
@@ -29,8 +29,8 @@ function Rutas() {
                             <Admi/>
                          </PrivateRoute>
                       }/>
-                      <Route path='/Restaurant/:restaurante_id' element={<RestaurantsDetail/>}   />
-                      <Route path='/Perfilusuario/:usuario_id' element={ <PerfilUsuario/>} />
+                      <Route path='/Restaurant/:restaurante_id' element={<Restaurantes/>}   />
+                      <Route path='/Perfilusuario/:usuario_id' element={ <Usuarios/>} />
               </Routes>
           </Router>
       </div>

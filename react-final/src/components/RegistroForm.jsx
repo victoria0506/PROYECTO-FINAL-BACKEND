@@ -60,7 +60,6 @@ function RegistroForm() {
         <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder={t('User')}/>
         <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder={t('Email')}/>
         <input type="text" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder={t('Password')}/>
-        
         <div className="botones">
         <button onClick={mostrar}>
           {cargando ? t('Charging...') : t('Register')}

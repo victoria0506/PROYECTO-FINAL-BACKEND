@@ -4,10 +4,7 @@ const PrivateRoute = ({ children }) => {
     const location = useLocation();
     console.log(location);
     const Admi = localStorage.getItem("Admi-id");
-    console.log(Admi);
-    
     const isLogged = location.state?.logged || false;
-
     if (!Admi) {
         return isLogged ? children : <Navigate to="/home" />;
     }

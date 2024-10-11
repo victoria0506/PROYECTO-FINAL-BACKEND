@@ -1,4 +1,3 @@
-
 import Home from "../components/Home"
 import Carrusel2 from "../components/Carrusel"
 import VideoAnuncio from "../components/VideoAnuncio"

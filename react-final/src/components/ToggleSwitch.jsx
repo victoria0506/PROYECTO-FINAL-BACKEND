@@ -7,7 +7,7 @@ import "../style/toggle.css"
 const ToggleSwitch = () => {
   const { i18n } = useTranslation();
   const usuario_id = localStorage.getItem("Usuario Autenticado_id") 
-  console.log("id usuario : ", usuario_id);
+  // console.log("id usuario : ", usuario_id);
   
    
   const handleToggle = () => {

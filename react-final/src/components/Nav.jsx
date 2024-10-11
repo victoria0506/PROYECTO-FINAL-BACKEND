@@ -44,15 +44,6 @@ function Nav() {
         <a href="/contacto" className="menu-item">{t('contact')}</a>
       </div>
         <BusquedaRes />
-      <div className="search-bar">
-        <input
-          type="search"
-          placeholder={t('search')}
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="search-input"
-        />
-      </div>
       <div className="actions">
         <ToggleSwitch />
       </div>

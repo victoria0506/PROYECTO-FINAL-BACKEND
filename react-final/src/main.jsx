@@ -5,7 +5,6 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import App from './App.jsx'
 import './index.css'
 import './i18n';
-
 import 'leaflet/dist/leaflet.css';
 import { ContextProvider } from './context/contextProvider.jsx';
 
