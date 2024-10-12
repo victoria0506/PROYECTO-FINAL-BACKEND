@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import SweetAlert2 from 'react-sweetalert2';
 import userGET from "../services/getUser";
 import { useTranslation } from "react-i18next";
-import { use } from "i18next";
+//import { use } from "i18next";
 import { compartirContexto } from "../context/contextProvider";
 import "../style/login.css"
 
