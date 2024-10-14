@@ -90,6 +90,30 @@ class favoritosView(ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
+    # def create(self, request, *args, **kwargs):
+    #     user = request.user  
+    #     if not user.is_authenticated:
+    #         return Response(
+    #             {'detail': 'Debes estar autenticado para añadir favoritos.'},
+    #             status=status.HTTP_401_UNAUTHORIZED
+    #         )
+    #     try:
+    #         usuario = Usuarios.objects.get(usuario_id=user.id)
+    #     except Usuarios.DoesNotExist:
+    #         return Response(
+    #             {'detail': 'Usuario no encontrado.'},
+    #             status=status.HTTP_404_NOT_FOUND
+    #         )
+
+    #     restaurante_id = request.data.get('restaurante_id')
+    #     if favoritos.objects.filter(usuario_id=usuario, restaurante_id=restaurante_id).exists():
+    #         return Response(
+    #             {'detail': 'Este restaurante ya está en tus favoritos.'},
+    #             status=status.HTTP_400_BAD_REQUEST
+    #         )
+
+    #     return super().create(request, *args, **kwargs)
+    
 class calendarioView(ModelViewSet):
     queryset=calendario.objects.all()
     serializer_class=calendarioSerializer

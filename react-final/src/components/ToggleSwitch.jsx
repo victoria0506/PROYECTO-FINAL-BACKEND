@@ -2,31 +2,49 @@ import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import "../style/toggle.css"
-
+import { compartirContexto } from '../context/contextProvider';
+import { useEffect, useState } from 'react';
 
 const ToggleSwitch = () => {
   const { i18n } = useTranslation();
-  const usuario_id = localStorage.getItem("Usuario Autenticado_id") 
   // console.log("id usuario : ", usuario_id);
+  const [usuario, setUsuario] = useState(null);
+  const [admi, setAdmi] = useState(null);
+  const {actualizador, setActu, apiData, setApiData} = compartirContexto()
   
+  useEffect(() => {
+    const id = localStorage.getItem("Usuario Autenticado_id");
+    const adminId = localStorage.getItem("Admi-id");
+    setUsuario(id);
+    setAdmi(adminId);
+  }, [])
    
   const handleToggle = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';
     i18n.changeLanguage(newLang);
   };
 
+  const cerrar_sesion = () => {
+    localStorage.removeItem("Usuario Autenticado_id");
+    localStorage.removeItem("Admi-id");
+    setAdmi(null)
+    setUsuario(null)
+    setActu(actualizador + 1)
+  }
+
   return (
     <div className="toggleContainer">
       <button className="btn">{i18n.t('help')}</button>
-      {usuario_id ? (
+      {usuario ? (
         <div className="user-container">
-          <a className='btnlogin' href={`/Perfilusuario/${usuario_id}`}>
+          <a className='btnlogin' href={`/Perfilusuario/${usuario}`}>
             <FontAwesomeIcon icon={faUser} />
           </a>
         </div>
-      ):(
+      ) : (
         <a className='btnlogin' href="login">{i18n.t('login')}</a>
       )}
+
       <input
         type="checkbox"
         id="language-switch"
