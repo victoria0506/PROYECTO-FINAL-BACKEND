@@ -122,7 +122,7 @@ const FormAdmin = () => {
           </select>
 
           <br /><br />
-          <button onClick={Añadir}>{t('Add')}</button>
+          <button className='buttonaddadmi' onClick={Añadir}>{t('Add')}</button>
         </div>
       </div>
       <SweetAlert2 {...swalProps} />

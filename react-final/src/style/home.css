@@ -180,8 +180,12 @@
   font-family: 'Frostbites', sans-serif;
                                                 
     text-align: center; 
-    width: 330px; /* Ancho del contenedor */
-    font-size: 7rem; /* Aumenta el tamaño de la fuente aquí */
-    color: black;
+    font-size: 80px;
+    font-weight: bold;
+    color: #171616;
+    text-align: center;
+    margin-top: 20px;
+ 
 }
+
                                        

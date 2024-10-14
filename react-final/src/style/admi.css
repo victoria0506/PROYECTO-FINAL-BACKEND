@@ -2,7 +2,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #ffffff;
     margin: 0;
 }
 
@@ -45,7 +45,7 @@ select:focus {
     outline: none;
 }
 
-button {
+.buttonaddadmi {
     width: 100%;
     padding: 10px;
     background-color: #5c483a;
@@ -57,7 +57,7 @@ button {
     transition: background-color 0.3s;
 }
 
-button:hover {
+.buttonaddadmi:hover {
     background-color: #5c483a; /* Color al pasar el mouse */
 }
 
