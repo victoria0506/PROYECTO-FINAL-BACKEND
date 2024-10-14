@@ -1,21 +1,17 @@
-import { useState } from "react"; // Importamos useState para manejar el estado del menú
-import MenuRestaurantes from "./MenuRestaurantes"; // Importamos el componente del menú
+
+import { useState, useEffect } from "react"; 
+import MenuRestaurantes from "./MenuRestaurantes"; 
 import ModalMap from "./ModalMap";
 import { useParams } from "react-router-dom";
 import RestaGet from "../services/getRestaurant";
 import '../style/paginarestaurantes.css';
 import { useTranslation } from "react-i18next";
-import "../style/DetailRestau.css"
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faHeart } from '@fortawesome/free-solid-svg-icons';
-// import { faUtensils } from "@fortawesome/free-solid-svg-icons";
-// import { Alert } from "bootstrap";
-import favoritosRestaurants from "../services/FavoritosPost";
 import "../style/DetailRestau.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import favoritosRestaurants from "../services/FavoritosPost";
 import deleteRestau from "../services/DELETEFAVO";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { Modal } from "react-bootstrap"; 
 
 const RestaurantsDetail = () => {
     const { restaurante_id } = useParams();
@@ -23,8 +19,9 @@ const RestaurantsDetail = () => {
     const { t } = useTranslation();
     const usuario_id = localStorage.getItem("Usuario Autenticado_id"); 
     const [favoritos, setFavoritos] = useState([]); 
-    const [showMenu, setShowMenu] = useState(false); // Estado para controlar la visibilidad del menú
+    const [showMenu, setShowMenu] = useState(false); // Controla la visibilidad del modal de menú
 
+    // Función para obtener detalles del restaurante
     const obtenerDetallesRestaurante = async () => {
         const restaurantes = await RestaGet();
         const Restaurante = restaurantes.find(resta => String(resta.restaurante_id) === restaurante_id);
@@ -40,6 +37,7 @@ const RestaurantsDetail = () => {
         const favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
         setFavoritos(favoritos);
     };
+
     useEffect(() => {
         obtenerDetallesRestaurante();
         obtenerFavoritos();
@@ -49,7 +47,6 @@ const RestaurantsDetail = () => {
         return <div>No se encontró el restaurante.</div>;
     }
 
-    // Función para mostrar/ocultar el menú
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
@@ -64,8 +61,9 @@ const RestaurantsDetail = () => {
                 if (confirmacion) {
                     const resultado = await favoritosRestaurants(usuario_id, restaurante_id);
                     if (resultado) {
-                        favoritos.push(restaurante_id); 
-                        localStorage.setItem(favoritesKey, JSON.stringify(favoritos)); 
+                        favoritos.push({ favorito_id: resultado.favorito_id, restaurante_id })
+                        localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
+                        setFavoritos(favoritos); 
                         alert("Restaurante añadido a tus favoritos.");
                     } else {
                         alert("Hubo un error al añadir el restaurante a tus favoritos.");
@@ -78,7 +76,6 @@ const RestaurantsDetail = () => {
             alert("Regístrate o inicia sesión si quieres añadir a favoritos.");
         }
     };
-
 
     const eliminarFavoritos = async (favorito_id) => {
         if (usuario_id) {
@@ -135,18 +132,32 @@ const RestaurantsDetail = () => {
     )}
 </div>
 
-                {/* Imagen que al hacer clic muestra el menú */}
                 <img 
                     className="menu-image" 
-                    src="/src/img/menu.png" // Cambia esto por la URL de tu imagen del menú
+                    src="/src/img/menu.png"
                     alt="Ver Menú"
-                    onClick={toggleMenu} // Manejador del clic
+                    onClick={toggleMenu}
                 />
 
-                {/* Mostrar menú solo si showMenu es true */}
                 {showMenu && <MenuRestaurantes />}
-
                 <ModalMap />
+
+                <img 
+                    className="menu-image" 
+                    src="/src/img/menu.png" 
+                    alt="Ver Menú"
+                    onClick={toggleMenu} 
+                />
+
+                
+<Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
+    <Modal.Header closeButton className="custom-header">
+    </Modal.Header>
+    <Modal.Body className="custom-body">
+        <MenuRestaurantes />
+    </Modal.Body>
+</Modal>
+
             </div>
         </div>
     );

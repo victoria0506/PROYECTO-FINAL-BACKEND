@@ -37,7 +37,7 @@ const ToggleSwitch = () => {
       <button className="btn">{i18n.t('help')}</button>
       {usuario ? (
         <div className="user-container">
-          <a className='btnlogin' href={`/Perfilusuario/${usuario}`}>
+          <a className='btnlogincuenta' href={`/Perfilusuario/${usuario}`}>
             <FontAwesomeIcon icon={faUser} />
           </a>
         </div>
