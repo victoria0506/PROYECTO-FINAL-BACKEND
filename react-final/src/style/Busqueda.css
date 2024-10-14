@@ -1,10 +1,6 @@
-.search-button{
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    background-color: #000000;
+.search-img{
+width: 200px;
     cursor: pointer;
+    
 }
 

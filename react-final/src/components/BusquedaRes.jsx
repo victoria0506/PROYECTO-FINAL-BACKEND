@@ -39,9 +39,9 @@ const BusquedaRes = () => {
 
     return (
         <div>
-            <Button variant="outline-primary" onClick={AbrirModal} className="search-button">
-                {t('search')}
-            </Button>
+            <img src="src/img/barrabusqueda.png" onClick={AbrirModal} className="search-img"
+               
+        />
             <Modal show={showModal} onHide={() => setShowModal(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>{t('search')}</Modal.Title>
