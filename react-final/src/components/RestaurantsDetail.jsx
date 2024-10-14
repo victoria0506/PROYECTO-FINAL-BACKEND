@@ -1,55 +1,42 @@
-import { useState } from "react"; // Importamos useState para manejar el estado del menú
-import MenuRestaurantes from "./MenuRestaurantes"; // Importamos el componente del menú
+import { useState, useEffect } from "react";
+import MenuRestaurantes from "./MenuRestaurantes";
 import ModalMap from "./ModalMap";
 import { useParams } from "react-router-dom";
 import RestaGet from "../services/getRestaurant";
 import '../style/paginarestaurantes.css';
 import { useTranslation } from "react-i18next";
-import "../style/DetailRestau.css"
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faHeart } from '@fortawesome/free-solid-svg-icons';
-// import { faUtensils } from "@fortawesome/free-solid-svg-icons";
-// import { Alert } from "bootstrap";
-import favoritosRestaurants from "../services/FavoritosPost";
 import "../style/DetailRestau.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import favoritosRestaurants from "../services/FavoritosPost";
-import deleteRestau from "../services/DELETEFAVO";
-
+import { Modal } from "react-bootstrap"; 
 const RestaurantsDetail = () => {
     const { restaurante_id } = useParams();
     const [restaurantDetail, setRestaurantDetail] = useState(null);
     const { t } = useTranslation();
-    const usuario_id = localStorage.getItem("Usuario Autenticado_id"); 
-    const [favoritos, setFavoritos] = useState([]); 
-    const [showMenu, setShowMenu] = useState(false); // Estado para controlar la visibilidad del menú
+    const [showMenu, setShowMenu] = useState(false); // Controla la visibilidad del modal de menú
+    const [isFavorited, setIsFavorited] = useState(false); // Estado para saber si está en favoritos
 
+    // Función para obtener detalles del restaurante
     const obtenerDetallesRestaurante = async () => {
         const restaurantes = await RestaGet();
-        const Restaurante = restaurantes.find(resta => String(resta.restaurante_id) === restaurante_id);
-        if (!Restaurante) {
+        const Restaurantes = restaurantes.find(resta => String(resta.restaurante_id) === restaurante_id);
+        if (!Restaurantes) {
             throw new Error("Restaurante no encontrado");
         } else {
-            setRestaurantDetail(Restaurante);
+            setRestaurantDetail(Restaurantes);
         }
     };
 
-    const obtenerFavoritos = () => {
-        const favoritesKey = `favoritos_${usuario_id}`;
-        const favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
-        setFavoritos(favoritos);
-    };
     useEffect(() => {
         obtenerDetallesRestaurante();
-        obtenerFavoritos();
     }, [restaurante_id]);
 
     if (!restaurantDetail) {
         return <div>No se encontró el restaurante.</div>;
     }
 
-    // Función para mostrar/ocultar el menú
+    // Función para mostrar el modal del menú
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
@@ -59,50 +46,24 @@ const RestaurantsDetail = () => {
         if (usuario_id) {
             const favoritesKey = `favoritos_${usuario_id}`;
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
-            if (!favoritos.includes(restaurante_id)) {
+            if (favoritos.includes(restaurante_id)) {
+                alert("Este restaurante ya está en tus favoritos.");
+            } else {
                 const confirmacion = confirm("¿Deseas añadir este restaurante a tus favoritos?");
                 if (confirmacion) {
                     const resultado = await favoritosRestaurants(usuario_id, restaurante_id);
                     if (resultado) {
-                        favoritos.push(restaurante_id); 
-                        localStorage.setItem(favoritesKey, JSON.stringify(favoritos)); 
+                        favoritos.push(restaurante_id);
+                        localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
+                        setIsFavorited(true); // Cambia el estado a true
                         alert("Restaurante añadido a tus favoritos.");
                     } else {
                         alert("Hubo un error al añadir el restaurante a tus favoritos.");
                     }
                 }
-            } else {
-                alert("Este restaurante ya está en tus favoritos.");
             }
         } else {
             alert("Regístrate o inicia sesión si quieres añadir a favoritos.");
-        }
-    };
-
-
-    const eliminarFavoritos = async (favorito_id) => {
-        if (usuario_id) {
-            const favoritesKey = `favoritos_${usuario_id}`;
-            let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
-            
-            const favorito = favoritos.find(fav => fav.restaurante_id === restaurante_id);
-            if (favorito) {
-                const confirmacion = confirm("¿Deseas eliminar este restaurante de tus favoritos?");
-                if (confirmacion) {
-                    const resultado = await deleteRestau(favorito.favorito_id);                 if (resultado) {
-                        favoritos = favoritos.filter(fav => fav.favorito_id !== favorito.favorito_id);
-                        localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
-                        setFavoritos(favoritos); 
-                        alert("Restaurante eliminado de tus favoritos.");
-                    } else {
-                        alert("Hubo un error al eliminar el restaurante de tus favoritos.");
-                    }
-                }
-            } else {
-                alert("Este restaurante no está en tus favoritos.");
-            }
-        } else {
-            alert("Regístrate o inicia sesión si quieres eliminar de favoritos.");
         }
     };
 
@@ -119,41 +80,41 @@ const RestaurantsDetail = () => {
                 </h4>
                 <h3>Precio Promedio: {restaurantDetail.precio_promedio}</h3>
                 <h3>Calificación Promedio: {restaurantDetail.calificacion_promedio}</h3>
-                <ModalMap />
+                <ModalMap/>
                 <div>
-    {favoritos.map(fav => (
-        fav.restaurante_id === restaurante_id ? (
-            <button key={fav.favorito_id} className="AñaFavo" onClick={() => eliminarFavoritos(fav.favorito_id)}>
-                {t('Remove from favorites')}
-            </button>
-        ) : null
-    ))}
-    {!favoritos.some(fav => fav.restaurante_id === restaurante_id) && (
-        <button className="AñaFavo" onClick={anadirFavoritos}>
-            {t('Add to favorites')}
-        </button>
-    )}
-</div>
+                    <button className="AñaFavo" onClick={anadirFavoritos}>
+                        <FontAwesomeIcon 
+                            icon={faHeart} 
+                            style={{ color: isFavorited ? 'gold' : 'transparent', stroke: 'black', strokeWidth: '30px' }} 
+                        />
+                        {t('Add to favorites')}
+                    </button>
+                </div>
 
-                {/* Imagen que al hacer clic muestra el menú */}
+              
                 <img 
                     className="menu-image" 
-                    src="/src/img/menu.png" // Cambia esto por la URL de tu imagen del menú
+                    src="/src/img/menu.png" 
                     alt="Ver Menú"
-                    onClick={toggleMenu} // Manejador del clic
+                    onClick={toggleMenu} 
                 />
 
-                {/* Mostrar menú solo si showMenu es true */}
-                {showMenu && <MenuRestaurantes />}
+                
+<Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
+    <Modal.Header closeButton className="custom-header">
+    </Modal.Header>
+    <Modal.Body className="custom-body">
+        <MenuRestaurantes />
+    </Modal.Body>
+</Modal>
 
-                <ModalMap />
+                
             </div>
         </div>
     );
 };
 
 export default RestaurantsDetail;
-
 
 
 
