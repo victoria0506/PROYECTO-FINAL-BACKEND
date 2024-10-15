@@ -17,7 +17,6 @@ const Map = () => {
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
 
         // Marcador para el Hotel Las Brisas
@@ -37,7 +36,7 @@ const Map = () => {
         };
     }, []);
 
-    return <div id="map" style={{ height: '450px', width: '100%' }} />;
+    return <div id="map" />;
 };
 
 export default Map;
