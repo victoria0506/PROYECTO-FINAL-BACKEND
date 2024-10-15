@@ -9,9 +9,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
 import { compartirContexto } from "../context/contextProvider";
 
-
 const PerfilUsuario = () => {
-
     const {usuario_id} = useParams()
     const [usuariosDetail, setUsuarioDetail] = useState(null);
     const { t } = useTranslation();

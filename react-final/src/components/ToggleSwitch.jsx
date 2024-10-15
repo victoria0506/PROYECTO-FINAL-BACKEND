@@ -23,9 +23,9 @@ const ToggleSwitch = () => {
     }
   }, [usuario, admi])
 
-  useEffect(() => {
-    setActu(actualizador + 1);
-  }, [actualizador, setActu]);
+  // useEffect(() => {
+  //   setActu(actualizador + 1);
+  // }, [actualizador, setActu]);
    
   const handleToggle = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';
@@ -42,7 +42,7 @@ const ToggleSwitch = () => {
           </a>
         </div>
       ) : (
-        <a className='btnlogin' href="login">{i18n.t('login')}</a>
+        <a className='btnlogin' href="/login">{i18n.t('login')}</a>
       )}
 
       <input

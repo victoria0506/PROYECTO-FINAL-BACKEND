@@ -59,7 +59,6 @@ function LoginForm () {
                 }
         }
     }
-
     return (
         <div className="login-page">
          <img className="background-video" src="src/img/.jpg" alt="" />

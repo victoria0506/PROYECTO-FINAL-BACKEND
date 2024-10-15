@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { Modal } from "react-bootstrap"; 
+import CalificacionEstrellas from "./CalificacionEstrellas";
 
 const RestaurantsDetail = () => {
     const { restaurante_id } = useParams();
@@ -19,7 +20,7 @@ const RestaurantsDetail = () => {
     const { t } = useTranslation()
     const usuario_id = localStorage.getItem("Usuario Autenticado_id") 
     const [favoritos, setFavoritos] = useState([]); 
-    const [showMenu, setShowMenu] = useState(false) // Controla la visibilidad del modal de menú
+    const [showMenu, setShowMenu] = useState(false)
 
     const obtenerDetallesRestaurante = async () => {
         const restaurantes = await RestaGet();
@@ -62,9 +63,6 @@ const RestaurantsDetail = () => {
                         favoritos.push({ favorito_id: resultado.favorito_id, restaurante_id })
                         localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
                         setFavoritos(favoritos); 
-                        alert("Restaurante añadido a tus favoritos.");
-                    } else {
-                        alert("Hubo un error al añadir el restaurante a tus favoritos.");
                     }
                 }
             }
@@ -88,16 +86,9 @@ const RestaurantsDetail = () => {
                         favoritos = favoritos.filter(fav => fav.favorito_id !== favorito.favorito_id);
                         localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
                         setFavoritos(favoritos); 
-                        alert("Restaurante eliminado de tus favoritos.");
-                    } else {
-                        alert("Hubo un error al eliminar el restaurante de tus favoritos.");
                     }
                 }
-            } else {
-                alert("Este restaurante no está en tus favoritos.");
             }
-        } else {
-            alert("Regístrate o inicia sesión si quieres eliminar de favoritos.");
         }
     }
 
@@ -125,6 +116,7 @@ const RestaurantsDetail = () => {
                     alt="Ver Menú"
                     onClick={toggleMenu} 
                 />
+               <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
               <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
                     <Modal.Header closeButton className="custom-header" />
                     <Modal.Body className="custom-body">

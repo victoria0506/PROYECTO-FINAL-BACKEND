@@ -16,7 +16,6 @@ const deleteRestau = async (restaurante_id) => {
         return(data)
         } catch(error) {
         console.log(error)
-        alert("Error del servidor al eliminar el producto")
     } 
 }
 export default deleteRestau
