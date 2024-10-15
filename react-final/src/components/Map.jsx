@@ -17,7 +17,6 @@ const Map = () => {
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
         }).addTo(map);
 
         // Marcador para el Hotel Las Brisas
@@ -29,7 +28,7 @@ const Map = () => {
         }).addTo(map);
 
         HotelLasBrisasMarker.bindPopup(
-            `<b>Hotel Las Brisas</b><br><a href="https://es.wikipedia.org/wiki/Torre_Eiffel" target="_blank">Más información</a>`
+            `<b>Hotel Las Brisas</b><br><a href="http://localhost:5173/Restaurant/1" target="_blank">Más información</a>`
         ).openPopup();
 
         return () => {
@@ -37,7 +36,7 @@ const Map = () => {
         };
     }, []);
 
-    return <div id="map" style={{ height: '450px', width: '100%' }} />;
+    return <div id="map" />;
 };
 
 export default Map;

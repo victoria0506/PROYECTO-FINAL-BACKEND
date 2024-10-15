@@ -1,34 +1,27 @@
 import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Map from './Map'; 
+ import Map from '../components/Map';
+
 
 function ModalMap() {
-  const values = [true];
-  const [fullscreen, setFullscreen] = useState(true);
   const [show, setShow] = useState(false);
 
-  function handleShow(breakpoint) {
-    setFullscreen(breakpoint);
+  function handleShow() {
     setShow(true);
   }
 
   return (
     <>
-      {values.map((v, idx) => (
-        <Button key={idx} className="buttonlista" onClick={() => handleShow(v)}>
-          Mapa
-          {typeof v === 'string' && `below ${v.split('-')[0]}`}
-        </Button>
-      ))}
-      <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Hotel Las Brisas</Modal.Title>
-        </Modal.Header>
+      {/* Muestra el mapa en la página */}
+      <div onClick={handleShow} style={{ cursor: 'pointer' }}>
+        <Map/>
+      </div>
+
+      {/* Modal que se abre al hacer clic en el mapa */}
+      <Modal show={show} onHide={() => setShow(false)} fullscreen>
+        <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
-          <div>
-            <Map />
-          </div>
+         <Map/>
         </Modal.Body>
       </Modal>
     </>
@@ -36,3 +29,4 @@ function ModalMap() {
 }
 
 export default ModalMap;
+

@@ -15,10 +15,11 @@
 
 @import url('https://fonts.cdnfonts.com/css/hello-bonia-serif');
 .nombrerestaurante{
-    font-family: 'Hello Bonia Serif', sans-serif;
-    font-size: 100px;
-    margin-left: 250px;
-    margin-top: -130px;
+  font-family: 'Hello Bonia Serif', sans-serif;
+  font-size: 100px;
+  margin-left: 250px;
+  margin-top: -130px;
+  position: relative; /* Esto permite que el botón de favorito se posicione relativamente al nombre */
 }
 
 .introrestaurantes {
@@ -36,26 +37,26 @@
 
 
 .menu-image{
- cursor: pointer;
- width: 140px;
- height: 170px;
- filter: brightness(1.1);
+  cursor: pointer;
+  width: 140px;
+  height: 170px;
+  filter: brightness(1.1);
   mix-blend-mode: multiply;
-  margin: -200px 0 0 1000px;
+  margin: 0 auto; /* Centraliza la imagen sin margen */
 }
 
 
 
 /* Estilo personalizado para el encabezado del modal */
 .custom-header {
-    background-color: #000000; /* Color de fondo del header */
+    background-color: #291d1d; /* Color de fondo del header */
     color: white; /* Color del texto del header */
     border-bottom: 2px solid #33333300; /* Línea de separación personalizada */
 }
 
 /* Estilo personalizado para el cuerpo del modal */
 .custom-body {
-    background-color: #000000; /* Color de fondo del cuerpo del modal */
+    background-color: #291d1d; /* Color de fondo del cuerpo del modal */
     
     display: flex;
     flex-direction: column;
@@ -69,3 +70,40 @@
     border-radius: 50%;
 }
 
+
+/*boton favorito*/
+    .añafavo-button {
+      font-size: 3rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      position: absolute; /* Posicionamiento absoluto */
+     margin-left: 90%;
+      margin-top: -510px; /* Ajusta la altura del botón a la misma del nombre del restaurante */
+      }
+      
+      .heart-icon {
+        padding: 0.2rem; /* Optional padding for spacing */
+        border-radius: 50%; /* Optional rounded corners */
+        transition: color 0.3s ease; /* Smooth color transition */
+      }
+      
+      .heart-icon:not(.favorite) {
+        color: black; /* Color when not favorite */
+        border: 2px solid transparent; /* Border for unselected */
+      }
+      
+      .heart-icon.favorite {
+        color: red; /* Color when favorite */
+      }
+      
+/*mapa*/
+#map {
+    height: 280px; /* Altura del mapa */
+    width: 18%; /* Ancho completo del contenedor */
+    border: 2px solid #ccc; /* Borde alrededor del mapa */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra del mapa */
+    margin-left: 80%;
+    bottom: 140px;
+}
