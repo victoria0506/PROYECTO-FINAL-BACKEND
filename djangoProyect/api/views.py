@@ -11,7 +11,6 @@ from rest_framework.authentication import TokenAuthentication
 from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
 
-
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
     serializer_class= TipoUserSerializer
@@ -40,10 +39,16 @@ class UsuarioView(ModelViewSet):
     def register(self, request):
         serializer = UsuariosSerializer(data=request.data)
         if serializer.is_valid():
+            if (serializer.validated_data['email'] == 'Admi@RestaurApp.com' and 
+                serializer.validated_data['nombre_usuario'] == 'Administrador'):
+                tipo_usuario = TipoUsuario.objects.get(id=2)  
+            else:
+                tipo_usuario = TipoUsuario.objects.get(id=1)  
+            serializer.validated_data['id_tipoUsuario'] = tipo_usuario
             serializer.validated_data['contrasena'] = make_password(serializer.validated_data['contrasena'])
             serializer.save()
             return JsonResponse({"message": "Registro exitoso"}, status=201)
-        return JsonResponse(serializer.errors, status=400)
+        return JsonResponse(serializer.errors, status=400)      
         
 class CantonView(ModelViewSet):
     queryset= Canton.objects.all()

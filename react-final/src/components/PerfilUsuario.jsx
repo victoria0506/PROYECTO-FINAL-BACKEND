@@ -9,6 +9,7 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
 import { compartirContexto } from "../context/contextProvider";
 
+
 const PerfilUsuario = () => {
 
     const {usuario_id} = useParams()
@@ -17,6 +18,15 @@ const PerfilUsuario = () => {
     const navigate = useNavigate();
     const [usuario, setUsuario] = useState(null);
     const {actualizador, setActu, apiData, setApiData} = compartirContexto()
+
+    useEffect(() => {
+        const usurio_authen = localStorage.getItem("Usuario Autenticado_id")
+        if (!usurio_authen) {
+            navigate("/login") // Navegacion hacia la pagina de Home, despues de un segundo
+        }else{
+            obtenerDetallesUsuarios();
+        }
+    }, [usuario_id, navigate]);
     
     const obtenerDetallesUsuarios = async () => {
         const Users = await userGET();
@@ -28,15 +38,13 @@ const PerfilUsuario = () => {
         }
     };
 
-    useEffect(() => {
-        obtenerDetallesUsuarios();
-    }, [usuario_id]);
-
     const cerrar_sesion = () => {
         localStorage.removeItem("Usuario Autenticado_id")
-        navigate("/home")
         setUsuario(null)
         setActu(actualizador + 1)
+        setTimeout(() => {
+            navigate("/login") // Navegacion hacia la pagina de Home, despues de un segundo
+        }, 1000);
       }
 
     if(!usuariosDetail){

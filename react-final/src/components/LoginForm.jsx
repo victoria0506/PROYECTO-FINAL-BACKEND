@@ -36,7 +36,7 @@ function LoginForm () {
                 const UserObte = await userGET()// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
                 const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena)
                 if(validarUser) { 
-                    if (validarUser.nombre_usuario === "Administrador" && validarUser.email === "Admi@RestaurApp.com") {
+                    if (validarUser.nombre_usuario === "Administrador" || validarUser.email === "Admi@RestaurApp.com") {
                         navigate("/admi")
                         localStorage.setItem("Admi-id", validarUser.nombre_usuario) // en localStorage gusrdamos el id del administrador, para que se pueda cerrar la secion si es necesario
                         alert("Bienvenido Administrador") 
