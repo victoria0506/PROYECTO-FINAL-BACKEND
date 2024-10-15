@@ -23,9 +23,9 @@ const ToggleSwitch = () => {
     }
   }, [usuario, admi])
 
-  useEffect(() => {
-    setActu(actualizador + 1);
-  }, [actualizador, setActu]);
+  // useEffect(() => {
+  //   setActu(actualizador + 1);
+  // }, [actualizador, setActu]);
    
   const handleToggle = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';

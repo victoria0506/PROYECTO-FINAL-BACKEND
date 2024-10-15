@@ -28,7 +28,7 @@ const Map = () => {
         }).addTo(map);
 
         HotelLasBrisasMarker.bindPopup(
-            `<b>Hotel Las Brisas</b><br><a href="http://localhost:5173/Restaurant/1" target="_blank">Más información</a>`
+            `<b>Hotel Las Brisas</b><br><a href="http://localhost:5173/Restaurant/2" target="_blank">Más información</a>`
         ).openPopup();
 
         return () => {

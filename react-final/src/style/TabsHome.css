@@ -1,0 +1,16 @@
+/* TabsHome.css */
+.tabs-container {
+    margin-top: 20px;
+    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
+    background-color: #fff; /* Color de fondo (puedes ajustar según tu preferencia) */
+    overflow-x: hidden; /* Evita el desbordamiento horizontal */
+  }
+  
+  .tabs-scrollable {
+    width: 100%; /* Ocupa todo el ancho de la pantalla */
+  }
+  
+  .tabs-scrollable .MuiTabs-flexContainer {
+    justify-content: space-between; /* Distribuye uniformemente las pestañas */
+  }
+  
