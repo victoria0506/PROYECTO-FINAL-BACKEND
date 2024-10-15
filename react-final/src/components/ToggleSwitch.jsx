@@ -15,22 +15,22 @@ const ToggleSwitch = () => {
   useEffect(() => {
     const id = localStorage.getItem("Usuario Autenticado_id");
     const adminId = localStorage.getItem("Admi-id");
-    setUsuario(id);
-    setAdmi(adminId);
-  }, [])
+    if (id !== usuario) {
+      setUsuario(id);
+    }
+    if (adminId !== admi) {
+      setAdmi(adminId);
+    }
+  }, [usuario, admi])
+
+  useEffect(() => {
+    setActu(actualizador + 1);
+  }, [actualizador, setActu]);
    
   const handleToggle = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';
     i18n.changeLanguage(newLang);
   };
-
-  const cerrar_sesion = () => {
-    localStorage.removeItem("Usuario Autenticado_id");
-    localStorage.removeItem("Admi-id");
-    setAdmi(null)
-    setUsuario(null)
-    setActu(actualizador + 1)
-  }
 
   return (
     <div className="toggleContainer">

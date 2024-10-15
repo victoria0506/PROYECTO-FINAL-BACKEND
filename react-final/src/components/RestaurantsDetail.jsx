@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react"; 
 import MenuRestaurantes from "./MenuRestaurantes"; 
 import ModalMap from "./ModalMap";
@@ -15,11 +14,11 @@ import { Modal } from "react-bootstrap";
 
 const RestaurantsDetail = () => {
     const { restaurante_id } = useParams();
-    const [restaurantDetail, setRestaurantDetail] = useState(null);
-    const { t } = useTranslation();
-    const usuario_id = localStorage.getItem("Usuario Autenticado_id"); 
+    const [restaurantDetail, setRestaurantDetail] = useState(null)
+    const { t } = useTranslation()
+    const usuario_id = localStorage.getItem("Usuario Autenticado_id") 
     const [favoritos, setFavoritos] = useState([]); 
-    const [showMenu, setShowMenu] = useState(false); // Controla la visibilidad del modal de menú
+    const [showMenu, setShowMenu] = useState(false) // Controla la visibilidad del modal de menú
 
     // Función para obtener detalles del restaurante
     const obtenerDetallesRestaurante = async () => {
@@ -30,7 +29,7 @@ const RestaurantsDetail = () => {
         } else {
             setRestaurantDetail(Restaurante);
         }
-    };
+    }
 
     const obtenerFavoritos = () => {
         const favoritesKey = `favoritos_${usuario_id}`;
@@ -56,10 +55,11 @@ const RestaurantsDetail = () => {
         if (usuario_id) {
             const favoritesKey = `favoritos_${usuario_id}`;
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
+            console.log(favoritos);
             if (!favoritos.includes(restaurante_id)) {
                 const confirmacion = confirm("¿Deseas añadir este restaurante a tus favoritos?");
                 if (confirmacion) {
-                    const resultado = await favoritosRestaurants(usuario_id, restaurante_id);
+                    const resultado = await favoritosRestaurants(usuario_id, restaurante_id)
                     if (resultado) {
                         favoritos.push({ favorito_id: resultado.favorito_id, restaurante_id })
                         localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
@@ -75,18 +75,20 @@ const RestaurantsDetail = () => {
         } else {
             alert("Regístrate o inicia sesión si quieres añadir a favoritos.");
         }
-    };
+    }
 
     const eliminarFavoritos = async (favorito_id) => {
         if (usuario_id) {
             const favoritesKey = `favoritos_${usuario_id}`;
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
-            
-            const favorito = favoritos.find(fav => fav.restaurante_id === restaurante_id);
+            console.log(favoritos);
+            const favorito = favoritos.find(fav => fav.restaurante_id === restaurante_id)
+            console.log(favorito);
             if (favorito) {
                 const confirmacion = confirm("¿Deseas eliminar este restaurante de tus favoritos?");
                 if (confirmacion) {
-                    const resultado = await deleteRestau(favorito.favorito_id);                 if (resultado) {
+                    const resultado = deleteRestau(String(favorito.favorito_id));                 
+                    if (resultado) {
                         favoritos = favoritos.filter(fav => fav.favorito_id !== favorito.favorito_id);
                         localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
                         setFavoritos(favoritos); 
@@ -101,12 +103,11 @@ const RestaurantsDetail = () => {
         } else {
             alert("Regístrate o inicia sesión si quieres eliminar de favoritos.");
         }
-    };
+    }
 
     return (
         <div>
             <div>
-                
                 <img className="img-normalizada" src="https://visitachihuahuacapital.com/wp-content/uploads/2023/06/restaurantes-mariscos-chihuahua-9.jpg" alt="Logo" />
                 <img className="logorestaurante" src="https://www.designevo.com/res/templates/thumb_small/lobster-in-circle-banner.webp" alt="Logo del Restaurante" />
                 <h3 className="nombrerestaurante">{restaurantDetail.nombre_restaurante}</h3>
@@ -116,55 +117,38 @@ const RestaurantsDetail = () => {
                 </h4>
                 <h3>Precio Promedio: {restaurantDetail.precio_promedio}</h3>
                 <h3>Calificación Promedio: {restaurantDetail.calificacion_promedio}</h3>
-                <ModalMap />
                 <div>
-    {favoritos.map(fav => (
-        fav.restaurante_id === restaurante_id ? (
-            <button key={fav.favorito_id} className="AñaFavo" onClick={() => eliminarFavoritos(fav.favorito_id)}>
-                {t('Remove from favorites')}
-            </button>
-        ) : null
-    ))}
-    {!favoritos.some(fav => fav.restaurante_id === restaurante_id) && (
-        <button className="AñaFavo" onClick={anadirFavoritos}>
-            {t('Add to favorites')}
-        </button>
-    )}
-</div>
-
+                    {favoritos.map(fav => (
+                        fav.restaurante_id === restaurante_id ? (
+                            <button key={fav.favorito_id} className="AñaFavo" onClick={() => eliminarFavoritos(fav.favorito_id)}>
+                                {t('Remove from favorites')}
+                            </button>
+                        ) : null
+                    ))}
+                    {!favoritos.some(fav => fav.restaurante_id === restaurante_id) && (
+                        <button className="AñaFavo" onClick={anadirFavoritos}>
+                            {t('Add to favorites')}
+                        </button>
+                    )}
+                </div>
                 <img 
                     className="menu-image" 
                     src="/src/img/menu.png"
                     alt="Ver Menú"
                     onClick={toggleMenu}
                 />
-
                 {showMenu && <MenuRestaurantes />}
                 <ModalMap />
-
-                <img 
-                    className="menu-image" 
-                    src="/src/img/menu.png" 
-                    alt="Ver Menú"
-                    onClick={toggleMenu} 
-                />
-
-                
-<Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
-    <Modal.Header closeButton className="custom-header">
-    </Modal.Header>
-    <Modal.Body className="custom-body">
-        <MenuRestaurantes />
-    </Modal.Body>
-</Modal>
-
+                <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
+                    <Modal.Header closeButton className="custom-header">
+                    </Modal.Header>
+                    <Modal.Body className="custom-body">
+                        <MenuRestaurantes />
+                    </Modal.Body>
+                </Modal>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default RestaurantsDetail;
-
-
-
-
