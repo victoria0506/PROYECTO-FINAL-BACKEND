@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react";
 import userGET from "../services/getUser";
 import { useTranslation } from "react-i18next";
@@ -6,8 +6,8 @@ import "../style/PerfilUsuario.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from "react-router-dom";
 import { compartirContexto } from "../context/contextProvider";
+
 
 const PerfilUsuario = () => {
     const {usuario_id} = useParams()
@@ -17,10 +17,11 @@ const PerfilUsuario = () => {
     const [usuario, setUsuario] = useState(null);
     const {actualizador, setActu, apiData, setApiData} = compartirContexto()
 
+
     useEffect(() => {
         const usurio_authen = localStorage.getItem("Usuario Autenticado_id")
         if (!usurio_authen) {
-            navigate("/login") // Navegacion hacia la pagina de Home, despues de un segundo
+            navigate("/login") 
         }else{
             obtenerDetallesUsuarios();
         }
@@ -41,7 +42,7 @@ const PerfilUsuario = () => {
         setUsuario(null)
         setActu(actualizador + 1)
         setTimeout(() => {
-            navigate("/login") // Navegacion hacia la pagina de Home, despues de un segundo
+            navigate("/login")
         }, 1000);
       }
 
@@ -65,7 +66,7 @@ const PerfilUsuario = () => {
             <button className="btnlogin" onClick={cerrar_sesion}>
             {t('logout')} 
           </button>
-            <button className="cerrar-secion">Mis favoritos</button>
+            <button className="cerrar-secion" onClick={() => navigate(`/favoritos/${usuario_id}`)}>Mis favoritos</button>
             </div>
         </div>
     </div>

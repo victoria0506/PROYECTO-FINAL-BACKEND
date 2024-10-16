@@ -1,4 +1,5 @@
 function VideoAnuncio() {
+  
   return (
     <div>
     <video className="videoanuncio" controls autoPlay muted>

@@ -5,6 +5,7 @@ import "../style/toggle.css"
 import { compartirContexto } from '../context/contextProvider';
 import { useEffect, useState } from 'react';
 
+
 const ToggleSwitch = () => {
   const { i18n } = useTranslation();
   // console.log("id usuario : ", usuario_id);
@@ -23,9 +24,9 @@ const ToggleSwitch = () => {
     }
   }, [usuario, admi])
 
-  // useEffect(() => {
-  //   setActu(actualizador + 1);
-  // }, [actualizador, setActu]);
+  useEffect(() => {
+    setActu(actualizador + 1);
+  }, [setActu]);
    
   const handleToggle = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';

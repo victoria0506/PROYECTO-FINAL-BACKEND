@@ -11,7 +11,6 @@ const Carrusel2 = () => {
   //const selectedBackground = backgroundImages[i18n.language] || backgroundImages.es;
   return (
     <div className='carrusel'>
-   
       <Carousel data-bs-theme="dark">
         <Carousel.Item>
           <div className="overlay"></div> {/* Overlay para oscurecer la imagen */}

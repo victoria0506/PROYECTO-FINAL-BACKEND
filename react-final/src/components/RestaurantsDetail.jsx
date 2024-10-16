@@ -14,6 +14,7 @@ import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { Modal } from "react-bootstrap"; 
 import CalificacionEstrellas from "./calificacionEstrellas";
 import CarouselPlatillos from "./CarouselPlatillos";
+// import FavoritosBtn from "./FavoritosBtn";
 
 
 const RestaurantsDetail = () => {
@@ -56,15 +57,18 @@ const RestaurantsDetail = () => {
         if (usuario_id) {
             const favoritesKey = `favoritos_${usuario_id}`;
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
+            const favoritoExistente = favoritos.find(fav => fav.restaurante_id === restaurante_id)
             console.log(favoritos);
-            if (!favoritos.includes(restaurante_id)) {
-                const confirmacion = confirm("¿Deseas añadir este restaurante a tus favoritos?");
-                if (confirmacion) {
-                    const resultado = await favoritosRestaurants(usuario_id, restaurante_id);
-                    if (resultado) {
-                        favoritos.push({ favorito_id: resultado.favorito_id, restaurante_id })
-                        localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
-                        setFavoritos(favoritos); 
+            if (!favoritoExistente) {
+                if (!favoritos.includes(restaurante_id)) {
+                    const confirmacion = confirm("¿Deseas añadir este restaurante a tus favoritos?");
+                    if (confirmacion) {
+                        const resultado = await favoritosRestaurants(usuario_id, restaurante_id);
+                        if (resultado) {
+                            favoritos.push({ favorito_id: resultado.favorito_id, restaurante_id })
+                            localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
+                            setFavoritos(favoritos); 
+                        }
                     }
                 }
             }
@@ -77,7 +81,6 @@ const RestaurantsDetail = () => {
         if (usuario_id) {
             const favoritesKey = `favoritos_${usuario_id}`;
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
-            
             const favorito = favoritos.find(fav => fav.restaurante_id === restaurante_id);
             if (favorito) {
                 const confirmacion = confirm("¿Deseas eliminar este restaurante de tus favoritos?");
@@ -106,11 +109,12 @@ const RestaurantsDetail = () => {
                 </h4>
                 {/* <h3>Precio Promedio: {restaurantDetail.precio_promedio}</h3>
                 <h3>Calificación Promedio: {restaurantDetail.calificacion_promedio}</h3> */}
-                <ModalMap/>
+                {/* <ModalMap/> */}
                 <button className="añafavo-button" onClick={isFavorite ? () => eliminarFavoritos() : anadirFavoritos}>
                 <FontAwesomeIcon
                  icon={isFavorite ? solidHeart : regularHeart} className={`heart-icon ${isFavorite ? "favorite" : ""}`}/>
                  </button>
+                 {/* <FavoritosBtn restauranteId={restaurantDetail.restaurante_id}/> */}
                 <img 
                     className="menu-image" 
                     src="/src/img/menu.png" 
@@ -118,7 +122,7 @@ const RestaurantsDetail = () => {
                     onClick={toggleMenu} 
                 />
                <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
-              <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
+                <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
                     <Modal.Header closeButton className="custom-header" />
                     <Modal.Body className="custom-body">
                         <MenuRestaurantes />

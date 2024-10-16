@@ -1,7 +1,6 @@
 import Home from "../components/Home"
 import Carrusel2 from "../components/Carrusel"
 import CardsRestaurantes from "../components/CardRestaurantes"
-
 import Nav from "../components/Nav"
 import TabsHome from "../components/TabsHome"
 
@@ -12,9 +11,7 @@ function HomePage() {
      <Home/>
      <TabsHome/>
      <Carrusel2/>
-     
      <CardsRestaurantes/>
-     
     </div>
   )
 }

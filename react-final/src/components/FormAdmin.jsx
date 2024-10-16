@@ -45,7 +45,7 @@ const FormAdmin = () => {
     console.log(valor);
   } 
 
-    const Añadir = async () =>{
+  const Añadir = async () =>{
         if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || !ubicacion.canton || !ubicacion.distrito || !validatePrecioPromedio || !validateCalificacionPromedio) {
             setSwalProps({ 
               show: true,
@@ -61,7 +61,7 @@ const FormAdmin = () => {
             text: 'Restaurante añadido exitosamente',
           });
         }
-    }
+  }
 
   return (
     <div>

@@ -11,4 +11,3 @@ function DescubrePage() {
 }
 
 export default DescubrePage
-

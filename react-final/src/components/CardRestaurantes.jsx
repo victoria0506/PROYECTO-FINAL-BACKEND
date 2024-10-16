@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const CardsRestaurantes = () => {
-
     const [restaurantes, setRestaurantes] = useState([])
     const { t } = useTranslation();
 
@@ -15,7 +14,7 @@ const CardsRestaurantes = () => {
     }
 
     useEffect(() => {
-         obtenerRestaurant()
+        obtenerRestaurant()
     }, [])
 
     return (
