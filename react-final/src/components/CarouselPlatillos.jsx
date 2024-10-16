@@ -4,9 +4,9 @@ import '../style/CarouselPlatillos.css';
 const CarouselPlatillos = () => {
   const items = [
     {
-      imgSrc: "https://images.pexels.com/photos/708392/pexels-photo-708392.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      title: "Descriptive Title",
-      subtitle: "Date and Duration"
+      imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn8f-twWkEpnn4KxYBYT9PXuSIwo-f9FrDYQ&s",
+      title: "Pollito",
+      subtitle: "taz"
     },
     {
       imgSrc: "https://images.pexels.com/photos/1785001/pexels-photo-1785001.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",

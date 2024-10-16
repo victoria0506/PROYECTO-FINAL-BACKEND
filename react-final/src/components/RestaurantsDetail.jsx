@@ -106,7 +106,7 @@ const RestaurantsDetail = () => {
                 </h4>
                 {/* <h3>Precio Promedio: {restaurantDetail.precio_promedio}</h3>
                 <h3>Calificación Promedio: {restaurantDetail.calificacion_promedio}</h3> */}
-                <ModalMap/>
+                {/* <ModalMap/> */}
                 <button className="añafavo-button" onClick={isFavorite ? () => eliminarFavoritos() : anadirFavoritos}>
                 <FontAwesomeIcon
                  icon={isFavorite ? solidHeart : regularHeart} className={`heart-icon ${isFavorite ? "favorite" : ""}`}/>
