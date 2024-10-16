@@ -79,7 +79,7 @@
       cursor: pointer;
       position: absolute; /* Posicionamiento absoluto */
      margin-left: 92%;
-      margin-top: -405px; /* Ajusta la altura del botón a la misma del nombre del restaurante */
+      margin-top: -140px; /* Ajusta la altura del botón a la misma del nombre del restaurante */
       }
       
       .heart-icon {

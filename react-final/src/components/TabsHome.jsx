@@ -22,12 +22,12 @@ export default function TabsHome() {
         className="tabs-scrollable"
       >
         <Tab label="Comida Tradicional" />
-        <Tab label="Item Two" />
-        <Tab label="Item Three" />
-        <Tab label="Item Four" />
-        <Tab label="Item Five" />
-        <Tab label="Item Six" />
-        <Tab label="Item Seven" />
+        <Tab label="Comida Internacional" />
+        <Tab label="Mariscos" />
+        <Tab label="Comida Rapida" />
+        <Tab label="Comida Gourmet" />
+        <Tab label="Ensaladas" />
+   
       </Tabs>
     </Box>
   );

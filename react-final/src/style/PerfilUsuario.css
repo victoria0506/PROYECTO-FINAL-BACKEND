@@ -100,3 +100,30 @@
     flex-direction: column; 
     gap: 10px; 
 }
+
+
+.mini-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+.mini-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.mini-modal-content p {
+    cursor: pointer; /* Cambia el cursor a puntero */
+    margin: 10px 0; /* Espaciado entre las opciones */
+}
