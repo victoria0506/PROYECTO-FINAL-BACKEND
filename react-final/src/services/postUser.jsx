@@ -3,7 +3,7 @@ const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
 
 const userPost = async (nombre_usuario, email, contrasena) => { // funcion del metodo POST
     try {
-        const response = await fetch('http://localhost:8000/api/users/', {
+        const response = await fetch('http://localhost:8000/api/usersRegistro/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

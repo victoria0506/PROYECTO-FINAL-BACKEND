@@ -1,7 +1,7 @@
 
 import { useParams, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react";
-import userGET from "../services/getUser";
+import GET from "../services/GET";
 import { useTranslation } from "react-i18next";
 import "../style/PerfilUsuario.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -30,7 +30,7 @@ const PerfilUsuario = () => {
 
     const obtenerDetallesUsuarios = async () => {
         try {
-            const Users = await userGET();
+            const Users = await GET();
             const Usuarios = Users.find(usu => usu.usuario_id === parseInt(usuario_id));
             if (!Usuarios) {
                 setUsuarioDetail(null);
@@ -46,7 +46,7 @@ const PerfilUsuario = () => {
 
     const cerrar_sesion = () => {
         localStorage.removeItem("Usuario Autenticado_id")
-        setUsuario(null)
+        // setUsuario(null)
         setActu(actualizador + 1)
         setTimeout(() => {
             navigate("/login")

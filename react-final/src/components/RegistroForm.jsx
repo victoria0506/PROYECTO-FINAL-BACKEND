@@ -1,6 +1,6 @@
 import {useState } from "react"
 import { Link } from "react-router-dom"
-import userGET from "../services/getUser";
+import GET from "../services/GET";
 import { useNavigate } from "react-router-dom"
 import SweetAlert2 from 'react-sweetalert2';
 import userPost from "../services/postUser";
@@ -33,7 +33,7 @@ function RegistroForm() {
         return;
       } else {
         setcargando(true); 
-        const UserObte = await userGET(); 
+        const UserObte = await GET(); 
         const validarRegistro = UserObte.find(user => 
           user.nombre_usuario === usuario && user.email === correo && user.contrasena === contraseña
         ); 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import canton2 from "../services/cantonFech";
 import distritos2 from "../services/distritoFech";
 import especiali from "../services/especialidadesGet";
-import userGET from "../services/getUser";
+import GET from "../services/GET";
 
 const UsedataRest = (canton) => {
     const [distritos, setDistritos] = useState([]);
@@ -12,7 +12,7 @@ const UsedataRest = (canton) => {
     useEffect(() => {
         const loadCantones = async () => {
             const CantonesData = await canton2();
-            setCantones(CantonesData);
+            setCantones(CantonesData)
         };
         loadCantones();
     }, []);

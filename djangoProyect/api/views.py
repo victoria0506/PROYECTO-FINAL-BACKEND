@@ -1,15 +1,15 @@
-from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from .serializers import (TipoUserSerializer,UsuariosSerializer,
 restaurantesSerializer,
-CalificacionSerializer,favoritosSerializer,calendarioSerializer,especialidadSerializer, CantonSerializer, distritoSerializer, RestaEspeciSerializer)
-from .models import TipoUsuario,Usuarios,restaurantes,calificaciones,favoritos,calendario,tipo_especialidad, Canton, distrito, RestaEspecialidades
+CalificacionSerializer,favoritosSerializer,calendarioSerializer,especialidadSerializer, CantonSerializer, distritoSerializer, RestaEspeciSerializer, ImagenSerializer, PlatillosSeralizer)
+from .models import TipoUsuario,Usuarios,restaurantes,calificaciones,favoritos,calendario,tipo_especialidad, Canton, distrito, RestaEspecialidades, Imagenes, Platillos_destacados
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password, check_password
+from .auth import registro_user, login_user, create_Authorization, create_Refresh
 
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
@@ -17,38 +17,36 @@ class TipouserView(ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
-class UsuarioView(ModelViewSet):
-    queryset=Usuarios.objects.all()
-    serializer_class= UsuariosSerializer
+class RegisterView(ModelViewSet):
+    queryset = Usuarios.objects.all()
+    serializer_class = UsuariosSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-    
-    def login(self, request):
-        email = request.data.get('email')
-        contrasena = request.data.get('contrasena')
-        try:
-            usuario = Usuarios.objects.get(email=email)
-            if check_password(contrasena, usuario.contrasena):
-                request.session['usuario_id'] = usuario.usuario_id
-                return JsonResponse({"message": "Logueo Exitoso", "user_id": usuario.usuario_id}, status=200)
-            else:
-                return JsonResponse({"message": "Contraseña incorrecta"}, status=400)
-        except Usuarios.DoesNotExist:
-            return JsonResponse({"message": "Usuario no encontrado"}, status=404)
 
     def register(self, request):
         serializer = UsuariosSerializer(data=request.data)
         if serializer.is_valid():
-            if (serializer.validated_data['email'] == 'Admi@RestaurApp.com' and 
-                serializer.validated_data['nombre_usuario'] == 'Administrador'):
-                tipo_usuario = TipoUsuario.objects.get(id=2)  
-            else:
-                tipo_usuario = TipoUsuario.objects.get(id=1)  
-            serializer.validated_data['id_tipoUsuario'] = tipo_usuario
-            serializer.validated_data['contrasena'] = make_password(serializer.validated_data['contrasena'])
-            serializer.save()
-            return JsonResponse({"message": "Registro exitoso"}, status=201)
-        return JsonResponse(serializer.errors, status=400)      
+            registro_user(serializer.validated_data)
+            return Response({"message": "Registro exitoso"}, status=201)
+        return Response(serializer.errors, status=400)
+    
+class LoginView(ModelViewSet):
+    queryset = Usuarios.objects.all()
+    serializer_class = UsuariosSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request):
+        email = request.data.get('email')
+        contrasena = request.data.get('contrasena')
+        print(f"Email: {email}, Contraseña: {contrasena}")
+        
+        usuario = login_user(email, contrasena)
+        if usuario:
+            access_token = create_Authorization(usuario)
+            refresh_token = create_Refresh(usuario)
+            return Response({"access_token": access_token, "refresh_token": refresh_token}, status=200)
+        return Response({"message": "Credenciales inválidas"}, status=400) 
         
 class CantonView(ModelViewSet):
     queryset= Canton.objects.all()
@@ -70,6 +68,18 @@ class RestauranteView(ModelViewSet):
     
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
+    
+class ImagenesView(ModelViewSet):
+    queryset= Imagenes.objects.all()
+    serializer_class= ImagenSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+class PlatillosView(ModelViewSet):
+    queryset= Platillos_destacados.objects.all()
+    serializer_class= PlatillosSeralizer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     
 class especialidadesView(ModelViewSet):
     queryset=tipo_especialidad.objects.all()
@@ -94,30 +104,6 @@ class favoritosView(ModelViewSet):
     serializer_class=favoritosSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
-    
-    # def create(self, request, *args, **kwargs):
-    #     user = request.user  
-    #     if not user.is_authenticated:
-    #         return Response(
-    #             {'detail': 'Debes estar autenticado para añadir favoritos.'},
-    #             status=status.HTTP_401_UNAUTHORIZED
-    #         )
-    #     try:
-    #         usuario = Usuarios.objects.get(usuario_id=user.id)
-    #     except Usuarios.DoesNotExist:
-    #         return Response(
-    #             {'detail': 'Usuario no encontrado.'},
-    #             status=status.HTTP_404_NOT_FOUND
-    #         )
-
-    #     restaurante_id = request.data.get('restaurante_id')
-    #     if favoritos.objects.filter(usuario_id=usuario, restaurante_id=restaurante_id).exists():
-    #         return Response(
-    #             {'detail': 'Este restaurante ya está en tus favoritos.'},
-    #             status=status.HTTP_400_BAD_REQUEST
-    #         )
-
-    #     return super().create(request, *args, **kwargs)
     
 class calendarioView(ModelViewSet):
     queryset=calendario.objects.all()

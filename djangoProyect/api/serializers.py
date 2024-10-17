@@ -1,6 +1,7 @@
 from rest_framework.serializers import ModelSerializer
-from .models import  TipoUsuario,Usuarios,restaurantes, calificaciones, favoritos, calendario, tipo_especialidad, Canton, distrito, RestaEspecialidades
+from .models import  TipoUsuario,Usuarios,restaurantes, calificaciones, favoritos, calendario, tipo_especialidad, Canton, distrito, RestaEspecialidades, Imagenes, Platillos_destacados
 from rest_framework import serializers
+from django.contrib.auth.hashers import make_password
 
 class TipoUserSerializer(ModelSerializer):
     class Meta:
@@ -22,6 +23,11 @@ class UsuariosSerializer(ModelSerializer):
             raise serializers.ValidationError("Este nombre de usuario ya está registrado.")
         return value
     
+    def create(self, validated_data):
+        validated_data['contrasena'] = make_password(validated_data['contrasena'])
+        user = Usuarios.objects.create(**validated_data)
+        return user
+    
 class CantonSerializer(ModelSerializer):
     class Meta:
         model= Canton
@@ -36,6 +42,16 @@ class restaurantesSerializer(ModelSerializer):
     class Meta:
       model= restaurantes
       fields= '__all__'
+      
+class ImagenSerializer(ModelSerializer):
+    class Meta:
+        model= Imagenes
+        fields= '__all__'
+        
+class PlatillosSeralizer(ModelSerializer):
+    class Meta:
+        model= Platillos_destacados
+        fields= '__all__'
       
 class especialidadSerializer(ModelSerializer):
     class Meta:
