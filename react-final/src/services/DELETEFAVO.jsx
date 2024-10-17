@@ -18,4 +18,13 @@ const deleteRestau = async (restaurante_id) => {
         console.log(error)
     } 
 }
+
+
+
+
+
+
+
+
+
 export default deleteRestau
