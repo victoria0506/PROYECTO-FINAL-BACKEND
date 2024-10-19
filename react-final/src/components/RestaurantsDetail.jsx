@@ -14,7 +14,8 @@ import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { Modal } from "react-bootstrap"; 
 import CalificacionEstrellas from "./calificacionEstrellas";
 import CarouselPlatillos from "./CarouselPlatillos";
-import ImageUpload from "./ImageUpload";
+// import ImageUpload from "./ImageUpload";
+import Tabs from "../components/Tabs";
 // import FavoritosBtn from "./FavoritosBtn";
 
 
@@ -117,13 +118,10 @@ const RestaurantsDetail = () => {
                  icon={isFavorite ? solidHeart : regularHeart} className={`heart-icon ${isFavorite ? "favorite" : ""}`}/>
                  </button>
                  {/* <FavoritosBtn restauranteId={restaurantDetail.restaurante_id}/> */}
-                <img 
-                    className="menu-image" 
-                    src="/src/img/menu.png" 
-                    alt="Ver Menú"
-                    onClick={toggleMenu} 
-                />
-               <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
+                
+                    <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
+              
+                 <Tabs/>
                 <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
                     <Modal.Header closeButton className="custom-header" />
                     <Modal.Body className="custom-body">
@@ -131,9 +129,10 @@ const RestaurantsDetail = () => {
                     </Modal.Body>
                 </Modal>
             </div>
+            <div>
             <CarouselPlatillos/>
-
-            <ImageUpload restauranteId={restaurantDetail.restaurante_id}/>
+            {/* <ImageUpload restauranteId={restaurantDetail.restaurante_id}/> */}
+            </div>
         </div>
     );
 };
