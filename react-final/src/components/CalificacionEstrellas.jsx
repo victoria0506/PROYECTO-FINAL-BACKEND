@@ -3,6 +3,7 @@ import { Rating } from 'react-simple-star-rating';
 import calificacionPOST from "../services/CalificacionPOST";
 import CalifiGET from "../services/calificacionGet";
 import CaliPut from "../services/CalificacionPut";
+import '../style/paginarestaurantes.css'
 
 const CalificacionEstrellas = ({restauranteId}) => {
   const [calificacion, setCalificacion] = useState(0)
@@ -58,7 +59,7 @@ const CalificacionEstrellas = ({restauranteId}) => {
   }
 
   return (
-    <div>
+    <div className="estrellas">
       <Rating
           fillColorArray={[
             '#f14f45',
