@@ -14,7 +14,9 @@ import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { Modal } from "react-bootstrap"; 
 import CalificacionEstrellas from "./calificacionEstrellas";
 import CarouselPlatillos from "./CarouselPlatillos";
+import ImageUpload from "./ImageUpload";
 // import FavoritosBtn from "./FavoritosBtn";
+
 
 
 const RestaurantsDetail = () => {
@@ -130,6 +132,8 @@ const RestaurantsDetail = () => {
                 </Modal>
             </div>
             <CarouselPlatillos/>
+
+            <ImageUpload restauranteId={restaurantDetail.restaurante_id}/>
         </div>
     );
 };

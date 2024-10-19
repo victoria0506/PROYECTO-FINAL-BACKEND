@@ -1,40 +1,23 @@
-// // src/services/imageService.js
+const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
 
-// const privateKey= private_/Kf5OO276GORsVgPp3Fyv9yRAkY=
-// const uploadImage = async (file, privateKey) => {
-//     const reader = new FileReader();
+export const FechImg = async (imageFile, restauranteId) => {
+    
+    const formData = new FormData();
+    formData.append('img', imageFile);
+    formData.append('restaurante_id', restauranteId);
 
-//     return new Promise((resolve, reject) => {
-//         reader.onload = async (event) => {
-//             const base64Image = event.target.result.split(',')[1];
+    const response = await fetch('http://localhost:8000/api/Imagenes/', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Token ${Token}`, 
+        },
+        body: formData,
+    });
 
-//             try {
-//                 const response = await fetch('https://ik.imagekit.io/1i7fig3wc/mis-imagenes', {
-//                     method: 'POST',
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                         'Authorization': 'Basic ' + btoa(`${privateKey}:`),
-//                     },
-//                     body: JSON.stringify({
-//                         file: base64Image,
-//                         fileName: file.name,
-//                     }),
-//                 });
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'An error occurred while uploading the image.');
+    }
 
-//                 const data = await response.json();
-
-//                 if (response.ok) {
-//                     resolve(data.url);
-//                 } else {
-//                     reject(data.message);
-//                 }
-//             } catch (error) {
-//                 reject('Error al subir la imagen');
-//             }
-//         };
-
-//         reader.readAsDataURL(file);
-//     });
-// };
-
-// export { uploadImage };
+    return await response.json();
+};

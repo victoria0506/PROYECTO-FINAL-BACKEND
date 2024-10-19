@@ -37,7 +37,7 @@ router.register(
     prefix='calendario', basename="calendario", viewset=calendarioView
 )
 router.register(
-    prefix= 'Imagenes', basename= "imagenes", viewset=ImagenesView
+    prefix= 'Imagenes', basename= "Imagenes", viewset=ImagenesView
 )
 router.register(
     prefix= 'Platillos', basename= "platillosDesta", viewset=PlatillosView

@@ -46,6 +46,8 @@ const PerfilUsuario = () => {
 
     const cerrar_sesion = () => {
         localStorage.removeItem("Usuario Autenticado_id")
+        sessionStorage.removeItem("access_token")
+        sessionStorage.removeItem("refresh_token")
         // setUsuario(null)
         setActu(actualizador + 1)
         setTimeout(() => {
