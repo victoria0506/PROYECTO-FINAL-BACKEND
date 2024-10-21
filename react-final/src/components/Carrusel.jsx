@@ -36,8 +36,8 @@ const Carrusel2 = () => {
           />
           <Carousel.Caption className="caption-centered">
             <div className="caption-content">
-              <h3>Segunda Imagen</h3>
-              <p style={{color: "white"}}>Este es un breve texto para describir la segunda imagen.</p>
+          
+              <h2 className='texto2carrusel' style={{color: "white"}}>Si te encanta el marisco, no te puedes perder estos restaurantes que son famosos por ofrecer los platillos más frescos del océano.</h2>
               <button className="btn btn-primary">Ver más</button>
             </div>
           </Carousel.Caption>

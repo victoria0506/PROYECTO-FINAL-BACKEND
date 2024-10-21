@@ -1,3 +1,8 @@
+.maincontainer{
+  margin-top: 80px;
+}
+
+
 .container-cards {
   display: flex;
   flex-wrap: wrap;
@@ -40,7 +45,7 @@
 
 .card__title {
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
   margin-top: 20px;
   position: relative;
 }
@@ -48,7 +53,7 @@
 .card__description {
   font-size: 0.8rem;
   color: #666;
-  
+  font-weight: 500;
   margin-top: -10px;
 }
 
