@@ -35,7 +35,7 @@ function Nav() {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isWhitePage ? 'white-page' : ''}`}>
       <div className="navbar-brand">
-        <img className="logonav" src="src/img/logonav.png" alt="Logo" />
+        <img className="logonav" src="/src/img/logonav.png" alt="Logo" />
       </div>
       <div className="menu">
         <a href="/home" className="menu-item">{t('home')}</a>

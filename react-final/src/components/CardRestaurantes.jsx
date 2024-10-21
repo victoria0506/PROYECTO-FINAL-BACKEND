@@ -18,7 +18,7 @@ const CardsRestaurantes = () => {
     }, [])
 
     return (
-        <div>
+        <div className="maincontainer">
             <h1>{t('Discover your next favorite restaurant.')}</h1>
             <div className="container-cards">
                 {restaurantes.map((restau, index) => (

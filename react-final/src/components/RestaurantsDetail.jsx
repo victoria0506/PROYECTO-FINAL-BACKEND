@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"; 
 import MenuRestaurantes from "./MenuRestaurantes"; 
-import ModalMap from "./ModalMap";
 import { useParams } from "react-router-dom";
 import RestaGet from "../services/getRestaurant";
 import '../style/paginarestaurantes.css';
@@ -14,11 +13,7 @@ import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { Modal } from "react-bootstrap"; 
 import CalificacionEstrellas from "./calificacionEstrellas";
 import CarouselPlatillos from "./CarouselPlatillos";
-// import ImageUpload from "./ImageUpload";
 import Tabs from "../components/Tabs";
-// import FavoritosBtn from "./FavoritosBtn";
-
-
 
 const RestaurantsDetail = () => {
     const { restaurante_id } = useParams();
@@ -26,8 +21,10 @@ const RestaurantsDetail = () => {
     const { t } = useTranslation();
     const usuario_id = localStorage.getItem("Usuario Autenticado_id"); 
     const [favoritos, setFavoritos] = useState([]); 
-    const [showMenu, setShowMenu] = useState(false)
+    const [isFavorite, setIsFavorite] = useState(false); // Nuevo estado para manejar si es favorito
+    const [showMenu, setShowMenu] = useState(false);
 
+    // Función para obtener los detalles del restaurante
     const obtenerDetallesRestaurante = async () => {
         const restaurantes = await RestaGet();
         const Restaurantes = restaurantes.find(resta => String(resta.restaurante_id) === restaurante_id);
@@ -38,16 +35,22 @@ const RestaurantsDetail = () => {
         }
     };
 
+    // Función para obtener los favoritos del usuario
     const obtenerFavoritos = () => {
         const favoritesKey = `favoritos_${usuario_id}`;
         const favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
         setFavoritos(favoritos);
+        // Verificar si el restaurante actual está en favoritos
+        const favoritoExistente = favoritos.some(fav => fav.restaurante_id === restaurante_id);
+        setIsFavorite(favoritoExistente); // Actualizamos el estado `isFavorite`
     };
 
     useEffect(() => {
         obtenerDetallesRestaurante();
+        obtenerFavoritos(); // Llamamos a obtenerFavoritos al cargar el componente
     }, [restaurante_id]);
 
+    // Si no se encuentra el detalle del restaurante
     if (!restaurantDetail) {
         return <div>No se encontró el restaurante.</div>;
     }
@@ -60,18 +63,18 @@ const RestaurantsDetail = () => {
         if (usuario_id) {
             const favoritesKey = `favoritos_${usuario_id}`;
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
-            const favoritoExistente = favoritos.find(fav => fav.restaurante_id === restaurante_id)
-            console.log(favoritos);
+            const favoritoExistente = favoritos.find(fav => fav.restaurante_id === restaurante_id);
+    
             if (!favoritoExistente) {
-                if (!favoritos.includes(restaurante_id)) {
-                    const confirmacion = confirm("¿Deseas añadir este restaurante a tus favoritos?");
-                    if (confirmacion) {
-                        const resultado = await favoritosRestaurants(usuario_id, restaurante_id);
-                        if (resultado) {
-                            favoritos.push({ favorito_id: resultado.favorito_id, restaurante_id })
-                            localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
-                            setFavoritos(favoritos); 
-                        }
+                const confirmacion = confirm("¿Deseas añadir este restaurante a tus favoritos?");
+                if (confirmacion) {
+                    setIsFavorite(true); // Actualizar inmediatamente el estado visual del ícono
+                    
+                    const resultado = await favoritosRestaurants(usuario_id, restaurante_id);
+                    if (resultado) {
+                        favoritos.push({ favorito_id: resultado.favorito_id, restaurante_id });
+                        localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
+                        setFavoritos(favoritos); 
                     }
                 }
             }
@@ -79,16 +82,19 @@ const RestaurantsDetail = () => {
             alert("Regístrate o inicia sesión si quieres añadir a favoritos.");
         }
     };
-
-    const eliminarFavoritos = async (favorito_id) => {
+    
+    const eliminarFavoritos = async () => {
         if (usuario_id) {
             const favoritesKey = `favoritos_${usuario_id}`;
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
             const favorito = favoritos.find(fav => fav.restaurante_id === restaurante_id);
+    
             if (favorito) {
                 const confirmacion = confirm("¿Deseas eliminar este restaurante de tus favoritos?");
                 if (confirmacion) {
-                    const resultado = deleteRestau(String(favorito.favorito_id));                 
+                    setIsFavorite(false); // Actualizar inmediatamente el estado visual del ícono
+    
+                    const resultado = await deleteRestau(String(favorito.favorito_id));
                     if (resultado) {
                         favoritos = favoritos.filter(fav => fav.favorito_id !== favorito.favorito_id);
                         localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
@@ -98,9 +104,7 @@ const RestaurantsDetail = () => {
             }
         }
     };
-
-    const isFavorite = favoritos.some(fav => fav.restaurante_id === restaurante_id);
-
+    
     return (
         <div>
             <div>
@@ -110,18 +114,17 @@ const RestaurantsDetail = () => {
                 <h4 className="introrestaurantes">
                     Hotel Las Brisas, ubicado en Puntarenas, es el lugar perfecto para disfrutar de mariscos frescos y una cocina costarricense en un ambiente acogedor junto al océano.
                 </h4>
-                {/* <h3>Precio Promedio: {restaurantDetail.precio_promedio}</h3>
-                <h3>Calificación Promedio: {restaurantDetail.calificacion_promedio}</h3> */}
-                {/* <ModalMap/> */}
                 <button className="añafavo-button" onClick={isFavorite ? () => eliminarFavoritos() : anadirFavoritos}>
-                <FontAwesomeIcon
-                 icon={isFavorite ? solidHeart : regularHeart} className={`heart-icon ${isFavorite ? "favorite" : ""}`}/>
-                 </button>
-                 {/* <FavoritosBtn restauranteId={restaurantDetail.restaurante_id}/> */}
+    <FontAwesomeIcon
+        icon={isFavorite ? solidHeart : regularHeart}
+        className={`heart-icon ${isFavorite ? "favorite" : ""}`}
+    />
+</button>
+
+
+                <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
                 
-                    <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
-              
-                 <Tabs/>
+                <Tabs/>
                 <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
                     <Modal.Header closeButton className="custom-header" />
                     <Modal.Body className="custom-body">
@@ -130,14 +133,14 @@ const RestaurantsDetail = () => {
                 </Modal>
             </div>
             <div>
-            <CarouselPlatillos/>
-            {/* <ImageUpload restauranteId={restaurantDetail.restaurante_id}/> */}
+                <CarouselPlatillos/>
             </div>
         </div>
     );
 };
 
 export default RestaurantsDetail;
+
 
 
 

@@ -3,6 +3,8 @@ import Carrusel2 from "../components/Carrusel"
 import CardsRestaurantes from "../components/CardRestaurantes"
 import Nav from "../components/Nav"
 import TabsHome from "../components/TabsHome"
+import Quiz from "../components/Quiz"
+import CarouselHomePlatosDest from "../components/CarouselHomePlatosDest"
 
 function HomePage() {
   return (
@@ -11,6 +13,9 @@ function HomePage() {
      <Home/>
      <TabsHome/>
      <Carrusel2/>
+     <CarouselHomePlatosDest/>
+    
+     <Quiz/>
      <CardsRestaurantes/>
     </div>
   )
