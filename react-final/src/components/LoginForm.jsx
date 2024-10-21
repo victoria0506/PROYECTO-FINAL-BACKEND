@@ -6,6 +6,7 @@ import GET from "../services/GET";
 import { useTranslation } from "react-i18next";
 import { compartirContexto } from "../context/contextProvider";
 import "../style/login.css"
+import Cookies from 'js-cookie';
 
 function LoginForm () {
     const [swalProps, setSwalProps] = useState({})
@@ -37,8 +38,12 @@ function LoginForm () {
             const response = await LoginFech(correo, contrasena)
             console.log("Respuesta del login:", response)
             if (response && response.access_token) {
-                sessionStorage.setItem("access_token", response.access_token)
-                sessionStorage.setItem("refresh_token", response.refresh_token)
+                // sessionStorage.setItem("access_token", response.access_token)
+                // sessionStorage.setItem("refresh_token", response.refresh_token)
+                Cookies.set('access_token', response.access_token, { expires: 1, secure: true, sameSite: 'Strict' });
+                Cookies.set('refresh_token', response.refresh_token, { expires: 7, secure: true, sameSite: 'Strict' });
+                console.log('Tokens guardados en cookies.');
+
                 const userObte = await GET()
                 const validarUser = userObte.find(user => user.nombre_usuario === usuario && user.email === correo)
                 if (validarUser) {

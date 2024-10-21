@@ -5,6 +5,7 @@ const PutRestaur = async (restaurante_id,nombre_restaurante,precio_promedio,capa
     try {
         const response = await fetch(`http://localhost:8000/api/admiRestaur/${restaurante_id}/`, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${Token}`
@@ -23,6 +24,7 @@ const PutRestaur = async (restaurante_id,nombre_restaurante,precio_promedio,capa
             especiSelect.map(async (especialidadId) => {
                 await fetch(`http://localhost:8000/api/RestaEspecialidades/${restaurante_id}/`, {
                 method: 'PUT',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Token ${Token}`

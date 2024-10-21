@@ -11,6 +11,9 @@ class Usuarios(models.Model):
     contrasena= models.CharField(max_length=200)
     id_tipoUsuario= models.ForeignKey(TipoUsuario, on_delete=models.CASCADE, default=1)
     
+    def is_authenticated(self):
+        return True 
+    
 class Canton(models.Model):
     id_canton= models.AutoField(primary_key=True)
     nombre_canton= models.CharField(max_length=100)

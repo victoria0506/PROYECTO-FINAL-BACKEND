@@ -51,7 +51,7 @@ const BusquedaRes = () => {
 
     return (
         <div>
-            <img src="src/img/barrabusqueda.png" onClick={AbrirModal} className="search-img"
+            <img src="/src/img/barrabusqueda.png" onClick={AbrirModal} className="search-img"
                
         />
             <Modal show={showModal} onHide={() => setShowModal(false)}>

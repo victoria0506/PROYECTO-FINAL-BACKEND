@@ -6,6 +6,7 @@ const favoritosRestaurants = async (usuario_id, restaurante_id) => { // funcion 
     try {
         const response = await fetch('http://localhost:8000/api/favoritos/', {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${Token}`

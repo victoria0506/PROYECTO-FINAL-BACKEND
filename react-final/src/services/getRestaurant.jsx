@@ -5,6 +5,7 @@ const RestaGet = async () => { // funcion del metodo GET
     try {
         const response = await fetch('http://localhost:8000/api/admiRestaur/', {
         method: 'GET',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${Token}`

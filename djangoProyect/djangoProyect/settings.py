@@ -31,7 +31,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5173",
     "http://react_app:5173",
 ]
-
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000',  # Ajusta según sea necesario
+]
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt'
 ]
 
 MIDDLEWARE = [
@@ -137,6 +141,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
      "DEFAULT_AUTHENTICATION_CLASSES": [
+        "api.authentication.CookieAuthentication",
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.TokenAuthentication"
     ]

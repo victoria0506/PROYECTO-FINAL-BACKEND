@@ -119,9 +119,8 @@ const RestaurantsDetail = () => {
                  </button>
                  {/* <FavoritosBtn restauranteId={restaurantDetail.restaurante_id}/> */}
                 
-                    <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
-              
-                 <Tabs/>
+                <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
+                <Tabs/>
                 <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
                     <Modal.Header closeButton className="custom-header" />
                     <Modal.Body className="custom-body">

@@ -8,6 +8,7 @@ export const FechImg = async (imageFile, restauranteId) => {
 
     const response = await fetch('http://localhost:8000/api/Imagenes/', {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Authorization': `Token ${Token}`, 
         },

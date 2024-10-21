@@ -5,6 +5,7 @@ const distritos2 = async () => {
     try {
         const response = await fetch('http://localhost:8000/api/distrito/', {
             method: 'GET', 
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization':  `Token ${Token}`

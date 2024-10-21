@@ -5,6 +5,7 @@ const especiali = async () => {
     try {
         const response = await fetch('http://localhost:8000/api/especilidades/', {
             method: 'GET', 
+            credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization':  `Token ${Token}`

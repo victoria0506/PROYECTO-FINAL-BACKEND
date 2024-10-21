@@ -1,5 +1,6 @@
 from rest_framework.routers import DefaultRouter
 from .views import TipouserView,RegisterView,LoginView,RestauranteView,CalificacionView,favoritosView, calendarioView, especialidadesView, CantonView, distritoView, RestaEspecilidadesView, ImagenesView, PlatillosView
+# from rest_framework_simplejwt.views import (TokenRefreshView,)
 
 router = DefaultRouter()
 
@@ -42,3 +43,6 @@ router.register(
 router.register(
     prefix= 'Platillos', basename= "platillosDesta", viewset=PlatillosView
 )
+# router.register(
+#     prefix='token_refresh', basename="token_refresh", viewset=CustomTokenRefreshView
+# )

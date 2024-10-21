@@ -6,6 +6,7 @@ const PostResta = async (nombre_restaurante,precio_promedio,capacidad,calificaci
     try {
         const response = await fetch('http://localhost:8000/api/admiRestaur/', {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${Token}`
@@ -24,6 +25,7 @@ const PostResta = async (nombre_restaurante,precio_promedio,capacidad,calificaci
             especiSelect.map(async (especialidadId) => {
                 await fetch('http://localhost:8000/api/RestaEspecialidades/', {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Token ${Token}`
