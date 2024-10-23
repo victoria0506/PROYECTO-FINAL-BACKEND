@@ -1,12 +1,11 @@
 /* Estilos para la página de registro */
 .login4 {
   position: relative;
-  width: 100vw;
-  height: 100vh;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 
 .background-video {
@@ -23,10 +22,12 @@
 .logn6 {
   background-color: #fff; /* Fondo blanco para el formulario */
   padding: 30px;
-  border-radius: 10px; /* Bordes redondeados */
+  border-radius: 17px; /* Bordes redondeados */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para darle profundidad */
   text-align: center; /* Centrar el texto */
-  width: 300px; /* Ancho fijo del formulario */
+  width: 370px; /* Ancho fijo del formulario */
+  height: 450px;
+  margin-top: 100px;
 }
 
 /* Estilos para el título */
@@ -49,11 +50,12 @@ h2 {
   border-radius: 5px;
   font-size: 16px;
   box-sizing: border-box;
+  font-weight: 600;
 }
 
 /* Botones */
 .botones button {
-  background-color: #5c483a; /* Color de fondo similar al del botón en la imagen */
+  background-color: #3a3a3a; /* Color de fondo similar al del botón en la imagen */
   color: white;
   padding: 10px 20px;
   border: none;

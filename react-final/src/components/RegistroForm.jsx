@@ -55,7 +55,8 @@ function RegistroForm() {
   return (
     <div className="login4">
        <div className="logn6">
-        <h2>{t('Register')}</h2>
+       <img className="logologinregister" src="/src/img/logonav.png" alt="" />
+  
         <h5>{mensaje}</h5>
         <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder={t('User')}/>
         <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder={t('Email')}/>
@@ -64,7 +65,7 @@ function RegistroForm() {
         <button onClick={mostrar}>
           {cargando ? t('Charging...') : t('Register')}
         </button>
-        <p className="text">{t('Do you have an account?')}<Link to='/login'>Login</Link></p>
+        <p className="text">{t('Do you have an account?')} <Link to='/login'>{t('Login')}</Link></p>
         </div>
        </div>
        <div>

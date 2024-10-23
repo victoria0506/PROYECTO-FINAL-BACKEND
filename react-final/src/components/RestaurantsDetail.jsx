@@ -108,11 +108,11 @@ const RestaurantsDetail = () => {
     return (
         <div>
             <div>
-                <img className="img-normalizada" src="/src/img/lasbrisasheader.jpeg" alt="Logo" />
-                <img className="logorestaurante" src="/src/img/images.jpg" alt="Logo del Restaurante" />
+                <img className="img-normalizada" src="/src/img/headercayuga.jpeg" alt="Logo" />
+                <img className="logorestaurante" src="/src/img/logocayuga.jpg" alt="Logo del Restaurante" />
                 <h3 className="nombrerestaurante">{restaurantDetail.nombre_restaurante}</h3>
                 <h4 className="introrestaurantes">
-                    Hotel Las Brisas, ubicado en Puntarenas, es el lugar perfecto para disfrutar de mariscos frescos y una cocina costarricense en un ambiente acogedor junto al océano.
+                    Restaurante & Sport Bar dentro del Hotel Cayuga con deliciosa variedad de comida y cócteles.
                 </h4>
                 <button className="añafavo-button" onClick={isFavorite ? () => eliminarFavoritos() : anadirFavoritos}>
     <FontAwesomeIcon
