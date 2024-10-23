@@ -73,6 +73,7 @@ class RestauranteView(ModelViewSet):
     queryset= restaurantes.objects.all()
     serializer_class= restaurantesSerializer
     authentication_classes = [TokenAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
     def create(self, request, *args, **kwargs):
