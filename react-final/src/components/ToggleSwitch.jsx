@@ -1,33 +1,38 @@
 import { useTranslation } from 'react-i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import "../style/toggle.css"
+import "../style/toggle.css";
 import { compartirContexto } from '../context/contextProvider';
 import { useEffect, useState } from 'react';
 
-
 const ToggleSwitch = () => {
   const { i18n } = useTranslation();
-  // console.log("id usuario : ", usuario_id);
   const [usuario, setUsuario] = useState(null);
   const [admi, setAdmi] = useState(null);
-  const {actualizador, setActu, apiData, setApiData} = compartirContexto()
-  
+  const { actualizador, setActu } = compartirContexto();
+  const [fotoPerfil, setFotoPerfil] = useState(null); // Estado para almacenar la foto de perfil
+
   useEffect(() => {
     const id = localStorage.getItem("Usuario Autenticado_id");
     const adminId = localStorage.getItem("Admi-id");
+
     if (id !== usuario) {
       setUsuario(id);
+      
+      // Recuperar la foto de perfil del usuario desde localStorage
+      const foto = localStorage.getItem(`fotoPerfil_${id}`);
+      setFotoPerfil(foto); // Guardar la foto en el estado
     }
+    
     if (adminId !== admi) {
       setAdmi(adminId);
     }
-  }, [usuario, admi])
+  }, [usuario, admi]);
 
   useEffect(() => {
     setActu(actualizador + 1);
   }, [setActu]);
-   
+
   const handleToggle = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';
     i18n.changeLanguage(newLang);
@@ -39,7 +44,11 @@ const ToggleSwitch = () => {
       {usuario ? (
         <div className="user-container">
           <a className='btnlogincuenta' href={`/Perfilusuario/${usuario}`}>
-            <FontAwesomeIcon icon={faUser} />
+            {fotoPerfil ? (
+              <img src={fotoPerfil} alt="Foto de perfil" className="foto-cuenta" /> // Mostrar la foto de perfil si existe
+            ) : (
+              <FontAwesomeIcon icon={faUser} className="icono-usuario" /> // Mostrar el ícono de usuario si no hay foto
+            )}
           </a>
         </div>
       ) : (
@@ -50,7 +59,7 @@ const ToggleSwitch = () => {
         type="checkbox"
         id="language-switch"
         className="language-toggle"
-        onChange={handleToggle} // Llama a la función para cambiar idioma
+        onChange={handleToggle} 
       />
       <label htmlFor="language-switch" className="language-switch">
         <span className={`lang-label es ${i18n.language === 'es' ? 'active' : ''}`}>ES</span>
@@ -59,4 +68,5 @@ const ToggleSwitch = () => {
     </div>
   );
 };
+
 export default ToggleSwitch;

@@ -82,9 +82,11 @@ function LoginForm () {
     
     return (
         <div className="login-page">
-         <img className="background-video" src="src/img/.jpg" alt="" />
+         {/* <img className="background-video" src="src/img/.jpg" alt="" /> */}
             <div className="login">
-                <h2 className="iniciarsesion">Login</h2>
+            
+                <img className="logologinregister" src="/src/img/logonav.png" alt="" />
+    
                 <h5>{mensaje}</h5>
                 <input
                     type="text"

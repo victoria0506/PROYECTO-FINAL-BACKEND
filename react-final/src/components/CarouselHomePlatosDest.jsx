@@ -6,25 +6,25 @@ const CarouselHomePlatosDest = () => {
     {
       imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn8f-twWkEpnn4KxYBYT9PXuSIwo-f9FrDYQ&s",
       title: "Pollito",
-      subtitle: "Taz",
+      subtitle: "De Restaurante Cayu",
       description: "Delicious grilled chicken with spices."
     },
     {
-      imgSrc: "https://images.pexels.com/photos/1785001/pexels-photo-1785001.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNXGD_KBiL40xZo1zMEjp6MaByHZlYh6DLZw&s",
       title: "Pizza",
-      subtitle: "Italian",
+      subtitle: "De Restaurante So",
       description: "Traditional Italian pizza with fresh ingredients."
     },
     {
-      imgSrc: "https://images.pexels.com/photos/417344/pexels-photo-417344.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX6JkqU_xH5kJmcTzlPhfbK1Nl8I7t753gyg&s",
       title: "Sushi",
-      subtitle: "Japanese",
+      subtitle: "De Restaurante ariGATO",
       description: "Fresh sushi rolls with wasabi and soy sauce."
     },
     {
       imgSrc: "https://images.pexels.com/photos/1071882/pexels-photo-1071882.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
       title: "Steak",
-      subtitle: "Grilled",
+      subtitle: "De Restaurante WQ",
       description: "Juicy grilled steak cooked to perfection."
     },
     {
@@ -61,7 +61,7 @@ const CarouselHomePlatosDest = () => {
     <motion.div
     initial={{ y: 100, opacity: 0 }}
     whileInView={{ y: 0, opacity: 1 }}
-    transition={{ duration: 0.5 }}
+    transition={{ duration: 0.8 }}
     viewport={{ once: false }} // Allows the animation to trigger each time the element comes into view
   >
     <div className="carousel-section-unique">

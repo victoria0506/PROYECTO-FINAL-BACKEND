@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import "../style/Tabs.css";
 import MenuRestaurantes from "./MenuRestaurantes";
 import Map from "./Map";
+import Calendario from "./Calendario";
 
 const Tabs = () => {
   const [activeTab, setActiveTab] = useState(""); // Estado inicial vacío
@@ -40,6 +41,12 @@ const Tabs = () => {
             <i className="icon inbox-apps"></i>
             <label htmlFor="text">Ubicación</label>
           </div>
+
+          {/* Pestaña 4: Nueva pestaña de Eventos */}
+          <div className="tab" onClick={() => handleTabChange("tab4")}>
+            <i className="icon events-icon"></i>
+            <label htmlFor="text">Calendario</label>
+          </div>
         </div>
 
         {/* Modal que se muestra cuando se selecciona una pestaña */}
@@ -51,12 +58,7 @@ const Tabs = () => {
             {/* Mostrar contenido dinámico según la pestaña activa */}
             {activeTab === "tab1" && (
               <div id="tab__content--1">
-                <p>
-                  Lorem ipsum is placeholder text commonly used in the graphic,
-                  print, and publishing industries for previewing layouts and
-                  visual mockups.
-                </p>
-                <img src="https://placehold.it/800x600" alt="" />
+                
               </div>
             )}
             {activeTab === "tab2" && (
@@ -66,7 +68,12 @@ const Tabs = () => {
             )}
             {activeTab === "tab3" && (
               <div id="tab__content--3">
-            <Map/>
+                <Map />
+              </div>
+            )}
+            {activeTab === "tab4" && (
+              <div id="tab__content--4">
+              <Calendario />
               </div>
             )}
           </Modal.Body>
@@ -77,5 +84,6 @@ const Tabs = () => {
 };
 
 export default Tabs;
+
 
 
