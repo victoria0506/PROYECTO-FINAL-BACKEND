@@ -9,7 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from .auth import registro_user, login_user, create_Authorization, create_Refresh
 from .authentication import CookieAuthentication
-from rest_framework_simplejwt.views import TokenRefreshView
+from django.db.models import Avg
 
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
@@ -39,8 +39,7 @@ class LoginView(ModelViewSet):
     def create(self, request):
         email = request.data.get('email')
         contrasena = request.data.get('contrasena')
-        print(f"Email: {email}, Contraseña: {contrasena}")
-        
+        # print(f"Email: {email}, Contraseña: {contrasena}")
         usuario = login_user(email, contrasena)
         if usuario:
             access_token = create_Authorization(usuario)
@@ -49,8 +48,8 @@ class LoginView(ModelViewSet):
                 {"message": "Login exitoso"},
                 status=status.HTTP_200_OK
             )
-            response.set_cookie(key='access_token', value=access_token, httponly=True, secure=False)
-            response.set_cookie(key='refresh_token', value=refresh_token, httponly=True, secure=False)
+            response.set_cookie(key='access_token', value=access_token, httponly=True, secure=True)
+            response.set_cookie(key='refresh_token', value=refresh_token, httponly=True, secure=True)
             return Response({"access_token": access_token, "refresh_token": refresh_token}, status=200)
         return Response({"message": "Credenciales inválidas"}, status=400) 
     
@@ -69,11 +68,36 @@ class distritoView(ModelViewSet):
 class RestauranteView(ModelViewSet):
     queryset= restaurantes.objects.all()
     serializer_class= restaurantesSerializer
-    authentication_classes = [CookieAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        nuevo_restaurante = serializer.save()
+        
+        promedio_calificacion = calificaciones.objects.filter(
+            restaurante_id=nuevo_restaurante
+        ).aggregate(Avg('calificacion'))['calificacion__avg']
+        
+        nuevo_restaurante.calificacion_promedio = promedio_calificacion or 0  
+        nuevo_restaurante.save()
+
+        return Response(serializer.data, status=201)
+    
     def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        updated_restaurante = serializer.save()
+    
+        promedio_calificacion = calificaciones.objects.filter(
+            restaurante_id=updated_restaurante
+        ).aggregate(Avg('calificacion'))['calificacion__avg']
+
+        updated_restaurante.calificacion_promedio = promedio_calificacion or 0 
+        updated_restaurante.save()
+        return Response(serializer.data)
 
 class ImagenesView(ModelViewSet):
     queryset= Imagenes.objects.all()
@@ -106,7 +130,7 @@ class CalificacionView(ModelViewSet):
     permission_classes = [IsAuthenticated]
     
     def list(self, request, *args, **kwargs):
-        print("Request user:", request.user)  # Para verificar que el usuario esté autenticado correctamente
+        print("Request user:", request.user)  
         return super().list(request, *args, **kwargs)
     
 class favoritosView(ModelViewSet):
@@ -120,3 +144,4 @@ class calendarioView(ModelViewSet):
     serializer_class=calendarioSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+

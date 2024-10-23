@@ -1,6 +1,5 @@
-// const refreshToken = "tu_token_de_refresco";
 
-const refreshTokenRequest = async () => {
+const refreshToken = async (refreshToken) => {
     try {
         const response = await fetch('http://localhost:8000/api/token/refresh/', {
             method: 'POST',
@@ -20,4 +19,5 @@ const refreshTokenRequest = async () => {
         console.error('Error en la solicitud:', error);
     }
 };
- refreshTokenRequest();
+
+export default refreshToken

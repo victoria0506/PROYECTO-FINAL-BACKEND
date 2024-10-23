@@ -3,6 +3,7 @@ import jwt
 from datetime import datetime, timedelta
 from django.conf import settings
 from .models import Usuarios
+from rest_framework_simplejwt.tokens import RefreshToken
 
 def registro_user(data):
     data['contrasena'] = make_password(data['contrasena'])
@@ -28,18 +29,22 @@ def create_Authorization(usuario):
     return jwt.encode(payload, settings.SECRET_KEY, algorithm= 'HS256')
 
 def create_Refresh(usuario):
-    payload = {
-        'usuario_id': usuario.usuario_id,
-        'exp': datetime.utcnow() + timedelta(days= 7),
-        'iat': datetime.utcnow(),
-    }
-    return jwt.encode(payload, settings.SECRET_KEY, algorithm= 'HS256')
+    # payload = {
+    #      ['usuario_id']: usuario.usuario_id,
+    #     'exp': datetime.utcnow() + timedelta(days= 7),
+    #     'iat': datetime.utcnow(),
+    # }
+    # token = jwt.encode(payload, settings.SECRET_KEY, algorithm= 'HS256')
+    # return str(token)
+    refresh = RefreshToken.for_user(usuario)
+    refresh['usuario_id'] = usuario.usuario_id
+    return str(refresh)
 
 def decode_jwt(token):
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithm=['HS256'])
+        payload = jwt.decode(token,settings.SECRET_KEY, algorithms=['HS256'])
         return payload
     except jwt.ExpiredSignatureError:
-        return None
+        raise Exception("El token ha expirado.")
     except jwt.InvalidTokenError:
-        return None
+        raise Exception("Token inválido.")

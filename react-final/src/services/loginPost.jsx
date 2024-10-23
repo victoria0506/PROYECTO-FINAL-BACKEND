@@ -9,7 +9,7 @@ const LoginFech = async (email, contrasena) => { // funcion del metodo GET
             'Content-Type': 'application/json',
             'Authorization': `Token ${Token}`
         },
-        body: JSON.stringify({ email: email, contrasena })
+        body: JSON.stringify({ email: email, contrasena: contrasena })
         });
         if (!response.ok) {
             const errorData = await response.json();

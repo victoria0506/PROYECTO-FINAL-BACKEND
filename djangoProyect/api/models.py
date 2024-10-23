@@ -26,11 +26,13 @@ class distrito(models.Model):
 class restaurantes(models.Model):
     restaurante_id= models.AutoField(primary_key=True)
     nombre_restaurante= models.CharField(max_length=150)
-    precio_promedio = models.DecimalField(max_digits=7, decimal_places=3) 
+    precio_promedio = models.CharField(max_length=20)
     calificacion_promedio = models.DecimalField(max_digits=3, decimal_places=1, default=0)
     capacidad= models.IntegerField()
     accesibilidad= models.BooleanField(default=True)
+    descripcion = models.CharField(max_length=200)
     id_distrito= models.ForeignKey(distrito, on_delete=models.CASCADE)
+
     
 class Imagenes(models.Model):
     id_imagen= models.AutoField(primary_key=True)

@@ -21,3 +21,4 @@ class CookieAuthentication(BaseAuthentication):
         user = get_object_or_404(Usuarios, usuario_id= user_id)
         user.is_authenticated = True
         return (user, None)
+    

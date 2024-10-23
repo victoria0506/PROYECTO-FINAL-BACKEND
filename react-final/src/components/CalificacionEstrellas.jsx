@@ -80,3 +80,4 @@ const CalificacionEstrellas = ({restauranteId}) => {
 }
 
 export default CalificacionEstrellas
+

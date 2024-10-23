@@ -2,6 +2,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import  TipoUsuario,Usuarios,restaurantes, calificaciones, favoritos, calendario, tipo_especialidad, Canton, distrito, RestaEspecialidades, Imagenes, Platillos_destacados
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
+from rest_framework import serializers
 
 class TipoUserSerializer(ModelSerializer):
     class Meta:
@@ -77,4 +78,4 @@ class calendarioSerializer(ModelSerializer):
     class Meta:
       model= calendario
       fields= '__all__'
-    
+

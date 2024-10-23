@@ -43,6 +43,7 @@
     "react-select": "^5.8.1",
     "react-simple-star-rating": "^5.1.7",
     "react-sweetalert2": "^0.6.0",
+    "react-toastify": "^10.0.6",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.14.3"
   },

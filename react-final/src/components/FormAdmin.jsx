@@ -11,23 +11,13 @@ const FormAdmin = () => {
   const [nomResta, setNomresta] = useState("");
   const [precioPro, setPrecioPro] = useState("");
   const [capacidad, setCapacidad] = useState("");
-  const [calificacion, setCalificacio] = useState("");
+  const [descripcion, setDescripcion] = useState("")
   const [swalProps, setSwalProps] = useState({});
   const [ubicacion, setUbicacion] = useState({ canton: "", distrito: "" });
   const [especiSelect, setEspeciSelect] = useState([]);
   const { t } = useTranslation();
   const {distritos, cantones, especialidades} = UsedataRest(ubicacion.canton)
-
-
-  const validatePrecioPromedio = (precio) => {
-    const regex = /^\d{1,4}(\.\d{1,3})?$/; 
-    return regex.test(precio);
-  };
   
-  const validateCalificacionPromedio = (calificacion) => {
-    const number = parseFloat(calificacion);
-    return number >= 0 && number <= 10 && /^\d(\.\d)?$/.test(calificacion);
-  }
   const CambiosDistritos = (e) => {
     console.log("estan ocurriendo cambios");
     setUbicacion({ ...ubicacion, distrito: e.target.value })
@@ -46,7 +36,7 @@ const FormAdmin = () => {
   } 
 
   const Añadir = async () =>{
-        if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || !ubicacion.canton || !ubicacion.distrito || !validatePrecioPromedio || !validateCalificacionPromedio) {
+        if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || descripcion.trim() === "" || !ubicacion.canton || !ubicacion.distrito ) {
             setSwalProps({ 
               show: true,
               title: 'Error',
@@ -54,7 +44,7 @@ const FormAdmin = () => {
             });
         }else{
           const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
-           await PostResta(nomResta, precioPro,capacidad, calificacion, ubicacion, especialidadesValues);
+           await PostResta(nomResta,precioPro,capacidad,descripcion,ubicacion, especialidadesValues);
            setSwalProps({ 
             show: true,
             title: 'Exito!',
@@ -79,18 +69,18 @@ const FormAdmin = () => {
           value={precioPro}
           onChange={e => setPrecioPro(e.target.value)}/>
 
-          <label htmlFor="">{t('Qualification')}</label>
-          <input type="text" 
-          placeholder={t('Qualification')}
-          value={calificacion} 
-          onChange={e => setCalificacio(e.target.value)}/>
-          <br />
-
           <label htmlFor="">{t('Ability')}</label>
           <input type="text" 
           placeholder={t('Ability')}
           value={capacidad} 
           onChange={e => setCapacidad(e.target.value)}/>
+          <br />
+
+          <label htmlFor="">{t('description')}</label>
+          <input type="text" 
+          placeholder={t('description')}
+          value={descripcion} 
+          onChange={e => setDescripcion(e.target.value)}/>
           <br />
 
           <label>{t('Specialty')}:</label>

@@ -147,3 +147,10 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication"
     ]
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]
+SIMPLE_JWT = {
+    'USER_ID_FIELD': 'usuario_id',
+}

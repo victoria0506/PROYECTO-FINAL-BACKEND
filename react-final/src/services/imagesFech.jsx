@@ -1,24 +1,20 @@
-const Token= "d58379a2f75349bbb55f641fd6c323527b1f495a"
 
-export const FechImg = async (imageFile, restauranteId) => {
-    
+export const uploadImage = async (file) => {
     const formData = new FormData();
-    formData.append('img', imageFile);
-    formData.append('restaurante_id', restauranteId);
-
-    const response = await fetch('http://localhost:8000/api/Imagenes/', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Authorization': `Token ${Token}`, 
-        },
-        body: formData,
-    });
-
-    if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'An error occurred while uploading the image.');
+    formData.append('imageFile', file);
+    try {
+        const response = await fetch('https://ik.imagekit.io/sox1oxatj/restaurapp', {
+            method: 'POST',
+            body: formData,
+        });
+        if (!response.ok) {
+            throw new Error('Error en la subida de la imagen');
+        }
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.error('Error al subir la imagen:', error);
+        throw error; 
     }
-
-    return await response.json();
 };
+
