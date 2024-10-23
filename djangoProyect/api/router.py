@@ -42,6 +42,3 @@ router.register(
 router.register(
     prefix= 'Platillos', basename= "platillosDesta", viewset=PlatillosView
 )
-# router.register(
-#     prefix='token_refresh', basename="token_refresh", viewset=CustomTokenRefreshView
-# )

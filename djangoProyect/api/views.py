@@ -10,6 +10,10 @@ from rest_framework.authentication import TokenAuthentication
 from .auth import registro_user, login_user, create_Authorization, create_Refresh
 from .authentication import CookieAuthentication
 from django.db.models import Avg
+from rest_framework.views import APIView
+from imagekitio import ImageKit
+import json
+
 
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
@@ -145,3 +149,20 @@ class calendarioView(ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
+class GenerateImageKitAuth(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        try:
+            with open("secrets.json", "r") as file:
+                secrets = json.load(file)
+            imagekit = ImageKit(
+                private_key=secrets["IMAGEKIT_PRIVATE_KEY"],
+                public_key=secrets["IMAGEKIT_PUBLIC_KEY"],
+                url_endpoint=secrets["IMAGEKIT_URL_ENDPOINT"],
+            )
+            auth_params = imagekit.get_authentication_parameters() 
+            return Response(auth_params, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
