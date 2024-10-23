@@ -6,7 +6,7 @@ import "../style/PerfilUsuario.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { compartirContexto } from "../context/contextProvider";
-import UploadImage from "./Imagenes";
+
 
 const PerfilUsuario = () => {
     const { usuario_id } = useParams();
@@ -149,8 +149,6 @@ const PerfilUsuario = () => {
                     Mis Favoritos
                 </button>
             </div>
-            <br /><br />
-            <UploadImage/>
         </div>
     );
 };
