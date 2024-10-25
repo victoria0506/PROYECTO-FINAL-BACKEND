@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import '../style/Quiz.css';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const Quiz = () => {
     const [modalOpen, setModalOpen] = useState(false);
@@ -8,6 +9,7 @@ const Quiz = () => {
     const [answers, setAnswers] = useState({});
     const [results, setResults] = useState([]);
     const [quizFinished, setQuizFinished] = useState(false);
+    const { t } = useTranslation();
 
     const questions = [
         {
@@ -93,14 +95,9 @@ const Quiz = () => {
         viewport={{ once: false }} // Allows the animation to trigger each time the element comes into view
       >
         <div className="quiz-container">
-            <h1 className="quiz-title">Descubre tu lugar ideal</h1>
-            <p className="quiz-description">
-                Responde estas preguntas rápidas y te daremos recomendaciones personalizadas.
-            </p>
-            <button className="quiz-button" onClick={handleOpenModal}>
-                ¡Haz el Quiz!
-            </button>
-
+        <h1 className="quiz-title">{t("Discover Your Ideal Place")}</h1>
+            <p className="quiz-description">{t("Answer these quick questions and we'll give you personalized recommendations.")}</p>
+            <button className="quiz-button" onClick={handleOpenModal}>{t("Take the Quiz!")}</button>
             {modalOpen && (
                 <>
                     <div className="quiz-backdrop" onClick={handleCloseModal}></div>

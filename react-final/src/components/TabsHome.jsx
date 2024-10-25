@@ -1,9 +1,11 @@
 import { useState } from "react";
 import "../style/TabsHome.css"; // Asegúrate de crear este archivo CSS
 import { motion } from 'framer-motion';
+import { useTranslation } from "react-i18next";
 
 const TabsHome = () => {
   const [activeTab, setActiveTab] = useState(""); // Estado inicial vacío
+  const { t } = useTranslation();
 
   const handleTabChange = (tabId) => {
     // Si la pestaña activa es la misma, la oculta al hacer clic de nuevo
@@ -24,7 +26,7 @@ const TabsHome = () => {
       viewport={{ once: false }} // Allows the animation to trigger each time the element comes into view
     >
     
-      <h2 className="titulotabshome">¿Cuál es Tu Comida Favorita? Encuentra el Restaurante Perfecto:</h2>
+      <h2 className="titulotabshome">{t("What's Your Favorite Food? Find the Perfect Restaurant:")}</h2>
         <div className="tabshome">
           {/* Pestaña 1 - Arroz */}
           <div className="tabhome arroz" onClick={() => handleTabChange("tab1")}>

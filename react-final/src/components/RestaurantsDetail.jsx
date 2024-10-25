@@ -115,16 +115,13 @@ const RestaurantsDetail = () => {
                     Restaurante & Sport Bar dentro del Hotel Cayuga con deliciosa variedad de comida y cócteles.
                 </h4>
                 <button className="añafavo-button" onClick={isFavorite ? () => eliminarFavoritos() : anadirFavoritos}>
-    <FontAwesomeIcon
-        icon={isFavorite ? solidHeart : regularHeart}
-        className={`heart-icon ${isFavorite ? "favorite" : ""}`}
-    />
-</button>
-
-
+                    <FontAwesomeIcon
+                        icon={isFavorite ? solidHeart : regularHeart}
+                        className={`heart-icon ${isFavorite ? "favorite" : ""}`}
+                    />
+                </button>
                 <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
-                
-                <Tabs/>
+                <Tabs restauranteId={restaurantDetail.restaurante_id}/>
                 <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
                     <Modal.Header closeButton className="custom-header" />
                     <Modal.Body className="custom-body">

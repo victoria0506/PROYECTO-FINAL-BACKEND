@@ -1,7 +1,9 @@
 
+import { useTranslation } from 'react-i18next';
 import '../style/CarouselPlatillos.css';
 
 const CarouselPlatillos = () => {
+  const { t } = useTranslation()
   const items = [
     {
       imgSrc: "/src/img/hamburguesacayuga.jpeg",
@@ -28,7 +30,7 @@ const CarouselPlatillos = () => {
 
   return (
     <div className="carousel-section2">
-      <h2 className="categories__title">Destacados y favoritos</h2>
+      <h2 className="categories__title">{t("Highlights and Favorites")}</h2>
       <div className="carousel__container">
         {items.map((item, index) => (
           <div className="carousel-item2" key={index}>

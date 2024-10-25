@@ -1,7 +1,10 @@
 import '../style/CarouselHomePlatosDest.css';
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 const CarouselHomePlatosDest = () => {
+  const { t } = useTranslation();
+
   const items = [
     {
       imgSrc: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQn8f-twWkEpnn4KxYBYT9PXuSIwo-f9FrDYQ&s",
@@ -65,10 +68,8 @@ const CarouselHomePlatosDest = () => {
     viewport={{ once: false }} // Allows the animation to trigger each time the element comes into view
   >
     <div className="carousel-section-unique">
-        <h1 className="carousel-title-unique">PLATO ESTRELLA</h1>
-      <h2 className="carousel-subtitle-unique">
-        Si estás en duda sobre qué comer, echa un vistazo a 
-        estos <br />  platos seleccionados de nuestros mejores restaurantes.</h2>
+      <h1 className="carousel-title-unique">{t('STAR DISH')}</h1>
+      <h2 className="carousel-subtitle-unique">{t("If you're unsure about what to eat, take a look at these selected dishes from our best restaurants.")}</h2>
       <div className="carousel-navigation-unique">
         <button className="carousel-btn-left-unique" onClick={scrollLeft}>
         «

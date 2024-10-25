@@ -13,7 +13,7 @@ from django.db.models import Avg
 from rest_framework.views import APIView
 from imagekitio import ImageKit
 import json
-
+from rest_framework.permissions import IsAdminUser
 
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
@@ -43,7 +43,6 @@ class LoginView(ModelViewSet):
     def create(self, request):
         email = request.data.get('email')
         contrasena = request.data.get('contrasena')
-        # print(f"Email: {email}, Contraseña: {contrasena}")
         usuario = login_user(email, contrasena)
         if usuario:
             access_token = create_Authorization(usuario)
@@ -56,7 +55,7 @@ class LoginView(ModelViewSet):
             response.set_cookie(key='refresh_token', value=refresh_token, httponly=True, secure=True)
             return Response({"access_token": access_token, "refresh_token": refresh_token}, status=200)
         return Response({"message": "Credenciales inválidas"}, status=400) 
-    
+
 class CantonView(ModelViewSet):
     queryset= Canton.objects.all()
     serializer_class= CantonSerializer
@@ -70,17 +69,16 @@ class distritoView(ModelViewSet):
     permission_classes = [IsAuthenticated]
     
 class RestauranteView(ModelViewSet):
-    queryset= restaurantes.objects.all()
-    serializer_class= restaurantesSerializer
+    queryset = restaurantes.objects.all()
+    serializer_class = restaurantesSerializer
     authentication_classes = [TokenAuthentication]
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-    
+    permission_classes = [IsAuthenticated] 
+
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         nuevo_restaurante = serializer.save()
-        
+    
         promedio_calificacion = calificaciones.objects.filter(
             restaurante_id=nuevo_restaurante
         ).aggregate(Avg('calificacion'))['calificacion__avg']
@@ -89,20 +87,6 @@ class RestauranteView(ModelViewSet):
         nuevo_restaurante.save()
 
         return Response(serializer.data, status=201)
-    
-    def update(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        updated_restaurante = serializer.save()
-    
-        promedio_calificacion = calificaciones.objects.filter(
-            restaurante_id=updated_restaurante
-        ).aggregate(Avg('calificacion'))['calificacion__avg']
-
-        updated_restaurante.calificacion_promedio = promedio_calificacion or 0 
-        updated_restaurante.save()
-        return Response(serializer.data)
 
 class ImagenesView(ModelViewSet):
     queryset= Imagenes.objects.all()
@@ -149,6 +133,13 @@ class calendarioView(ModelViewSet):
     serializer_class=calendarioSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        queryset = calendario.objects.all()
+        restaurante_id = self.request.query_params.get('restaurante_id', None)
+        if restaurante_id is not None:
+            queryset = queryset.filter(restaurante_id=restaurante_id)
+        return queryset
 
 class GenerateImageKitAuth(APIView):
     authentication_classes = [TokenAuthentication]

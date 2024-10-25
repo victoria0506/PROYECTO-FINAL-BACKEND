@@ -69,8 +69,8 @@ class favoritos(models.Model):
     restaurante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE)
     
 class calendario(models.Model):
-    calendario_id= models.AutoField(primary_key=True)
-    restaurante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE)
-    dia= models.DateField(auto_now_add=True)
-    alta_demanada= models.BooleanField(default=True)
-    
+    calendario_id = models.AutoField(primary_key=True)
+    dia = models.DateField()
+    alta_demanada = models.BooleanField(default=True)  
+    nota = models.TextField(null=True, blank=True) 
+    restaurante_id = models.ForeignKey(restaurantes, on_delete=models.CASCADE)

@@ -1,13 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../style/Calendario.css';
+import CalendarioPOST from '../services/CalendarioPost';
 
-const Calendario = () => {
+const Calendario = ({ restauranteId }) => {
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState(currentDate);
-  const [importantDates, setImportantDates] = useState({}); // Guardar días importantes
+  const [importantDates, setImportantDates] = useState({});
 
-  const markImportantDate = (day) => {
+  const markImportantDate = async (day) => {
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth();
     const dateKey = `${year}-${month}-${day}`;
@@ -18,8 +19,10 @@ const Calendario = () => {
         ...importantDates,
         [dateKey]: note,
       });
+      console.log(dateKey);
+      await CalendarioPOST(dateKey, restauranteId)
     }
-  };
+  }
 
   const generateDays = () => {
     const days = [];
@@ -36,7 +39,6 @@ const Calendario = () => {
     for (let day = 1; day <= totalDays; day++) {
       const dateKey = `${year}-${month}-${day}`;
       const isImportant = importantDates[dateKey];
-      
       days.push(
         <div
           key={day}
@@ -69,3 +71,5 @@ const Calendario = () => {
 };
 
 export default Calendario;
+
+

@@ -10,20 +10,21 @@ const ToggleSwitch = () => {
   const [usuario, setUsuario] = useState(null);
   const [admi, setAdmi] = useState(null);
   const { actualizador, setActu } = compartirContexto();
-  const [fotoPerfil, setFotoPerfil] = useState(null); // Estado para almacenar la foto de perfil
+  const [fotoPerfil, setFotoPerfil] = useState(null); 
 
   useEffect(() => {
-    const id = localStorage.getItem("Usuario Autenticado_id");
-    const adminId = localStorage.getItem("Admi-id");
+    const id = localStorage.getItem("Usuario Autenticado_id")
+    const adminId = localStorage.getItem("Admi-id")
+    const storedLang = localStorage.getItem('language')
 
+    if (storedLang) {
+      i18n.changeLanguage(storedLang);
+    }
     if (id !== usuario) {
       setUsuario(id);
-      
-      // Recuperar la foto de perfil del usuario desde localStorage
       const foto = localStorage.getItem(`fotoPerfil_${id}`);
-      setFotoPerfil(foto); // Guardar la foto en el estado
+      setFotoPerfil(foto); 
     }
-    
     if (adminId !== admi) {
       setAdmi(adminId);
     }
@@ -36,6 +37,7 @@ const ToggleSwitch = () => {
   const handleToggle = () => {
     const newLang = i18n.language === 'es' ? 'en' : 'es';
     i18n.changeLanguage(newLang);
+    localStorage.setItem('language', newLang)
   };
 
   return (
@@ -60,6 +62,7 @@ const ToggleSwitch = () => {
         id="language-switch"
         className="language-toggle"
         onChange={handleToggle} 
+        checked={i18n.language === 'en'}
       />
       <label htmlFor="language-switch" className="language-switch">
         <span className={`lang-label es ${i18n.language === 'es' ? 'active' : ''}`}>ES</span>

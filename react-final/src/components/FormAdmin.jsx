@@ -6,6 +6,7 @@ import "../style/admi.css";
 import Select from 'react-select';
 import UsedataRest from './UsedataRest';
 import { IKContext, IKUpload } from 'imagekitio-react';
+import Calendario from './Calendario';
 
 const FormAdmin = () => {
   const [nomResta, setNomresta] = useState("");
@@ -18,6 +19,7 @@ const FormAdmin = () => {
   const [imageURL, setImageURL] = useState("");
   const { t } = useTranslation();
   const { distritos, cantones, especialidades } = UsedataRest(ubicacion.canton);
+  const [restauranteId, setRestauranteId] = useState("")
 
   const CambiosDistritos = (e) => {
     console.log("estan ocurriendo cambios");
@@ -35,7 +37,7 @@ const FormAdmin = () => {
   };
 
   const Añadir = async () => {
-    if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || descripcion.trim() === "" || !ubicacion.canton || !ubicacion.distrito || imageURL.trim() === "") {
+    if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || descripcion.trim() === "" || !ubicacion.canton || !ubicacion.distrito) {
       setSwalProps({
         show: true,
         title: 'Error',
@@ -43,7 +45,9 @@ const FormAdmin = () => {
       });
     } else {
       const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
-      await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURL);
+      const restaNew = await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURL);
+      setRestauranteId(restaNew.restaurante_id)
+      console.log(restaNew.restaurante_id);
       setSwalProps({
         show: true,
         title: 'Éxito!',
@@ -63,7 +67,7 @@ const FormAdmin = () => {
 
   const authenticator = async () => {
     try {
-      const response = await fetch('https://ik.imagekit.io/sox1oxatj/restaurapp');
+      const response = await fetch('http://localhost:8000/api/ImagenApi/');
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(`Request failed with status ${response.status}: ${errorText}`);
@@ -153,6 +157,9 @@ const FormAdmin = () => {
         </div>
       </div>
       <SweetAlert2 {...swalProps} />
+      <div>
+        <Calendario restauranteId={restauranteId}/>
+      </div>
     </div>
   );
 }

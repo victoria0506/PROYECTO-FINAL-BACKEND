@@ -4,8 +4,11 @@ import "../style/Tabs.css";
 import MenuRestaurantes from "./MenuRestaurantes";
 import Map from "./Map";
 import Calendario from "./Calendario";
+import CalendarioUsuario from "./CalendarioUsuario";
 
-const Tabs = () => {
+const Tabs = (restauranteId) => {
+  console.log(restauranteId);
+  
   const [activeTab, setActiveTab] = useState(""); // Estado inicial vacío
   const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
 
@@ -73,7 +76,7 @@ const Tabs = () => {
             )}
             {activeTab === "tab4" && (
               <div id="tab__content--4">
-              <Calendario />
+              <CalendarioUsuario restauranteId={restauranteId}/>
               </div>
             )}
           </Modal.Body>
