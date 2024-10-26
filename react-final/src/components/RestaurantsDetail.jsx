@@ -32,6 +32,7 @@ const RestaurantsDetail = () => {
             throw new Error("Restaurante no encontrado");
         } else {
             setRestaurantDetail(Restaurantes);
+            console.log(Restaurantes);
         }
     };
 
@@ -108,8 +109,8 @@ const RestaurantsDetail = () => {
     return (
         <div>
             <div>
-                <img className="img-normalizada" src="/src/img/headercayuga.jpeg" alt="Logo" />
-                <img className="logorestaurante" src="/src/img/logocayuga.jpg" alt="Logo del Restaurante" />
+                <img className="img-normalizada" src={restaurantDetail.img_url} alt="Logo" />
+                <img className="logorestaurante" src={restaurantDetail.img_url} alt="Logo del Restaurante" />
                 <h3 className="nombrerestaurante">{restaurantDetail.nombre_restaurante}</h3>
                 <h4 className="introrestaurantes">
                     Restaurante & Sport Bar dentro del Hotel Cayuga con deliciosa variedad de comida y cócteles.
