@@ -15,6 +15,9 @@ from imagekitio import ImageKit
 import json
 from rest_framework.permissions import IsAdminUser
 
+from django.core.files.storage import default_storage
+
+
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
     serializer_class= TipoUserSerializer
@@ -91,7 +94,7 @@ class RestauranteView(ModelViewSet):
 class ImagenesView(ModelViewSet):
     queryset= Imagenes.objects.all()
     serializer_class= ImagenSerializer
-    authentication_classes = [CookieAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
         
 class PlatillosView(ModelViewSet):
@@ -156,5 +159,43 @@ class GenerateImageKitAuth(APIView):
             )
             auth_params = imagekit.get_authentication_parameters() 
             return Response(auth_params, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        
+    def post(self, request):
+        try:
+            # Leer credenciales desde secrets.json
+            with open("secrets.json", "r") as file:
+                secrets = json.load(file)
+            # Obtener el archivo de la solicitud
+            image_file = request.FILES.get('imageFile')
+            if not image_file:
+                return Response({"error": "No se encontró ningún archivo"}, status=status.HTTP_400_BAD_REQUEST)
+            # Guardar temporalmente el archivo
+            temp_file_path = default_storage.save(image_file.name, image_file)
+            # Instanciar ImageKit
+            imagekit = ImageKit(
+                private_key=secrets["IMAGEKIT_PRIVATE_KEY"],
+                public_key=secrets["IMAGEKIT_PUBLIC_KEY"],
+                url_endpoint=secrets["IMAGEKIT_URL_ENDPOINT"],
+            )
+            # Subir la imagen a ImageKit
+            upload_response = imagekit.upload_file(
+                file=open(temp_file_path, "rb"),  # Ruta temporal del archivo
+                file_name=image_file.name,
+                options={"folder": "/restaurapp"}
+            )
+            # Eliminar el archivo temporal si es necesario
+            default_storage.delete(temp_file_path)
+            # Verificar si la subida fue exitosa
+            if upload_response['error']:
+                return Response({"error": upload_response['error']['message']}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # Retornar la URL de la imagen subida
+            return Response({
+                "url": upload_response['response']['url'],
+                "fileId": upload_response['response']['fileId']
+            }, status=status.HTTP_201_CREATED)
+
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

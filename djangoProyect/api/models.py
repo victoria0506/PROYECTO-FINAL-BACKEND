@@ -32,11 +32,10 @@ class restaurantes(models.Model):
     accesibilidad= models.BooleanField(default=True)
     descripcion = models.CharField(max_length=200)
     id_distrito= models.ForeignKey(distrito, on_delete=models.CASCADE)
-
     
 class Imagenes(models.Model):
     id_imagen= models.AutoField(primary_key=True)
-    url_img = models.CharField(max_length=100)
+    url_img = models.URLField(max_length=500) 
     restaurante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE)
     
 class Platillos_destacados(models.Model):
