@@ -8,25 +8,29 @@ const FavoritosUser = () => {
   const { usuario_id } = useParams();
   const { t } = useTranslation();
   const [favoritos, setFavoritos] = useState([]);
-  console.log(favoritos);
-  const [restaurantDetails, setRestaurantDetails] = useState([]);
-  console.log(restaurantDetails);
   
+  const [restaurantDetails, setRestaurantDetails] = useState([]);
   const obtenerFavoritos = async () => {
     const data = await favoritosGET(usuario_id);
     setFavoritos(data); 
   };
 
   const obtenerDetallesRestaurantes = async () => {
+    const restaurantIds = favoritos.map(favorito => favorito.restaurante_id);
     const detalles = await Promise.all(
-      favoritos.map(favorito => RestaGet(favorito.restaurante_id))
+      restaurantIds.map(async (restaurante_id) => {
+        const restauranteArray = await RestaGet(restaurante_id);
+        console.log("Datos recibidos de RestaGet:", restauranteArray);
+        return restauranteArray; 
+      })
     );
-    setRestaurantDetails(detalles);
-  }
-
+    const todosLosRestaurantes = detalles.flat().filter(Boolean); 
+    setRestaurantDetails(todosLosRestaurantes); 
+  };
+  
   useEffect(() => {
     obtenerFavoritos();
-  }, [usuario_id]);
+  }, []);
 
   useEffect(() => {
     if (favoritos.length > 0) {
@@ -40,10 +44,10 @@ const FavoritosUser = () => {
         <h2>{t("Tus Restaurantes Favoritos")}</h2>
         {restaurantDetails.length === 0 ? (
           <p>No tienes favoritos</p>
-        ):(
+        ) : (
           <ul>
-            {restaurantDetails.map((restaurant, index) => (
-              <li key={`${restaurant.restaurante_id}-${index}`}>
+            {restaurantDetails.map((restaurant) => (
+              <li key={restaurant.restaurante_id}>
                 <h3>{restaurant.nombre_restaurante}</h3>
               </li>
             ))}
@@ -52,6 +56,7 @@ const FavoritosUser = () => {
       </div>
     </div>
   );
+  
 };
 
 export default FavoritosUser;

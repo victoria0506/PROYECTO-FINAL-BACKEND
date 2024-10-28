@@ -6,6 +6,9 @@ import "../style/PerfilUsuario.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { compartirContexto } from "../context/contextProvider";
+import Cookies from 'js-cookie';
+import swal from 'sweetalert';
+import DeleteUser from "../services/DeleteUser";
 
 const PerfilUsuario = () => {
     const { usuario_id } = useParams();
@@ -22,11 +25,8 @@ const PerfilUsuario = () => {
             navigate("/login");
         } else {
             obtenerDetallesUsuarios();
-
-            // Recuperar la foto de perfil desde localStorage
             const fotoPerfil = localStorage.getItem(`fotoPerfil_${usuario_id}`);
             const usuario = { usuario_id: parseInt(usuario_id), foto: fotoPerfil || null }; 
-
             setUsuarioDetail(usuario); 
         }
     }, [usuario_id, navigate]);
@@ -53,13 +53,49 @@ const PerfilUsuario = () => {
 
     const cerrar_sesion = () => {
         localStorage.removeItem("Usuario Autenticado_id");
-        sessionStorage.removeItem("access_token");
-        sessionStorage.removeItem("refresh_token");
+        Cookies.remove("access_token");
+        Cookies.remove("refresh_token");
         setActu(actualizador + 1);
         setTimeout(() => {
             navigate("/login");
         }, 1000);
     };
+
+    const eliminar_cuenta = async () => {
+      swal({
+        title: "¿Estás seguro?",
+        text: "No podrás revertir esto!",
+        icon: "warning",
+        buttons: {
+            cancel: {
+                text: "No, cancelar",
+                visible: true,
+                className: "btn btn-danger",
+                closeModal: true,
+            },
+            confirm: {
+                text: "Sí, eliminarlo!",
+                className: "btn btn-success",
+                closeModal: true,
+            },
+        },
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            DeleteUser(usuario_id);
+            Cookies.remove("access_token");
+            Cookies.remove("refresh_token");
+            swal("¡Eliminado!");
+            setActu(actualizador + 1);
+            setTimeout(() => {
+                navigate("/register");
+            }, 1000);
+            localStorage.removeItem("Usuario Autenticado_id");
+        } else {
+            swal("Cancelado", "error");
+        }
+    });
+    }
 
     const CambioFoto = (event) => {
         const archivo = event.target.files[0];
@@ -146,6 +182,9 @@ const PerfilUsuario = () => {
                 </button>
                 <button className="cerrar-secion" onClick={() => navigate(`/favoritos/${usuario_id}`)}>
                     Mis Favoritos
+                </button>
+                <button className="Eliminar" onClick={eliminar_cuenta}>
+                    Eliminar Cuenta
                 </button>
             </div>
             <br /><br />

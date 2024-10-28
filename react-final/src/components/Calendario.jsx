@@ -13,7 +13,6 @@ const Calendario = ({ restauranteId }) => {
     const month = selectedDate.getMonth();
     const dateKey = `${year}-${month}-${day}`;
     const note = prompt("Enter a note for this day:");
-    
     if (note) {
       setImportantDates({
         ...importantDates,
@@ -28,7 +27,6 @@ const Calendario = ({ restauranteId }) => {
     const days = [];
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth();
-    
     const firstDay = new Date(year, month, 1).getDay();
     const totalDays = new Date(year, month + 1, 0).getDate();
 

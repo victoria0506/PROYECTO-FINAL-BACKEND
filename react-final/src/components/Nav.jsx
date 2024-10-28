@@ -4,7 +4,6 @@ import ToggleSwitch from './ToggleSwitch';
 import { useTranslation } from 'react-i18next';
 import BusquedaRes from './BusquedaRes';
 
-
 function Nav() {
   const { t } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,7 +18,6 @@ function Nav() {
   }, []);
 
   // Detectar scroll para cambiar el color del navbar
-
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {

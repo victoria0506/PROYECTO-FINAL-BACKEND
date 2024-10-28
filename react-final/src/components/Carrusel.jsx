@@ -1,14 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
-//import { useTranslation } from 'react-i18next';
+
 const Carrusel2 = () => {
-//const { i18n } = useTranslation();
-  // Imágenes de fondo para cada idioma
-  /*const backgroundImages = {
-    es: "src/img/eligeespañol.png", // Imagen en español
-    en: "src/img/elige.jpeg", // Imagen en inglés
-  };*/
-  // Seleccionar la imagen de fondo según el idioma actual
-  //const selectedBackground = backgroundImages[i18n.language] || backgroundImages.es;
   return (
     <div className='carrusel'>
       <Carousel data-bs-theme="dark">

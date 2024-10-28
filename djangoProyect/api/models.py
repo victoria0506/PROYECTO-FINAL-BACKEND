@@ -10,6 +10,7 @@ class Usuarios(models.Model):
     email= models.CharField(max_length=225,unique=True)
     contrasena= models.CharField(max_length=200)
     id_tipoUsuario= models.ForeignKey(TipoUsuario, on_delete=models.CASCADE, default=1)
+    is_staff = models.BooleanField(default=False)
     
     def is_authenticated(self):
         return True 
@@ -32,7 +33,6 @@ class restaurantes(models.Model):
     accesibilidad= models.BooleanField(default=True)
     descripcion = models.CharField(max_length=200)
     id_distrito= models.ForeignKey(distrito, on_delete=models.CASCADE)
-
     
 class Imagenes(models.Model):
     id_imagen= models.AutoField(primary_key=True)

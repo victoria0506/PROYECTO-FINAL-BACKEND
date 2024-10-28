@@ -111,7 +111,6 @@ const FormAdmin = () => {
           onChange={e => setNomresta(e.target.value)} 
         />
         <br />
-
         <label>{t('Average price')}: </label>
         <input 
           type="text" 
@@ -119,7 +118,6 @@ const FormAdmin = () => {
           value={precioPro} 
           onChange={e => setPrecioPro(e.target.value)} 
         />
-
         <label htmlFor="">{t('Ability')}</label>
         <input 
           type="text" 
@@ -128,7 +126,6 @@ const FormAdmin = () => {
           onChange={e => setCapacidad(e.target.value)} 
         />
         <br />
-
         <label htmlFor="">{t('description')}</label>
         <input 
           type="text" 
@@ -137,7 +134,6 @@ const FormAdmin = () => {
           onChange={e => setDescripcion(e.target.value)} 
         />
         <br />
-
         <label>{t('Specialty')}:</label>
         <Select
           onChange={setEspeciSelect}
@@ -150,7 +146,6 @@ const FormAdmin = () => {
           className="basic"
         />
         <br />
-
         <label>Cantones:  </label>
         <select onChange={CambiosCantones}>
           <option value="">Seleccione un canton</option>
@@ -158,7 +153,6 @@ const FormAdmin = () => {
             <option key={canton.id_canton} value={canton.id_canton}>{canton.nombre_canton}</option>
           ))}
         </select>
-
         <label>Distrito:  </label>
         <select onChange={CambiosDistritos}>
           <option value="">Seleccione un distrito</option>
@@ -166,7 +160,6 @@ const FormAdmin = () => {
             <option key={distrito.id_distrito} value={distrito.id_distrito}>{distrito.nombre_distrito}</option>
           ))}
         </select>
-  
         <label>Subir imagen de perfil:</label>
         <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
           <IKUpload
@@ -176,7 +169,6 @@ const FormAdmin = () => {
             folder='/restaurapp'
           />
         </IKContext>
-
         <label>Subir imagen de encabezado:</label>
         <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
           <IKUpload
@@ -186,7 +178,6 @@ const FormAdmin = () => {
             folder='/restaurapp'
           />
         </IKContext>
-
         <button className='buttonaddadmi' onClick={Añadir}>{t('Add')}</button>
       </div>
       <SweetAlert2 {...swalProps} />

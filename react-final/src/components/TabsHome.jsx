@@ -10,9 +10,9 @@ const TabsHome = () => {
   const handleTabChange = (tabId) => {
     // Si la pestaña activa es la misma, la oculta al hacer clic de nuevo
     if (activeTab === tabId) {
-      setActiveTab(""); // Vaciar el estado para ocultar el contenido
+      setActiveTab(""); 
     } else {
-      setActiveTab(tabId); // Establecer la nueva pestaña activa
+      setActiveTab(tabId); 
     }
   };
 

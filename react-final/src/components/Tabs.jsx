@@ -61,7 +61,6 @@ const Tabs = (restauranteId) => {
             {/* Mostrar contenido dinámico según la pestaña activa */}
             {activeTab === "tab1" && (
               <div id="tab__content--1">
-                
               </div>
             )}
             {activeTab === "tab2" && (

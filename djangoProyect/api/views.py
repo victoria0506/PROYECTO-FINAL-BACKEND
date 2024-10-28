@@ -30,7 +30,10 @@ class RegisterView(ModelViewSet):
     def register(self, request):
         serializer = UsuariosSerializer(data=request.data)
         if serializer.is_valid():
-            registro_user(serializer.validated_data)
+            email = serializer.validated_data.get('email')
+            is_staff = email == 'Admi@RestaurApp.com'
+            serializer.validated_data['is_staff'] = is_staff
+            usuario = serializer.save()  
             return Response({"message": "Registro exitoso"}, status=201)
         return Response(serializer.errors, status=400)
     
@@ -72,22 +75,8 @@ class RestauranteView(ModelViewSet):
     queryset = restaurantes.objects.all()
     serializer_class = restaurantesSerializer
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated] 
-
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        nuevo_restaurante = serializer.save()
-    
-        promedio_calificacion = calificaciones.objects.filter(
-            restaurante_id=nuevo_restaurante
-        ).aggregate(Avg('calificacion'))['calificacion__avg']
-        
-        nuevo_restaurante.calificacion_promedio = promedio_calificacion or 0  
-        nuevo_restaurante.save()
-
-        return Response(serializer.data, status=201)
-
+    permission_classes = [IsAdminUser] 
+  
 class ImagenesView(ModelViewSet):
     queryset= Imagenes.objects.all()
     serializer_class= ImagenSerializer

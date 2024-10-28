@@ -108,7 +108,7 @@ const RestaurantsDetail = () => {
     
     return (
         <div>
-            <div>
+            <div className="conta">
                 <img className="img-normalizada" src={restaurantDetail.img_url} alt="Logo" />
                 <img className="logorestaurante" src={restaurantDetail.img_url} alt="Logo del Restaurante" />
                 <h3 className="nombrerestaurante">{restaurantDetail.nombre_restaurante}</h3>

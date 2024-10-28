@@ -56,7 +56,6 @@ function RegistroForm() {
     <div className="login4">
        <div className="logn6">
        <img className="logologinregister" src="/src/img/logonav.png" alt="" />
-  
         <h5>{mensaje}</h5>
         <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder={t('User')}/>
         <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder={t('Email')}/>

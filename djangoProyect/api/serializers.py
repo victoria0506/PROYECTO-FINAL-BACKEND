@@ -25,7 +25,11 @@ class UsuariosSerializer(ModelSerializer):
         return value
     
     def create(self, validated_data):
+        email = validated_data.get('email')
+        validated_data['is_staff'] = email == 'Admi@RestaurApp.com'
         validated_data['contrasena'] = make_password(validated_data['contrasena'])
+        tipo_usuario_id = 2 if validated_data['is_staff'] else 1 
+        validated_data['id_tipoUsuario'] = TipoUsuario.objects.get(id_tipoUsuario=tipo_usuario_id)
         user = Usuarios.objects.create(**validated_data)
         return user
     

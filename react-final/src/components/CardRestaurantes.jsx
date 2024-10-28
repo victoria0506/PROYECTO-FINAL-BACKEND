@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 const CardsRestaurantes = () => {
     const [restaurantes, setRestaurantes] = useState([])
     const { t } = useTranslation();
-
     const obtenerRestaurant = async () => {
         const restaurantObte = await RestaGet();
         setRestaurantes(restaurantObte);
