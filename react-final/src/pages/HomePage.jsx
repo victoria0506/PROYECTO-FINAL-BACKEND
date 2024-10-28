@@ -1,24 +1,26 @@
-import Home from "../components/Home"
-import Carrusel2 from "../components/Carrusel"
-import CardsRestaurantes from "../components/CardRestaurantes"
-import Nav from "../components/Nav"
-import TabsHome from "../components/TabsHome"
-import Quiz from "../components/Quiz"
-import CarouselHomePlatosDest from "../components/CarouselHomePlatosDest"
+import { useState } from "react";
+import Home from "../components/Home";
+import Carrusel2 from "../components/Carrusel";
+import CardsRestaurantes from "../components/CardRestaurantes";
+import Nav from "../components/Nav";
+import TabsHome from "../components/TabsHome";
+import Quiz from "../components/Quiz";
+import CarouselHomePlatosDest from "../components/CarouselHomePlatosDest";
 
 function HomePage() {
+  const [especialidadSeleccionada, setEspecialidadSeleccionada] = useState("");
+
   return (
     <div>
-      <Nav/>
-     <Home/>
-     <TabsHome/>
-     <Carrusel2/>
-     <CarouselHomePlatosDest/>
-    
-     <Quiz/>
-     <CardsRestaurantes/>
+      <Nav />
+      <Home />
+      <TabsHome setEspecialidadSeleccionada={setEspecialidadSeleccionada} />
+      <Carrusel2 />
+      <CarouselHomePlatosDest />
+      <Quiz />
+      <CardsRestaurantes especialidadSeleccionada={especialidadSeleccionada} />
     </div>
-  )
+  );
 }
 
-export default HomePage
+export default HomePage;

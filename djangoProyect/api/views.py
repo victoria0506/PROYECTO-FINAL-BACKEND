@@ -14,6 +14,9 @@ from rest_framework.views import APIView
 from imagekitio import ImageKit
 import json
 from rest_framework.permissions import IsAdminUser
+from django.core.files.storage import default_storage
+import requests
+
 
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
@@ -80,8 +83,15 @@ class RestauranteView(ModelViewSet):
 class ImagenesView(ModelViewSet):
     queryset= Imagenes.objects.all()
     serializer_class= ImagenSerializer
-    authentication_classes = [CookieAuthentication]
+    authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        restaurante_id = self.request.query_params.get('restaurante_id', None)
+        if restaurante_id is not None:
+            queryset = queryset.filter(restaurante_id=restaurante_id)
+        return queryset
         
 class PlatillosView(ModelViewSet):
     queryset= Platillos_destacados.objects.all()
@@ -147,3 +157,61 @@ class GenerateImageKitAuth(APIView):
             return Response(auth_params, status=status.HTTP_200_OK)
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+        
+def post(self, request):
+    try:
+        # Leer credenciales desde secrets.json
+        with open("secrets.json", "r") as file:
+            secrets = json.load(file)
+
+        # Obtener el archivo de la solicitud
+        image_file = request.FILES.get('imageFile')
+        if not image_file:
+            return Response({"error": "No se encontró ningún archivo"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Validar restaurante_id y tipo_imagen
+        restaurante_id = request.data.get('restaurante_id')
+        tipo_imagen = request.data.get('tipo_imagen')
+        
+        if not restaurante_id:
+            return Response({"error": "restaurante_id es necesario"}, status=status.HTTP_400_BAD_REQUEST)
+        if not tipo_imagen:
+            return Response({"error": "tipo_imagen es necesario"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Guardar temporalmente el archivo
+        temp_file_path = default_storage.save(image_file.name, image_file)
+
+        # Instanciar ImageKit
+        imagekit = ImageKit(
+            private_key=secrets["IMAGEKIT_PRIVATE_KEY"],
+            public_key=secrets["IMAGEKIT_PUBLIC_KEY"],
+            url_endpoint=secrets["IMAGEKIT_URL_ENDPOINT"],
+        )
+
+        # Subir la imagen a ImageKit
+        upload_response = imagekit.upload_file(
+            file=open(temp_file_path, "rb"),
+            file_name=image_file.name,
+        )
+
+        # Eliminar el archivo temporal
+        default_storage.delete(temp_file_path)
+
+        if upload_response.get('error'):
+            return Response({"error": upload_response['error']['message']}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        # Guardar la URL, restaurante_id y tipo_imagen en el modelo Imagenes
+        nueva_imagen = Imagenes.objects.create(
+            url_img=upload_response['response']['url'],
+            restaurante_id=restaurante_id,
+            tipo_imagen=tipo_imagen  # Guardar el tipo de imagen
+        )
+
+        return Response({
+            "url": nueva_imagen.url_img,
+            "fileId": upload_response['response']['fileId']
+        }, status=status.HTTP_201_CREATED)
+
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
