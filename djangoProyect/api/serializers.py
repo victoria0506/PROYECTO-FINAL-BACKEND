@@ -47,7 +47,7 @@ class restaurantesSerializer(ModelSerializer):
 class ImagenSerializer(ModelSerializer):
     class Meta:
         model= Imagenes
-        fields= '__all__'
+        fields = ['id_imagen', 'url_img', 'restaurante_id', 'tipo_imagen']
         
 class PlatillosSeralizer(ModelSerializer):
     class Meta:

@@ -6,9 +6,7 @@ import "../style/admi.css";
 import Select from 'react-select';
 import UsedataRest from './UsedataRest';
 import { IKContext, IKUpload } from 'imagekitio-react';
-import Calendario from './Calendario';
-import RestaurantsDetail from './RestaurantsDetail';
-
+import authenticator from '../services/FetchImagekit';
 const FormAdmin = () => {
   const [nomResta, setNomresta] = useState("");
   const [precioPro, setPrecioPro] = useState("");
@@ -17,12 +15,12 @@ const FormAdmin = () => {
   const [swalProps, setSwalProps] = useState({});
   const [ubicacion, setUbicacion] = useState({ canton: "", distrito: "" });
   const [especiSelect, setEspeciSelect] = useState([]);
-  const [profileImageURL, setProfileImageURL] = useState(""); // URL de la imagen de perfil
-  const [headerImageURL, setHeaderImageURL] = useState(""); // URL de la imagen de encabezado
+  const [imageURLPerfil, setImageURLPerfil] = useState(""); // Para la imagen de perfil
+  const [imageURLHeader, setImageURLHeader] = useState(""); // Para la imagen de encabezado
   const { t } = useTranslation();
   const { distritos, cantones, especialidades } = UsedataRest(ubicacion.canton);
-  const [restauranteId, setRestauranteId] = useState("")
 
+  // Manejo de cambios
   const CambiosDistritos = (e) => setUbicacion({ ...ubicacion, distrito: e.target.value });
   const CambiosCantones = (e) => setUbicacion({ canton: e.target.value, distrito: "" });
   const CambiosEspecialidades = (e) => {
@@ -32,18 +30,22 @@ const FormAdmin = () => {
 
   // Añadir el restaurante
   const Añadir = async () => {
-    if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || descripcion.trim() === "" || !ubicacion.canton || !ubicacion.distrito) {
+    if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || descripcion.trim() === "" || !ubicacion.canton || !ubicacion.distrito || imageURLPerfil.trim() === "" || imageURLHeader.trim() === "") {
       setSwalProps({
         show: true,
         title: 'Error',
         text: 'Ingrese sus datos de manera correcta',
       });
+    } else if (isNaN(precioPro) || isNaN(capacidad)) {
+      setSwalProps({
+        show: true,
+        title: 'Error',
+        text: 'El precio promedio y la capacidad deben ser números válidos',
+      });
     } else {
       const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
       try {
-        // Llamar a PostResta con las URLs de las imágenes
-        const date = await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues);
-        setRestauranteId(date.restaurante_id)
+        await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader); // Enviar ambas URLs
         setSwalProps({
           show: true,
           title: 'Éxito!',
@@ -69,37 +71,18 @@ const FormAdmin = () => {
     });
   };
 
-  const handleImageUploadSuccessProfile = async (res) => {
-    setProfileImageURL(res.url); // Guardar la URL de la imagen de perfil
-    // await uploadImage(res.url,restauranteId)
+  const handleImageUploadSuccessPerfil = (res) => {
+    setImageURLPerfil(res.url); // Guardar la URL de la imagen de perfil subida
     console.log("Imagen de perfil subida exitosamente:", res.url);
   };
+
   const handleImageUploadSuccessHeader = (res) => {
-    setHeaderImageURL(res.url); // Guardar la URL de la imagen de encabezado
+    setImageURLHeader(res.url); // Guardar la URL de la imagen de encabezado subida
     console.log("Imagen de encabezado subida exitosamente:", res.url);
   };
 
-  const authenticator = async () => {
-    try {
-      const Token= "a53ecb17b9b53418b44507fe226c0cf6490508f1";
-      const response = await fetch('http://localhost:8000/api/ImagenApi/', {
-        headers: {
-          'Authorization': `Token ${Token}`
-        }
-      });
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Request failed with status ${response.status}: ${errorText}`);
-      }
 
-      const data = await response.json();
-      const { signature, expire, token } = data;
-      return { signature, expire, token };
-    } catch (error) {
-      throw new Error(`Authentication request failed: ${error.message}`);
-    }
-  };
-
+  
   return (
     <div>
       <div className='Datos'>
@@ -151,7 +134,7 @@ const FormAdmin = () => {
         />
         <br />
 
-        <label>Cantones:  </label>
+        <label htmlFor="">Cantones:  </label>
         <select onChange={CambiosCantones}>
           <option value="">Seleccione un canton</option>
           {cantones.map(canton => (
@@ -159,7 +142,7 @@ const FormAdmin = () => {
           ))}
         </select>
 
-        <label>Distrito:  </label>
+        <label htmlFor="">Distrito:  </label>
         <select onChange={CambiosDistritos}>
           <option value="">Seleccione un distrito</option>
           {distritos.map(distrito => (
@@ -167,38 +150,34 @@ const FormAdmin = () => {
           ))}
         </select>
   
+        {/* Sección para subir la imagen de perfil */}
         <label>Subir imagen de perfil:</label>
         <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
           <IKUpload
             onError={handleImageUploadError}
-            onSuccess={handleImageUploadSuccessProfile}
+            onSuccess={handleImageUploadSuccessPerfil} // Cambiar a la función de éxito para la imagen de perfil
             authenticator={authenticator}
-            folder='/restaurapp'
           />
         </IKContext>
 
+        {/* Sección para subir la imagen de encabezado */}
         <label>Subir imagen de encabezado:</label>
         <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
           <IKUpload
             onError={handleImageUploadError}
-            onSuccess={handleImageUploadSuccessHeader}
+            onSuccess={handleImageUploadSuccessHeader} // Cambiar a la función de éxito para la imagen de encabezado
             authenticator={authenticator}
-            folder='/restaurapp'
           />
         </IKContext>
 
         <button className='buttonaddadmi' onClick={Añadir}>{t('Add')}</button>
       </div>
       <SweetAlert2 {...swalProps} />
-      <div>
-        <Calendario restauranteId={restauranteId}/>
-      </div>
     </div>
   );
 };
 
 export default FormAdmin;
-
 
 
 
