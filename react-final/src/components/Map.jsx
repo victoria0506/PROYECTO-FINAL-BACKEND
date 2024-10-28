@@ -14,11 +14,9 @@ const Map = () => {
             scrollWheelZoom: true,
             touchZoom: true,
         });
-
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
         }).addTo(map);
-
         // Marcador para el Hotel Las Brisas
         const HotelLasBrisasMarker = L.marker([9.974891256683694, -84.84748927705085], {
             icon: L.icon({

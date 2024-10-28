@@ -1,25 +1,28 @@
 
 
 .perfil-container {
-    max-width: 600px; /* Ancho máximo del contenedor */
-    margin: 20px auto; 
-    padding: 20px; 
-    border: 1px solid #ddd; 
-    border-radius: 8px; 
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); 
-    background-color: #f9f9f9; 
-    margin-top: 15%;
+    max-width: 800px; /* Ancho máximo del contenedor */
+    margin: 20px auto; /* Centrar horizontalmente */
+    padding: 10px; /* Espaciado interno */
+    
+    /* Elimina las siguientes dos líneas para quitar el cuadro del contenedor */
+    /* border: 1px solid #ddd; Eliminar el borde */
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); Eliminar la sombra */
+
+    background-color: #ffffff; /* Color de fondo */
+    margin-top: 12%;
 }
 
+
 .perfil-titulo {
-    font-size: 24px; 
+    font-size: 40px; 
     color: #333; 
     margin-bottom: 10px; 
     text-align: center;
 }
 
 .perfil-email {
-    font-size: 18px; 
+    font-size: 20px; 
     color: #555; 
     margin-bottom: 20px; 
     text-align: center;
@@ -34,34 +37,30 @@
 
 /* PerfilUsuario.css */
 
-.perfil-container {
-    max-width: 600px; /* Ancho máximo del contenedor */
-    margin: 20px auto; /* Centrar horizontalmente */
-    padding: 20px; /* Espaciado interno */
-    border: 1px solid #ddd; /* Borde sutil */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
-    background-color: #f9f9f9; /* Fondo claro */
-}
 
+/* Foto de perfil */
 .foto-perfil {
-    width: 100px; /* Ancho del circulito */
-    height: 100px; /* Alto del circulito */
+    width: 140px; /* Ancho del círculo */
+    height: 140px; /* Alto del círculo */
     border-radius: 50%; /* Borde redondeado para crear un círculo */
     border: 2px solid #ddd; /* Borde sutil */
     background-color: #f0f0f0; /* Color de fondo si no hay imagen */
     display: flex; /* Para centrar el icono o imagen dentro del círculo */
     justify-content: center; /* Centrar horizontalmente */
     align-items: center; /* Centrar verticalmente */
-    margin: 0 auto 20px; /* Centrar el circulito y añadir espaciado inferior */
+    margin: 0 auto 5px; /* Centrar el círculo y añadir espaciado inferior */
+    overflow: hidden; /* Ocultar cualquier parte de la imagen que se salga del contenedor */
+    object-fit: cover; /* Asegura que la imagen cubra todo el contenedor sin deformarse */
     cursor: pointer; /* Cambiar el cursor al pasar por encima */
 }
 
 .foto-perfil img {
     width: 100%; /* Asegura que la imagen llene el círculo */
     height: 100%; /* Asegura que la imagen llene el círculo */
-    border-radius: 50%; /* Borde redondeado para que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen cubra el contenedor sin distorsión */
+    border-radius: 50%; /* Mantiene la imagen en forma circular */
 }
+
 
 .icono-agregar {
     font-size: 30px; /* Tamaño del icono de agregar */
@@ -74,24 +73,40 @@
     margin-top: 20px; /* Margen superior */
     font-size: 16px; /* Tamaño de fuente */
 }
-.cerrar-secion {
+
+.containerlogfav{
+display: flex;
+grid-template-columns: 50px 50px;
+justify-content: center;
+}
+
+.btnlogout{
     padding: 10px 15px; 
     margin: 5px; 
-    background-color: #5c483a; 
-    color: white; 
+    background-color: #c0c0c0; 
+    color: rgb(0, 0, 0); 
     border: none; 
-    border-radius: 5px; 
+    border-radius: 25px; 
     cursor: pointer; 
     text-align: center; 
     width: auto; 
-    min-width: 100px; 
-    
-}
-    
 
-.cerrar-secion:hover {
-    background-color: #5c483a; 
+    font-weight: 600;  
 }
+.cerrar-secion {
+    padding: 10px 15px; 
+    margin: 5px; 
+    background-color: #c0c0c0; 
+    color: rgb(0, 0, 0); 
+    border: none; 
+    border-radius: 25px; 
+    cursor: pointer; 
+    text-align: center; 
+    width: auto; 
+    
+    font-weight: 600;
+}
+    
 
 .btn-container{
     display: flex;
@@ -99,4 +114,31 @@
     align-items: center; 
     flex-direction: column; 
     gap: 10px; 
+}
+
+
+.mini-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+.mini-modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.mini-modal-content p {
+    cursor: pointer; /* Cambia el cursor a puntero */
+    margin: 10px 0; /* Espaciado entre las opciones */
 }

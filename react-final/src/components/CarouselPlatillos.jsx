@@ -1,38 +1,36 @@
 
+import { useTranslation } from 'react-i18next';
 import '../style/CarouselPlatillos.css';
 
 const CarouselPlatillos = () => {
+  const { t } = useTranslation()
   const items = [
     {
-      imgSrc: "https://images.pexels.com/photos/708392/pexels-photo-708392.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      imgSrc: "/src/img/hamburguesacayuga.jpeg",
+      title: "Hamburguesa Cayuga",
+      subtitle: ""
+    },
+    {
+      imgSrc: "/src/img/hamburguesacayuga.jpeg",
       title: "Descriptive Title",
       subtitle: "Date and Duration"
     },
     {
-      imgSrc: "https://images.pexels.com/photos/1785001/pexels-photo-1785001.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+      imgSrc: "/src/img/hamburguesacayuga.jpeg",
       title: "Descriptive Title",
       subtitle: "Date and Duration"
     },
     {
-      imgSrc: "https://images.pexels.com/photos/417344/pexels-photo-417344.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+      imgSrc: "/src/img/hamburguesacayuga.jpeg",
       title: "Descriptive Title",
       subtitle: "Date and Duration"
     },
-    {
-      imgSrc: "https://images.pexels.com/photos/1071882/pexels-photo-1071882.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-      title: "Descriptive Title",
-      subtitle: "Date and Duration"
-    },
-    {
-        imgSrc: "https://images.pexels.com/photos/708392/pexels-photo-708392.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-        title: "Descriptive Title",
-        subtitle: "Date and Duration"
-      },
+
   ];
 
   return (
     <div className="carousel-section2">
-      <h2 className="categories__title">Destacados y favoritos</h2>
+      <h2 className="categories__title">{t("Highlights and Favorites")}</h2>
       <div className="carousel__container">
         {items.map((item, index) => (
           <div className="carousel-item2" key={index}>

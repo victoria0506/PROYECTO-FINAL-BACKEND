@@ -19,7 +19,6 @@ const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
     const {distritos, cantones, especialidades} = UsedataRest(ubicacion.canton)
     const {actualizador, setActu, apiData, setApiData} = compartirContexto()
 
-
     const EnvioActu = async (e) => {
         e.preventDefault();
 

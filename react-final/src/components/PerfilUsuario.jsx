@@ -1,77 +1,199 @@
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react";
-import userGET from "../services/getUser";
+import GET from "../services/GET";
 import { useTranslation } from "react-i18next";
-import "../style/PerfilUsuario.css"
+import "../style/PerfilUsuario.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from "react-router-dom";
 import { compartirContexto } from "../context/contextProvider";
-
+import Cookies from 'js-cookie';
+import swal from 'sweetalert';
+import DeleteUser from "../services/DeleteUser";
 
 const PerfilUsuario = () => {
-
-    const {usuario_id} = useParams()
-    const [usuariosDetail, setUsuarioDetail] = useState(null);
+    const { usuario_id } = useParams();
+    const [usuariosDetail, setUsuarioDetail] = useState({}); // Inicializar como objeto vacío
+    const [loading, setLoading] = useState(true); // Estado de carga
+    const [modalVisible, setModalVisible] = useState(false); // Estado para el modal
     const { t } = useTranslation();
     const navigate = useNavigate();
-    const [usuario, setUsuario] = useState(null);
-    const {actualizador, setActu, apiData, setApiData} = compartirContexto()
+    const { actualizador, setActu } = compartirContexto();
 
     useEffect(() => {
-        const usurio_authen = localStorage.getItem("Usuario Autenticado_id")
-        if (!usurio_authen) {
-            navigate("/login") // Navegacion hacia la pagina de Home, despues de un segundo
-        }else{
+        const usuario_authen = localStorage.getItem("Usuario Autenticado_id");
+        if (!usuario_authen) {
+            navigate("/login");
+        } else {
             obtenerDetallesUsuarios();
+            const fotoPerfil = localStorage.getItem(`fotoPerfil_${usuario_id}`);
+            const usuario = { usuario_id: parseInt(usuario_id), foto: fotoPerfil || null }; 
+            setUsuarioDetail(usuario); 
         }
     }, [usuario_id, navigate]);
-    
+
     const obtenerDetallesUsuarios = async () => {
-        const Users = await userGET();
-        const Usuarios = Users.find(usu => String(usu.usuario_id) === usuario_id);
-        if (!Usuarios) {
-            throw new Error("Usuario no encontrado");
-        }else{
-            setUsuarioDetail(Usuarios);
+        try {
+            const Users = await GET();
+            const Usuarios = Users.find(usu => usu.usuario_id === parseInt(usuario_id));
+            if (!Usuarios) {
+                setUsuarioDetail(null);
+            } else {
+                const fotoPerfil = localStorage.getItem(`fotoPerfil_${usuario_id}`);
+                setUsuarioDetail({
+                    ...Usuarios,
+                    foto: fotoPerfil 
+                });
+            }
+        } catch (error) {
+            console.error("Error al obtener detalles del usuario:", error);
+        } finally {
+            setLoading(false);
         }
     };
 
     const cerrar_sesion = () => {
-        localStorage.removeItem("Usuario Autenticado_id")
-        setUsuario(null)
-        setActu(actualizador + 1)
+        localStorage.removeItem("Usuario Autenticado_id");
+        Cookies.remove("access_token");
+        Cookies.remove("refresh_token");
+        setActu(actualizador + 1);
         setTimeout(() => {
-            navigate("/login") // Navegacion hacia la pagina de Home, despues de un segundo
+            navigate("/login");
         }, 1000);
-      }
+    };
 
-    if(!usuariosDetail){
-        return <div>No se encontró el usuario.</div> 
-    } 
+    const eliminar_cuenta = async () => {
+      swal({
+        title: "¿Estás seguro?",
+        text: "No podrás revertir esto!",
+        icon: "warning",
+        buttons: {
+            cancel: {
+                text: "No, cancelar",
+                visible: true,
+                className: "btn btn-danger",
+                closeModal: true,
+            },
+            confirm: {
+                text: "Sí, eliminarlo!",
+                className: "btn btn-success",
+                closeModal: true,
+            },
+        },
+        dangerMode: true,
+    }).then((willDelete) => {
+        if (willDelete) {
+            DeleteUser(usuario_id);
+            Cookies.remove("access_token");
+            Cookies.remove("refresh_token");
+            swal("¡Eliminado!");
+            setActu(actualizador + 1);
+            setTimeout(() => {
+                navigate("/register");
+            }, 1000);
+            localStorage.removeItem("Usuario Autenticado_id");
+        } else {
+            swal("Cancelado", "error");
+        }
+    });
+    }
 
-  return (
-    <div>
-        <div className="perfil-container">
-        <div className="foto-perfil" onClick={() => alert("Cambiar foto")}>
-                {usuariosDetail.foto ? (
-                    <img src={usuariosDetail.foto} alt="Foto de perfil" />
-                ) : (
-                    <FontAwesomeIcon className="icono-agregar" icon={faUser} />
+    const CambioFoto = (event) => {
+        const archivo = event.target.files[0];
+        if (archivo) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                const fotoBase64 = reader.result;
+                setUsuarioDetail((prevDetail) => ({
+                    ...prevDetail,
+                    foto: fotoBase64 
+                }));
+                localStorage.setItem(`fotoPerfil_${usuario_id}`, fotoBase64); 
+            };
+            reader.readAsDataURL(archivo);
+            setModalVisible(false); 
+        }
+    };
+
+    const eliminarFoto = () => {
+        setUsuarioDetail((prevDetail) => ({
+            ...prevDetail,
+            foto: null 
+        }));
+        localStorage.removeItem(`fotoPerfil_${usuario_id}`);
+        setModalVisible(false); 
+    };
+
+    const cambiarFoto = () => {
+        document.getElementById('inputFoto').click(); 
+    };
+
+    const clickfuera = (e) => {
+        if (modalVisible && e.target.id === "miniModal") {
+            setModalVisible(false); 
+        }
+    };
+
+    if (loading) {
+        return <div>Cargando...</div>; 
+    }
+
+    if (!usuariosDetail) {
+        return <div>No se encontró el usuario.</div>;
+    }
+
+    return (
+        <div onClick={clickfuera}>
+            <div className="perfil-container">
+                <div className="foto-perfil" onClick={() => {
+                    if (usuariosDetail.foto) {
+                        setModalVisible(true);
+                    } else {
+                        cambiarFoto(); 
+                    }
+                }}>
+                    {usuariosDetail.foto ? (
+                        <img src={usuariosDetail.foto} alt="Foto de perfil" />
+                    ) : (
+                        <FontAwesomeIcon className="icono-agregar" icon={faUser} />
+                    )}
+                </div>
+                <input
+                    id="inputFoto"
+                    type="file"
+                    accept="image/*"
+                    onChange={CambioFoto}
+                    style={{ display: 'none' }} 
+                />
+                
+                {modalVisible && usuariosDetail.foto && (
+                    <div id="miniModal" className="mini-modal">
+                        <div className="mini-modal-content">
+                            <p onClick={cambiarFoto}>{t('cambiar')}</p>
+                            <p onClick={eliminarFoto}>{t('eliminar')}</p>
+                        </div>
+                    </div>
                 )}
-        </div>
+            </div>
             <h3 className="perfil-titulo">{usuariosDetail.nombre_usuario}</h3>
             <h3 className="perfil-email">{usuariosDetail.email}</h3>
-            <div className="btn-container">
-            <button className="btnlogin" onClick={cerrar_sesion}>
-            {t('logout')} 
-          </button>
-            <button className="cerrar-secion">Mis favoritos</button>
+            <div className="containerlogfav">
+                <button className="btnlogout" onClick={cerrar_sesion}>
+                    {t('Log Out')}
+                </button>
+                <button className="cerrar-secion" onClick={() => navigate(`/favoritos/${usuario_id}`)}>
+                    Mis Favoritos
+                </button>
+                <button className="Eliminar" onClick={eliminar_cuenta}>
+                    Eliminar Cuenta
+                </button>
             </div>
+            <br /><br />
         </div>
-    </div>
-  )
-}
+    );
+};
 
-export default PerfilUsuario
+export default PerfilUsuario;
+
+
+
+

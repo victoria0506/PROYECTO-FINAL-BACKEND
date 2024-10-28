@@ -1,16 +1,69 @@
-/* TabsHome.css */
-.tabs-container {
-    margin-top: 20px;
-    width: 100%; /* Asegura que el contenedor ocupe todo el ancho */
-    background-color: #fff; /* Color de fondo (puedes ajustar según tu preferencia) */
-    overflow-x: hidden; /* Evita el desbordamiento horizontal */
-  }
+.articlehome{
+  margin-top: 100px;
+}
+
+
+.tabshome {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px; /* Espaciado entre las pestañas */
+  margin-top: 6%;
+  justify-content: center;
   
-  .tabs-scrollable {
-    width: 100%; /* Ocupa todo el ancho de la pantalla */
-  }
-  
-  .tabs-scrollable .MuiTabs-flexContainer {
-    justify-content: space-between; /* Distribuye uniformemente las pestañas */
-  }
+}
+
+.titulotabshome{
+
+  font-weight: 400;
+}
+
+.tabhome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.tabhome:hover {
+  transform: scale(1.05); /* Aumenta ligeramente el tamaño al pasar el mouse */
+}
+
+.tab-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px; /* Tamaño del círculo */
+  height: 150px; /* Tamaño del círculo */
+  border-radius: 50%; /* Hace que sea circular */
+  border: 2px solid #cacfd6;
+  background-color: white; /* Fondo blanco */
+  overflow: hidden; /* Oculta cualquier parte de la imagen que sobresalga */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto de profundidad */
+}
+
+.tab-image {
+  width: 100%; /* Ajusta la imagen al tamaño del círculo */
+  height: auto; /* Mantiene la relación de aspecto de la imagen */
+}
+
+label {
+  margin-top: 10px; /* Espaciado entre la imagen y el texto */
+  text-align: center;
+  font-weight: 400;
+}
+
+
+.tab__content {
+  margin-top: 20px; /* Espacio arriba del contenido */
+  padding: 120px; /* Espacio interno */
+  border: 1px solid #ddddddb7; /* O cualquier estilo que prefieras */
+  border-radius: 5px; /* Bordes redondeados opcionales */
+  background-color: #f9f9f9; /* Fondo opcional */
+  transition: all 0.3s ease; /* Transición suave */
+}
+
+.tab__content.active {
+  display: block; /* Asegurarte de que se muestre solo el contenido activo */
+}
   

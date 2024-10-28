@@ -1,17 +1,8 @@
 import Carousel from 'react-bootstrap/Carousel';
-//import { useTranslation } from 'react-i18next';
+
 const Carrusel2 = () => {
-//const { i18n } = useTranslation();
-  // Imágenes de fondo para cada idioma
-  /*const backgroundImages = {
-    es: "src/img/eligeespañol.png", // Imagen en español
-    en: "src/img/elige.jpeg", // Imagen en inglés
-  };*/
-  // Seleccionar la imagen de fondo según el idioma actual
-  //const selectedBackground = backgroundImages[i18n.language] || backgroundImages.es;
   return (
     <div className='carrusel'>
-   
       <Carousel data-bs-theme="dark">
         <Carousel.Item>
           <div className="overlay"></div> {/* Overlay para oscurecer la imagen */}
@@ -37,8 +28,8 @@ const Carrusel2 = () => {
           />
           <Carousel.Caption className="caption-centered">
             <div className="caption-content">
-              <h3>Segunda Imagen</h3>
-              <p style={{color: "white"}}>Este es un breve texto para describir la segunda imagen.</p>
+          
+              <h2 className='texto2carrusel' style={{color: "white"}}>Si te encanta el marisco, no te puedes perder estos restaurantes que son famosos por ofrecer los platillos más frescos del océano.</h2>
               <button className="btn btn-primary">Ver más</button>
             </div>
           </Carousel.Caption>

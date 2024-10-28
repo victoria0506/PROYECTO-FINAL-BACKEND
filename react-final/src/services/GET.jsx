@@ -1,9 +1,9 @@
-const Token= "d58379a2f75349bbb55f641fd6c323527b1f495a"
-//const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
+const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
+// const Token= "a53ecb17b9b53418b44507fe226c0cf6490508f1"
 
-const userGET = async () => { // funcion del metodo GET
+const GET = async () => { // funcion del metodo GET
     try {
-        const response = await fetch('http://localhost:8000/api/users/', {
+        const response = await fetch('http://localhost:8000/api/usersRegistro/', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -16,4 +16,4 @@ const userGET = async () => { // funcion del metodo GET
         console.log(error)
     }
 }
-export default userGET
+export default GET

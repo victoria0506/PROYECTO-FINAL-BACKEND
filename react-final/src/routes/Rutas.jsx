@@ -6,10 +6,11 @@ import Admi from "../pages/Admi"
 import ContactoPage from '../pages/ContactoPage';
 import AboutPage from '../pages/AboutPage';
 import PrivateRoute from './routePrivate';
-
 import DescubrePage from '../pages/DescubrePage';
 import Usuarios from "../pages/Usuarios";
 import Restaurantes from "../pages/Restaurantes"
+import Favoritos from "../pages/favoritos";
+// import Imagenes from "../pages/imagenes";
 
 function Rutas() {
     return (
@@ -31,6 +32,8 @@ function Rutas() {
                       }/>
                       <Route path='/Restaurant/:restaurante_id' element={<Restaurantes/>}   />
                       <Route path='/Perfilusuario/:usuario_id' element={ <Usuarios/>} />
+                      <Route path='/Favoritos/:usuario_id' element={ <Favoritos/>} />
+                      {/* <Route path='/imagenes' element={<Imagenes/>}   /> */}
               </Routes>
           </Router>
       </div>

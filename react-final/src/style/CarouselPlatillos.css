@@ -1,6 +1,6 @@
-.carousel-section {
+.carousel-section2 {
     padding: 30px;
-    padding-top: 80px;
+    padding-top: 110px;
     position: relative;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -11,6 +11,8 @@
     margin: 70px 0px;
     padding-bottom: 10px;
     display: inline-block;
+    display: flex;
+    justify-content: center;
   }
   
   .categories__title {
@@ -20,7 +22,8 @@
   }
   
   .carousel-item2 {
-    width: 200px;
+    
+    width: 250px;
     height: 250px;
     border-radius: 20px;
     background-color: #95bcd6;
@@ -47,7 +50,7 @@
   }
   
   .carousel-item__img {
-    width: 200px;
+    width: 250px;
     height: 250px;
     object-fit: cover;
   }

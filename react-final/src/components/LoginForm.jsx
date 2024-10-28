@@ -1,70 +1,82 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SweetAlert2 from 'react-sweetalert2';
-import userGET from "../services/getUser";
+import LoginFech from "../services/loginPost";
+import GET from "../services/GET";
 import { useTranslation } from "react-i18next";
-//import { use } from "i18next";
 import { compartirContexto } from "../context/contextProvider";
 import "../style/login.css"
 
-
 function LoginForm () {
-    const [swalProps, setSwalProps] = useState({});
-    const [usuario, setUsu] = useState("");
-    const [correo, setcorreo] = useState("");
-    const [contrasena, setcontrasena] = useState("");
+    const [swalProps, setSwalProps] = useState({})
+    const [usuario, setUsu] = useState("")
+    const [correo, setcorreo] = useState("")
+    const [contrasena, setcontrasena] = useState("")
     const [mensaje, setMensaje] = useState("")
     const navigate = useNavigate();
-    const [cargando, setcargando] = useState(false);
+    const [cargando, setcargando] = useState(false)
     const { t } = useTranslation();
     const {actualizador, setActu, apiData, setApiData} = compartirContexto()
 
     const validarEmail = (correo) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(correo);
-    };
+    }
 
     const Inicio = async () => {
-        if (usuario.trim() === "" && correo.trim() === "" && contrasena.trim() === "" && !validarEmail(correo) || contrasena.length < 5) { // validar que no se pueda loguear con estacios vacios
-            setSwalProps({ // SweetAlert
-              show: true,
-              title: 'Error',
-              text: 'Ingrese sus datos de manera correcta',
+        // Validaciones de entrada
+        if (usuario.trim() === "" || correo.trim() === "" || contrasena.trim() === "" || !validarEmail(correo) || contrasena.length < 5) {
+            setSwalProps({
+                show: true,
+                title: 'Error',
+                text: 'Ingrese sus datos de manera correcta',
             });
-              return
-            }else{
-                const UserObte = await userGET()// Llamamos al metodo GET para extraer los datos guardados en nuestra api 
-                const validarUser = UserObte.find((user) => user.nombre_usuario === usuario && user.email === correo && user.contrasena === contrasena)
-                if(validarUser) { 
+            return;
+        }
+        try {
+            const response = await LoginFech(correo, contrasena)
+            console.log("Respuesta del login:", response)
+            if (response && response.access_token) {
+                const userObte = await GET()
+                const validarUser = userObte.find(user => user.nombre_usuario === usuario && user.email === correo)
+                if (validarUser) {
                     if (validarUser.nombre_usuario === "Administrador" || validarUser.email === "Admi@RestaurApp.com") {
-                        navigate("/admi")
-                        localStorage.setItem("Admi-id", validarUser.nombre_usuario) // en localStorage gusrdamos el id del administrador, para que se pueda cerrar la secion si es necesario
-                        alert("Bienvenido Administrador") 
-                    }else{
-                        setcargando(true)
+                        localStorage.setItem("Admi-id", validarUser.nombre_usuario)
+                        navigate("/admi") 
+                        alert("Bienvenido Administrador")
+                    } else {
                         localStorage.setItem("Usuario Autenticado_id", validarUser.usuario_id)
-                        setActu(actualizador + 1)
-                        setTimeout(() => {
-                            navigate("/home") // Navegacion hacia la pagina de Home, despues de un segundo
-                        }, 1000);
+                        navigate("/home")
                         setMensaje("Logueo Exitoso")
                     }
-                }else{
-                    setSwalProps({ // SweetAlert para informar al usuario que sus datos son incorrectos
+                } else {
+                    setSwalProps({
+                        show: true,
+                        title: 'Error',
+                        text: 'Usuario no encontrado en la base de datos',
+                    });
+                }
+            } else {
+                setSwalProps({
                     show: true,
                     title: 'Error',
                     text: 'Correo o/y Contraseña incorrectas',
-                    });
-    
-                }
+                });
+            }
+        } catch (error) {
+            console.error("Error durante el login:", error.message)
+            setSwalProps({
+                show: true,
+                title: 'Error',
+                text: 'Ocurrió un error en la autenticación',
+            })
         }
     }
-
+    
     return (
         <div className="login-page">
-         <img className="background-video" src="src/img/.jpg" alt="" />
             <div className="login">
-                <h2 className="iniciarsesion">Login</h2>
+                <img className="logologinregister" src="/src/img/logonav.png" alt="" />
                 <h5>{mensaje}</h5>
                 <input
                     type="text"

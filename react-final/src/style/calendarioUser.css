@@ -1,0 +1,48 @@
+.calendario-usuario {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.day-header {
+    padding: 10px;
+    background-color: #f0f0f0;
+}
+
+.body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+.day {
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.day:hover {
+    background-color: #e0e0e0;
+}
+
+.has-event {
+    background-color: #cce5ff; 
+}
+
+.event-indicator {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
+    color: red;
+}
+
+.event-details {
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}

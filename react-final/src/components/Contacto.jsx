@@ -1,46 +1,43 @@
-import emailjs from 'emailjs-com'
-import '../style/contact.css'
+import emailjs from 'emailjs-com';
+import '../style/contact.css';
 
-const SERVICE_ID = "service_x7ea73l";  // ID del servicio de emailjs que se usará para enviar el correo.
-const TEMPLATE_ID = "template_le3437r";  // ID de la plantilla de emailjs que define cómo se verá el correo.
-const PUBLIC_KEY = "VVjiHxNPozqznvBzM"; // Clave pública de emailjs para autenticar las solicitudes.
-
+const SERVICE_ID = "service_cfe5cjv";
+const TEMPLATE_ID = "template_mdxf1vv";
+const PUBLIC_KEY = "ABs5xbm6PLuOPnJNm";
 
 function Contacto() {
-    const  handleOnSubmit = ( e ) => { 
-        e. preventDefault (); 
-        emailjs. sendForm ( SERVICE_ID , TEMPLATE_ID , e. target , PUBLIC_KEY ) //llamado a sendForm de emailjs para enviar el formulario
-          . then ( ( result ) => { 
-            console.log (result.text ); 
-            alert ( 'Mensaje enviado exitosamente' ) 
-          }, ( error ) => { 
-            console.log (error.text ); 
-            alert ( '¡Algo salió mal!' ) 
-          }); 
-        e. target.reset () //reinicia
-      }
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.target, PUBLIC_KEY)
+      .then((result) => {
+        console.log(result.text);
+        alert('Mensaje enviado exitosamente');
+      }, (error) => {
+        console.log(error.text);
+        alert('¡Algo salió mal!');
+      });
+    e.target.reset();
+  };
+
   return (
-    <div>
-      <form className="formContainer" onSubmit={handleOnSubmit}>
-                <h2>Contactanos!</h2>
-                <div className="formElement">
-            
-                    <input type="text" id="from_name" name="from_name" placeholder="Nombre" required />
-                </div>
-
-                <div className="formElement">
-                    
-                    <input type="email" id="from_email" name="from_email" placeholder="Email" required />
-                </div>
-
-                <div className="formElement">
-                 
-                    <textarea name="message" placeholder="Mensaje" required />
-                </div>
-                <button type='submit' className='formButton'>Enviar</button>
-            </form>
+    <div className="contact-container">
+      <div className="info-box">
+        <h2>Contáctanos</h2>
+        <p className="contact-info">Teléfono: +506 12345678</p>
+        <p className="contact-info">Email: ConsultasRestaurApp@gmail.com</p>
+      </div>
+      <form className="contact-form" onSubmit={handleOnSubmit}>
+        <input type="text" name="from_name" placeholder="Nombre" required className="form-input"/>
+        <input type="email" name="from_email" placeholder="Email" required className="form-input"/>
+        <textarea name="message" placeholder="Mensaje" required className="form-textarea"/>
+        <button type="submit" className="form-button">Enviar</button>
+      </form>
     </div>
-  )
+  );
 }
 
-export default Contacto
+export default Contacto;
+
+
+
+

@@ -1,10 +1,11 @@
-const Token= "d58379a2f75349bbb55f641fd6c323527b1f495a"
-//const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
+const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
+// const Token= "a53ecb17b9b53418b44507fe226c0cf6490508f1"
 
 const PutRestaur = async (restaurante_id,nombre_restaurante,precio_promedio,capacidad,calificacion_promedio ,id_distrito, especiSelect) => { 
     try {
         const response = await fetch(`http://localhost:8000/api/admiRestaur/${restaurante_id}/`, {
         method: 'PUT',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Token ${Token}`
@@ -16,13 +17,14 @@ const PutRestaur = async (restaurante_id,nombre_restaurante,precio_promedio,capa
                 calificacion_promedio: calificacion_promedio,
                 id_distrito: id_distrito.distrito
             })
-        });
+        })
         const data = await response.json();
         const restauranteId = data.restaurante_id; 
         await Promise.all(
             especiSelect.map(async (especialidadId) => {
                 await fetch(`http://localhost:8000/api/RestaEspecialidades/${restaurante_id}/`, {
                 method: 'PUT',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Token ${Token}`
