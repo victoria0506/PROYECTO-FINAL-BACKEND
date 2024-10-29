@@ -4,8 +4,9 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import Select from 'react-select';
 import UsedataRest from "./UsedataRest";
 import { useTranslation } from 'react-i18next';
-import SweetAlert2 from 'react-sweetalert2';
 import { compartirContexto } from "../context/contextProvider";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
     const [nomRestaur, setNomrestaur] = useState(restaurant?.nombre_restaurante || '');
@@ -23,17 +24,14 @@ const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
         e.preventDefault();
 
         if (nomRestaur.trim() === "" || precioPro.trim() === capacidad.trim() === "" || !ubicacion.canton || !ubicacion.distrito || !especialidades) {
-            setSwalProps({ // SweetAlert
-                show: true,
-                title: 'Error',
-                text: 'Ingrese sus datos de manera correcta',
-            });
+            toast.error('Ingrese sus datos de manera correcta')
         }else{
             const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
             const Actuali = await PutRestaur(restaurant.restaurante_id,nomRestaur, precioPro, capacidad, califiPromedio, ubicacion, especialidadesValues)
             setActu(prev => prev + 1)
             actualizar(Actuali)
             ModalCierre()
+            toast.success('Restaurante actualizado exitosamente.')
         }
     };
 
@@ -56,7 +54,7 @@ const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
 
     return (
         <div>
-                    <Modal show={show} onHide={ModalCierre}>
+            <Modal show={show} onHide={ModalCierre}>
             <Modal.Header closeButton>
                 <Modal.Title>Editar Restaurante</Modal.Title>
             </Modal.Header>
@@ -98,7 +96,6 @@ const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
                             required
                         />
                     </Form.Group>
-
                     <Form.Group controlId="formCantones">
                         <Form.Label>Cantones:</Form.Label>
                         <Form.Control as="select" onChange={CambiosCantones}>
@@ -110,7 +107,6 @@ const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
                             ))}
                         </Form.Control>
                     </Form.Group>
-
                     <Form.Group controlId="formDistritos">
                         <Form.Label>Distrito:</Form.Label>
                         <Form.Control as="select" onChange={CambiosDistritos}>
@@ -122,7 +118,6 @@ const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
                             ))}
                         </Form.Control>
                     </Form.Group>
-
                     <Form.Group controlId="formEspecialidad">
                         <Form.Label>{t('Specialty')}:</Form.Label>
                         <Select
@@ -136,7 +131,6 @@ const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
                             className="basic"
                         />
                     </Form.Group>
-
                     <Button variant="primary" type="submit">
                         Guardar Cambios
                     </Button>
@@ -144,7 +138,7 @@ const ModalUpdate = ({ show, ModalCierre, restaurant, actualizar }) => {
             </Modal.Body>
         </Modal>
             <div>
-               <SweetAlert2 {...swalProps} />
+            <ToastContainer position="top-center"/>
             </div>
         </div>
     );

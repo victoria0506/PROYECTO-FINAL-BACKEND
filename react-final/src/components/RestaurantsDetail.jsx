@@ -15,6 +15,8 @@ import { Modal } from "react-bootstrap";
 import CalificacionEstrellas from "./calificacionEstrellas";
 import CarouselPlatillos from "./CarouselPlatillos";
 import Tabs from "../components/Tabs";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RestaurantsDetail = () => {
     const { restaurante_id } = useParams();
@@ -66,7 +68,6 @@ const obtenerDetallesRestaurante = async () => {
             const favoritesKey = `favoritos_${usuario_id}`;
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
             const favoritoExistente = favoritos.find(fav => fav.restaurante_id === restaurante_id);
-    
             if (!favoritoExistente) {
                 const confirmacion = confirm("¿Deseas añadir este restaurante a tus favoritos?");
                 if (confirmacion) {
@@ -76,11 +77,12 @@ const obtenerDetallesRestaurante = async () => {
                         favoritos.push({ favorito_id: resultado.favorito_id, restaurante_id });
                         localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
                         setFavoritos(favoritos); 
+                        // toast.success("Restaurante añadido a favoritos.")
                     }
                 }
             }
         } else {
-            alert("Regístrate o inicia sesión si quieres añadir a favoritos.");
+            toast.warning("Regístrate o inicia sesión si quieres añadir a favoritos.")
         }
     };
     
@@ -89,7 +91,6 @@ const obtenerDetallesRestaurante = async () => {
             const favoritesKey = `favoritos_${usuario_id}`;
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
             const favorito = favoritos.find(fav => fav.restaurante_id === restaurante_id);
-    
             if (favorito) {
                 const confirmacion = confirm("¿Deseas eliminar este restaurante de tus favoritos?");
                 if (confirmacion) {
@@ -107,7 +108,7 @@ const obtenerDetallesRestaurante = async () => {
     
     return (
         <div>
-            <div>
+            <div className="CONTA">
                 <img className="img-normalizada" src={restaurantDetail.url_img} alt="header" />
                 <img className="logorestaurante" src={restaurantDetail.url_img} alt="Logo del Restaurante" />
                 <h3 className="nombrerestaurante">{restaurantDetail.nombre_restaurante}</h3>
@@ -151,6 +152,7 @@ const obtenerDetallesRestaurante = async () => {
             <div>
                 <CarouselPlatillos/>
             </div>
+            <ToastContainer position="top-center"/>
         </div>
     );
 };

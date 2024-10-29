@@ -1,1 +1,5 @@
-
+.Toastify__toast {
+    font-size: 20px; 
+    padding: 16px; 
+    width: 500px; 
+}

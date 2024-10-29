@@ -1,5 +1,7 @@
 import emailjs from 'emailjs-com';
 import '../style/contact.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SERVICE_ID = "service_cfe5cjv";
 const TEMPLATE_ID = "template_mdxf1vv";
@@ -11,10 +13,10 @@ function Contacto() {
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.target, PUBLIC_KEY)
       .then((result) => {
         console.log(result.text);
-        alert('Mensaje enviado exitosamente');
+        toast.success('Mensaje enviado exitosamente');
       }, (error) => {
         console.log(error.text);
-        alert('¡Algo salió mal!');
+        toast.error('¡Algo salió mal!');
       });
     e.target.reset();
   };
@@ -32,6 +34,7 @@ function Contacto() {
         <textarea name="message" placeholder="Mensaje" required className="form-textarea"/>
         <button type="submit" className="form-button">Enviar</button>
       </form>
+      <ToastContainer position="top-center"/>
     </div>
   );
 }

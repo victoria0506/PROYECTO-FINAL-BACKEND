@@ -6,6 +6,8 @@ import GET from "../services/GET";
 import { useTranslation } from "react-i18next";
 import { compartirContexto } from "../context/contextProvider";
 import "../style/login.css"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function LoginForm () {
     const [swalProps, setSwalProps] = useState({})
@@ -16,7 +18,7 @@ function LoginForm () {
     const navigate = useNavigate();
     const [cargando, setcargando] = useState(false)
     const { t } = useTranslation();
-    const {actualizador, setActu, apiData, setApiData} = compartirContexto()
+    const {actualizador, setActu} = compartirContexto()
 
     const validarEmail = (correo) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,11 +28,7 @@ function LoginForm () {
     const Inicio = async () => {
         // Validaciones de entrada
         if (usuario.trim() === "" || correo.trim() === "" || contrasena.trim() === "" || !validarEmail(correo) || contrasena.length < 5) {
-            setSwalProps({
-                show: true,
-                title: 'Error',
-                text: 'Ingrese sus datos de manera correcta',
-            });
+            toast.error('Ingrese sus datos de manera correcta')
             return;
         }
         try {
@@ -43,33 +41,23 @@ function LoginForm () {
                     if (validarUser.nombre_usuario === "Administrador" || validarUser.email === "Admi@RestaurApp.com") {
                         localStorage.setItem("Admi-id", validarUser.nombre_usuario)
                         navigate("/admi") 
-                        alert("Bienvenido Administrador")
+                        toast.success('Bienvenido Administrador')
+                        setActu(actualizador + 1)
                     } else {
                         localStorage.setItem("Usuario Autenticado_id", validarUser.usuario_id)
                         navigate("/home")
                         setMensaje("Logueo Exitoso")
+                        setActu(actualizador + 1)
                     }
                 } else {
-                    setSwalProps({
-                        show: true,
-                        title: 'Error',
-                        text: 'Usuario no encontrado en la base de datos',
-                    });
+                    toast.error('Usuario no encontrado en la base de datos')
                 }
             } else {
-                setSwalProps({
-                    show: true,
-                    title: 'Error',
-                    text: 'Correo o/y Contraseña incorrectas',
-                });
+                toast.error('Correo o/y Contraseña incorrectas')
             }
         } catch (error) {
             console.error("Error durante el login:", error.message)
-            setSwalProps({
-                show: true,
-                title: 'Error',
-                text: 'Ocurrió un error en la autenticación',
-            })
+            toast.error('Ocurrió un error en la autenticación')
         }
     }
     
@@ -104,7 +92,7 @@ function LoginForm () {
                 </button>
                 <p className="text">{t('You dont have an account?')} <Link to='/register'>{t('Register')}</Link></p>
             </div>
-            <SweetAlert2 {...swalProps} />
+            <ToastContainer position="top-center"/>
         </div>
     );
 }

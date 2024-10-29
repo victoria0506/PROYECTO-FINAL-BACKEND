@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../style/TabsHome.css";
 import { motion } from 'framer-motion';
 import { useTranslation } from "react-i18next";
-import CardsRestaurantes from "../components/CardRestaurantes"; // Asegúrate de que la ruta sea correcta
+import CardsRestaurantes from "../components/CardRestaurantes";
 
 const TabsHome = () => {
   const [activeTab, setActiveTab] = useState("");
@@ -14,7 +14,7 @@ const TabsHome = () => {
     } else {
       setActiveTab(tabId); 
     }
-  };
+  }
 
   return (
     <article className="articlehome">
@@ -27,7 +27,6 @@ const TabsHome = () => {
         >
           <h2 className="titulotabshome">{t("What's Your Favorite Food? Find the Perfect Restaurant:")}</h2>
           <div className="tabshome">
-            {/* Pestaña 1 - Arroz */}
             <div className="tabhome arroz" onClick={() => handleTabChange("tab1")}>
               <div className="tab-circle">
                 <img
@@ -38,8 +37,6 @@ const TabsHome = () => {
               </div>
               <label>Comida Tradicional</label>
             </div>
-
-            {/* Pestaña 2 - Hamburguesa */}
             <div className="tabhome hamburguesa" onClick={() => handleTabChange("tab2")}>
               <div className="tab-circle">
                 <img
@@ -50,8 +47,6 @@ const TabsHome = () => {
               </div>
               <label>Comida Rápida</label>
             </div>
-
-            {/* Pestaña 3 - Gourmet */}
             <div className="tabhome gourmet" onClick={() => handleTabChange("tab3")}>
               <div className="tab-circle">
                 <img
@@ -62,8 +57,6 @@ const TabsHome = () => {
               </div>
               <label>Gourmet</label>
             </div>
-
-            {/* Pestaña 4 - Ensalada */}
             <div className="tabhome ensalada" onClick={() => handleTabChange("tab4")}>
               <div className="tab-circle">
                 <img
@@ -74,8 +67,6 @@ const TabsHome = () => {
               </div>
               <label>Saludable</label>
             </div>
-
-            {/* Pestaña 5 - Mariscos */}
             <div className="tabhome mariscos" onClick={() => handleTabChange("tab5")}>
               <div className="tab-circle">
                 <img
@@ -88,8 +79,6 @@ const TabsHome = () => {
             </div>
           </div>
         </motion.div>
-
-        {/* Contenido de cada pestaña con las tarjetas de restaurantes */}
         {activeTab === "tab1" && (
           <div id="tab__content--1" className="tab__content active">
             <CardsRestaurantes tipo="tradicional" />

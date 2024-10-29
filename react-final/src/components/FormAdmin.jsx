@@ -7,6 +7,9 @@ import Select from 'react-select';
 import UsedataRest from './UsedataRest';
 import { IKContext, IKUpload } from 'imagekitio-react';
 import authenticator from '../services/FetchImagekit';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const FormAdmin = () => {
   const [nomResta, setNomresta] = useState("");
   const [precioPro, setPrecioPro] = useState("");
@@ -31,44 +34,23 @@ const FormAdmin = () => {
   // Añadir el restaurante
   const Añadir = async () => {
     if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || descripcion.trim() === "" || !ubicacion.canton || !ubicacion.distrito || imageURLPerfil.trim() === "" || imageURLHeader.trim() === "") {
-      setSwalProps({
-        show: true,
-        title: 'Error',
-        text: 'Ingrese sus datos de manera correcta',
-      });
+      toast.error("Ingrese sus datos de manera correcta")
     } else if (isNaN(precioPro) || isNaN(capacidad)) {
-      setSwalProps({
-        show: true,
-        title: 'Error',
-        text: 'El precio promedio y la capacidad deben ser números válidos',
-      });
+      toast.error('El precio promedio y la capacidad deben ser números válidos')
     } else {
       const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
       try {
         await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader); // Enviar ambas URLs
-        setSwalProps({
-          show: true,
-          title: 'Éxito!',
-          text: 'Restaurante añadido exitosamente',
-        });
+        toast.success('Restaurante añadido exitosamente')
       } catch (error) {
-        setSwalProps({
-          show: true,
-          title: 'Error',
-          text: 'Hubo un error al añadir el restaurante. Por favor, inténtelo de nuevo.',
-        });
+        toast.error('Hubo un error al añadir el restaurante. Por favor, inténtelo de nuevo.')
       }
     }
   };
-
-  // Manejo de errores y éxito en la subida de imagen
+  
   const handleImageUploadError = (err) => {
     console.log("Error subiendo la imagen:", err);
-    setSwalProps({
-      show: true,
-      title: 'Error',
-      text: 'Error al subir la imagen. Por favor, inténtelo de nuevo.',
-    });
+    toast.error('Error al subir la imagen. Por favor, inténtelo de nuevo.')
   };
 
   const handleImageUploadSuccessPerfil = (res) => {
@@ -163,7 +145,7 @@ const FormAdmin = () => {
         </IKContext>
         <button className='buttonaddadmi' onClick={Añadir}>{t('Add')}</button>
       </div>
-      <SweetAlert2 {...swalProps} />
+      <ToastContainer position="top-center"/>
     </div>
   );
 };

@@ -2,10 +2,11 @@ import {useState } from "react"
 import { Link } from "react-router-dom"
 import GET from "../services/GET";
 import { useNavigate } from "react-router-dom"
-import SweetAlert2 from 'react-sweetalert2';
 import userPost from "../services/postUser";
 import { useTranslation } from "react-i18next";
 import '../style/register.css'
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function RegistroForm() {
   // declaramos los hooks
@@ -13,7 +14,6 @@ function RegistroForm() {
     const [correo, setCorreo] = useState("")
     const [contraseña, setContraseña] = useState("")
     const [mensaje, setMensaje] = useState("")
-    const [swalProps, setSwalProps] = useState({});
     const [cargando, setcargando] = useState(false);
     const navigate = useNavigate(); // hookpara navegar entre paginas
     const { t } = useTranslation();
@@ -25,11 +25,7 @@ function RegistroForm() {
     
     const mostrar = async () => {
       if (usuario.trim() === "" || contraseña.trim() === "" || correo.trim() === "" || !validarEmail(correo) || contraseña.length < 5) {
-        setSwalProps({ 
-          show: true,
-          title: 'Error',
-          text: 'Ingrese todos los datos correctamente, incluyendo un correo válido y una contraseña de al menos 5 caracteres.',
-        });
+        toast.error('Ingrese todos los datos correctamente, incluyendo un correo válido y una contraseña de al menos 5 caracteres.');
         return;
       } else {
         setcargando(true); 
@@ -44,11 +40,7 @@ function RegistroForm() {
             navigate("/login"); 
           }, 1000);
         } else {
-          setSwalProps({
-            show: true,
-            title: 'Error',
-            text: 'El correo/contraseña ya se encuentran registrados',
-          });
+          toast.error('El correo o el nombre de usuario ya están registrados')
         }
       }
     };
@@ -68,7 +60,7 @@ function RegistroForm() {
         </div>
        </div>
        <div>
-       <SweetAlert2 {...swalProps} />
+       <ToastContainer position="top-center"/>
        </div>
     </div>
   )

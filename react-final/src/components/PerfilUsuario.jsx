@@ -7,8 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { compartirContexto } from "../context/contextProvider";
 import Cookies from 'js-cookie';
-import swal from 'sweetalert';
 import DeleteUser from "../services/DeleteUser";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PerfilUsuario = () => {
     const { usuario_id } = useParams();
@@ -62,40 +63,24 @@ const PerfilUsuario = () => {
     };
 
     const eliminar_cuenta = async () => {
-      swal({
-        title: "¿Estás seguro?",
-        text: "No podrás revertir esto!",
-        icon: "warning",
-        buttons: {
-            cancel: {
-                text: "No, cancelar",
-                visible: true,
-                className: "btn btn-danger",
-                closeModal: true,
-            },
-            confirm: {
-                text: "Sí, eliminarlo!",
-                className: "btn btn-success",
-                closeModal: true,
-            },
-        },
-        dangerMode: true,
-    }).then((willDelete) => {
-        if (willDelete) {
-            DeleteUser(usuario_id);
-            Cookies.remove("access_token");
-            Cookies.remove("refresh_token");
-            swal("¡Eliminado!");
-            setActu(actualizador + 1);
-            setTimeout(() => {
-                navigate("/register");
-            }, 1000);
-            localStorage.removeItem("Usuario Autenticado_id");
+        if (window.confirm("¿Estás seguro? No podrás revertir esto!")) {
+            try {
+                await DeleteUser(usuario_id);
+                Cookies.remove("access_token");
+                Cookies.remove("refresh_token");
+                toast.success("¡Cuenta eliminada con éxito!");
+                setActu(actualizador + 1);
+                setTimeout(() => {
+                    navigate("/register");
+                }, 1000);
+                localStorage.removeItem("Usuario Autenticado_id");
+            } catch (error) {
+                toast.error("Error al eliminar la cuenta. Inténtalo de nuevo.");
+            }
         } else {
-            swal("Cancelado", "error");
+            toast.info("Eliminación cancelada.");
         }
-    });
-    }
+    };
 
     const CambioFoto = (event) => {
         const archivo = event.target.files[0];
@@ -188,6 +173,7 @@ const PerfilUsuario = () => {
                 </button>
             </div>
             <br /><br />
+            <ToastContainer position="top-center"/>
         </div>
     );
 };
