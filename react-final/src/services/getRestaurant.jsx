@@ -8,11 +8,6 @@ const RestaGet = async () => {
             'Content-Type': 'application/json',
             'Authorization': `Token ${Token}`
         },
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Token ${Token}` // Añadir el token en el encabezado
-            }
         });
         const restaurantes = await response.json();
         // Ahora obtendremos las imágenes para cada restaurante

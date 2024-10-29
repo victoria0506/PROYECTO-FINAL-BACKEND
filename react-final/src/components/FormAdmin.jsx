@@ -7,6 +7,8 @@ import Select from 'react-select';
 import UsedataRest from './UsedataRest';
 import { IKContext, IKUpload } from 'imagekitio-react';
 import authenticator from '../services/FetchImagekit';
+import Calendario from './Calendario';
+
 const FormAdmin = () => {
   const [nomResta, setNomresta] = useState("");
   const [precioPro, setPrecioPro] = useState("");
@@ -31,35 +33,37 @@ const FormAdmin = () => {
   // Añadir el restaurante
   const Añadir = async () => {
     if (nomResta.trim() === "" || precioPro.trim() === "" || capacidad.trim() === "" || descripcion.trim() === "" || !ubicacion.canton || !ubicacion.distrito || imageURLPerfil.trim() === "" || imageURLHeader.trim() === "") {
-      setSwalProps({
-        show: true,
-        title: 'Error',
-        text: 'Ingrese sus datos de manera correcta',
-      });
+        setSwalProps({
+            show: true,
+            title: 'Error',
+            text: 'Ingrese sus datos de manera correcta',
+        });
     } else if (isNaN(precioPro) || isNaN(capacidad)) {
-      setSwalProps({
-        show: true,
-        title: 'Error',
-        text: 'El precio promedio y la capacidad deben ser números válidos',
-      });
+        setSwalProps({
+            show: true,
+            title: 'Error',
+            text: 'El precio promedio y la capacidad deben ser números válidos',
+        });
     } else {
-      const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
-      try {
-        await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader); // Enviar ambas URLs
-        setSwalProps({
-          show: true,
-          title: 'Éxito!',
-          text: 'Restaurante añadido exitosamente',
-        });
-      } catch (error) {
-        setSwalProps({
-          show: true,
-          title: 'Error',
-          text: 'Hubo un error al añadir el restaurante. Por favor, inténtelo de nuevo.',
-        });
-      }
+        const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
+        try {
+            // Ahora envía las URLs de imagen junto con los otros datos
+            await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader);
+            setSwalProps({
+                show: true,
+                title: 'Éxito!',
+                text: 'Restaurante añadido exitosamente',
+            });
+        } catch (error) {
+            setSwalProps({
+                show: true,
+                title: 'Error',
+                text: 'Hubo un error al añadir el restaurante. Por favor, inténtelo de nuevo.',
+            });
+        }
     }
-  };
+};
+
 
   // Manejo de errores y éxito en la subida de imagen
   const handleImageUploadError = (err) => {
@@ -153,7 +157,7 @@ const FormAdmin = () => {
           />
         </IKContext>
         {/* Sección para subir la imagen de encabezado */}
-        <label>Subir imagen de encabezado:</label>
+        <label>Subir imagen de header:</label>
         <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
           <IKUpload
             onError={handleImageUploadError}
@@ -164,6 +168,8 @@ const FormAdmin = () => {
         <button className='buttonaddadmi' onClick={Añadir}>{t('Add')}</button>
       </div>
       <SweetAlert2 {...swalProps} />
+
+      <Calendario/>
     </div>
   );
 };

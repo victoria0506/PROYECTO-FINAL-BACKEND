@@ -2,9 +2,6 @@ import { useState, useEffect } from "react";
 import MenuRestaurantes from "./MenuRestaurantes"; 
 import { useParams } from "react-router-dom";
 import RestaGet from "../services/getRestaurant";
-import '../style/paginarestaurantes.css';
-import { useTranslation } from "react-i18next";
-import "../style/DetailRestau.css";
 import fetchImagen from "../services/imageGet";
 import favoritosRestaurants from "../services/FavoritosPost";
 import deleteRestau from "../services/DELETEFAVO";
@@ -15,10 +12,14 @@ import { Modal } from "react-bootstrap";
 import CalificacionEstrellas from "./calificacionEstrellas";
 import CarouselPlatillos from "./CarouselPlatillos";
 import Tabs from "../components/Tabs";
+import '../style/paginarestaurantes.css';
+import '../style/DetailRestau.css';
+import { useTranslation } from "react-i18next";
 
 const RestaurantsDetail = () => {
     const { restaurante_id } = useParams();
     const [restaurantDetail, setRestaurantDetail] = useState(null);
+    const [restaurantImages, setRestaurantImages] = useState([]);  // Estado para almacenar las imágenes del restaurante
     const { t } = useTranslation();
     const usuario_id = localStorage.getItem("Usuario Autenticado_id"); 
     const [favoritos, setFavoritos] = useState([]); 
@@ -26,18 +27,26 @@ const RestaurantsDetail = () => {
     const [showMenu, setShowMenu] = useState(false);
 
     // Función para obtener los detalles del restaurante
-// Dentro del componente RestaurantsDetail
-const obtenerDetallesRestaurante = async () => {
-    const restaurantes = await RestaGet();
-    console.log("Datos de la API:", restaurantes); // Aquí deberías ver los datos, incluyendo las imágenes
-    const Restaurantes = restaurantes.find(resta => String(resta.restaurante_id) === restaurante_id);
-    if (!Restaurantes) {
-        throw new Error("Restaurante no encontrado");
-    } else {
-        setRestaurantDetail(Restaurantes);
-        console.log(Restaurantes);
-    }
-};
+    const obtenerDetallesRestaurante = async () => {
+        const restaurantes = await RestaGet();
+        const Restaurantes = restaurantes.find(resta => String(resta.restaurante_id) === restaurante_id);
+        if (!Restaurantes) {
+            throw new Error("Restaurante no encontrado");
+        } else {
+            setRestaurantDetail(Restaurantes);
+        }
+    };
+
+    const obtenerImagenesRestaurante = async () => {
+        try {
+            const imagenes = await fetchImagen(restaurante_id);
+            setRestaurantImages(imagenes || []); // Verifica que imagenes contenga la url_header
+        } catch (error) {
+            console.error("Error al obtener imágenes:", error);
+        }
+    };
+    
+    
 
     // Función para obtener los favoritos del usuario
     const obtenerFavoritos = () => {
@@ -49,14 +58,18 @@ const obtenerDetallesRestaurante = async () => {
     };
 
     useEffect(() => {
-        obtenerDetallesRestaurante();
-        obtenerFavoritos();
+        const fetchData = async () => {
+            await obtenerDetallesRestaurante();
+            await obtenerImagenesRestaurante();
+            obtenerFavoritos();
+        };
+        fetchData();
     }, [restaurante_id]);
 
     if (!restaurantDetail) {
         return <div>No se encontró el restaurante.</div>;
     }
-    console.log(restaurantDetail); 
+
     const toggleMenu = () => {
         setShowMenu(!showMenu);
     };
@@ -104,12 +117,18 @@ const obtenerDetallesRestaurante = async () => {
             }
         }
     };
+    console.log("IMAGENES: ", restaurantImages);
     
     return (
         <div>
             <div>
-                <img className="img-normalizada" src={restaurantDetail.url_img} alt="header" />
-                <img className="logorestaurante" src={restaurantDetail.url_img} alt="Logo del Restaurante" />
+                {/* Usa la primera imagen para el header y logo */}
+                {restaurantImages.length > 0 &&  (
+                    <>
+                        <img className="img-normalizada" src={restaurantImages[0].url_header} alt="header" />
+                        <img className="logorestaurante" src={restaurantImages[0].url_img} alt="Logo del Restaurante" />
+                    </>
+                )}
                 <h3 className="nombrerestaurante">{restaurantDetail.nombre_restaurante}</h3>
                 <h4 className="introrestaurantes">
                     Restaurante & Sport Bar dentro del Hotel Cayuga con deliciosa variedad de comida y cócteles.
@@ -124,11 +143,11 @@ const obtenerDetallesRestaurante = async () => {
                 <Tabs restauranteId={restaurantDetail.restaurante_id}/>
 
                 {/* Carrusel de imágenes adicionales del restaurante */}
-                {/* {restaurantDetail.imagenes && restaurantDetail.imagenes.length > 0 && (
+                {/* {restaurantImages.length > 1 && (
                     <div className="carousel-container">
                         <h3>Galería de Imágenes</h3>
                         <div className="image-carousel">
-                            {restaurantDetail.imagenes.map((imagen) => (
+                            {restaurantImages.slice(1).map((imagen) => (
                                 <img
                                     key={imagen.id}
                                     src={imagen.url_img}
@@ -156,7 +175,6 @@ const obtenerDetallesRestaurante = async () => {
 };
 
 export default RestaurantsDetail;
-
 
 
 
