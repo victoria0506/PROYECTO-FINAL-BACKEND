@@ -9,6 +9,8 @@ import { IKContext, IKUpload } from 'imagekitio-react';
 import authenticator from '../services/FetchImagekit';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Calendario from './Calendario';
+
 
 const FormAdmin = () => {
   const [nomResta, setNomresta] = useState("");
@@ -135,7 +137,7 @@ const FormAdmin = () => {
           />
         </IKContext>
         {/* Sección para subir la imagen de encabezado */}
-        <label>Subir imagen de encabezado:</label>
+        <label>Subir imagen de header:</label>
         <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
           <IKUpload
             onError={handleImageUploadError}
@@ -146,6 +148,7 @@ const FormAdmin = () => {
         <button className='buttonaddadmi' onClick={Añadir}>{t('Add')}</button>
       </div>
       <ToastContainer position="top-center"/>
+      <Calendario/>
     </div>
   );
 };

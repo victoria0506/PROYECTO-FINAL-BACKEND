@@ -173,11 +173,17 @@ def post(self, request):
         # Validar restaurante_id y tipo_imagen
         restaurante_id = request.data.get('restaurante_id')
         tipo_imagen = request.data.get('tipo_imagen')
+        url_header = request.data.get('url_header')
+    
         
         if not restaurante_id:
             return Response({"error": "restaurante_id es necesario"}, status=status.HTTP_400_BAD_REQUEST)
         if not tipo_imagen:
             return Response({"error": "tipo_imagen es necesario"}, status=status.HTTP_400_BAD_REQUEST)
+  
+        if not url_header:
+           return Response({"error": "url_header es necesario"}, status=status.HTTP_400_BAD_REQUEST)
+
 
         # Guardar temporalmente el archivo
         temp_file_path = default_storage.save(image_file.name, image_file)
@@ -204,12 +210,14 @@ def post(self, request):
         # Guardar la URL, restaurante_id y tipo_imagen en el modelo Imagenes
         nueva_imagen = Imagenes.objects.create(
             url_img=upload_response['response']['url'],
+            url_header=url_header,
             restaurante_id=restaurante_id,
             tipo_imagen=tipo_imagen  # Guardar el tipo de imagen
         )
 
         return Response({
             "url": nueva_imagen.url_img,
+             "url_header": nueva_imagen.url_header,
             "fileId": upload_response['response']['fileId']
         }, status=status.HTTP_201_CREATED)
 

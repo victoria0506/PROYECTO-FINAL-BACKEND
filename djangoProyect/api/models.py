@@ -37,10 +37,10 @@ class restaurantes(models.Model):
 class Imagenes(models.Model):
     id_imagen = models.AutoField(primary_key=True)
     url_img = models.URLField(max_length=500)
+    url_header = models.URLField(max_length=500, null=True, blank=True)  
     restaurante_id = models.ForeignKey(restaurantes, on_delete=models.CASCADE)
     tipo_imagen = models.CharField(max_length=20,choices=[("perfil", "Perfil"), ("encabezado", "Encabezado"), ("galeria", "Galería")],null=True,blank=True)
 
-    
 class Platillos_destacados(models.Model):
     id_platillo= models.AutoField(primary_key=True)
     nombre= models.CharField(max_length=50)
