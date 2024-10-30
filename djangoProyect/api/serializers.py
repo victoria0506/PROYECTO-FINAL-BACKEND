@@ -54,9 +54,22 @@ class ImagenSerializer(ModelSerializer):
         fields = '__all__'
         
 class PlatillosSeralizer(ModelSerializer):
+    platillo_urls = serializers.SerializerMethodField()
     class Meta:
         model= Platillos_destacados
         fields= '__all__'
+        
+    def get_platillo_urls(self, obj):
+        urls = []
+        if obj.url_platillo_1:
+            urls.append({"imgSrc": obj.url_platillo_1})
+        if obj.url_platillo_2:
+            urls.append({"imgSrc": obj.url_platillo_2})
+        if obj.url_platillo_3:
+            urls.append({"imgSrc": obj.url_platillo_3})
+        if obj.url_platillo_4:
+            urls.append({"imgSrc": obj.url_platillo_4})
+        return urls
       
 class especialidadSerializer(ModelSerializer):
     class Meta:

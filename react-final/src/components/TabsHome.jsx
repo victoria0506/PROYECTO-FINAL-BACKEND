@@ -1,20 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../style/TabsHome.css";
 import { motion } from 'framer-motion';
 import { useTranslation } from "react-i18next";
-import CardsRestaurantes from "../components/CardRestaurantes";
+import UsedataRest from "./UsedataRest";
+import RestaGet from "../services/getRestaurant";
+import { Link } from "react-router-dom";
 
 const TabsHome = () => {
   const [activeTab, setActiveTab] = useState("");
-  const { t } = useTranslation();
+  const [associatedRestaurants, setAssociatedRestaurants] = useState([]);
+  const [allRestaurants, setAllRestaurants] = useState([])
+  const { t } = useTranslation(); 
+  const { especialidades, restaurantesEspecialidades } = UsedataRest(); 
 
-  const handleTabChange = (tabId) => {
-    if (activeTab === tabId) {
-      setActiveTab(""); 
-    } else {
-      setActiveTab(tabId); 
+  const specialityImages = {
+    "Comida Tradicional": "https://i.pinimg.com/564x/a9/92/60/a99260c19fdc29ce4a7a7ed5632dc5dd.jpg",
+    "Comida Rapida": "https://i.pinimg.com/564x/4b/a8/d9/4ba8d9cdf558a307009690e53e839842.jpg",
+    "Carnes": "https://i.pinimg.com/474x/75/26/4b/75264bc72d8c89518bafe23cc84a6ad4.jpg",
+    "Saludable": "https://i.pinimg.com/474x/39/a5/5e/39a55e5ed083cfe82218ec5ac10e39aa.jpg",
+    "Mariscos": "https://i.pinimg.com/736x/2d/30/46/2d30462dacc0f3dd5b83c767f3eaa3de.jpg",
+    "Comida Asiatica": "https://i.pinimg.com/564x/3a/ec/6a/3aec6a06a61cbab4945af2d0156600aa.jpg",
+    "Pastas": "https://i.pinimg.com/564x/d2/fa/73/d2fa738fc594e75971001b7a1788d5a5.jpg"
+  };
+
+  const handleTabChange = async (especialidadId) => {
+    setActiveTab((prevTab) => (prevTab === especialidadId ? "" : especialidadId))
+    console.log("Speciality ID clicked:", especialidadId);
+    console.log("Restaurantes Especialidades:", restaurantesEspecialidades);
+    const filteredRestaurants = restaurantesEspecialidades.filter(
+        (restaurantEspecialidad) => restaurantEspecialidad.id_especialidad === especialidadId
+    );
+    console.log('Filtered Restaurants:', filteredRestaurants);
+    const restaurantIds = filteredRestaurants.map((relation) => relation.restaurante_id);
+    console.log('Restaurant IDs:', restaurantIds)
+    try{
+      const allRestaurants = await RestaGet()
+      const restaurantsDetails = restaurantIds.map((id) => {
+          return allRestaurants.find((rest) => rest.restaurante_id === id);
+      }).filter(Boolean);
+      console.log('Restaurants Details:', restaurantsDetails);
+      setAssociatedRestaurants(restaurantsDetails);
+    }catch (error){
+      console.error("Error fetching restaurants:", error)
     }
-  }
+
+  };
+
 
   return (
     <article className="articlehome">
@@ -27,88 +58,43 @@ const TabsHome = () => {
         >
           <h2 className="titulotabshome">{t("What's Your Favorite Food? Find the Perfect Restaurant:")}</h2>
           <div className="tabshome">
-            <div className="tabhome arroz" onClick={() => handleTabChange("tab1")}>
-              <div className="tab-circle">
-                <img
-                  src="https://i.pinimg.com/474x/02/32/ec/0232ec5cc5bc98a01ba40d568839446b.jpg"
-                  alt="Plato de arroz"
-                  className="tab-image"
-                />
+            {especialidades.map((especialidad) => (
+              <div
+                key={especialidad.id_especialidad}
+                className={`tabhome ${especialidad.descripcion.toLowerCase()}`}
+                onClick={() => handleTabChange(especialidad.id_especialidad)}
+              >
+                <div className="tab-circle">
+                  <img
+                    src={specialityImages[especialidad.descripcion]}
+                    alt={especialidad.descripcion}
+                    className={`tab-image_${especialidad.descripcion.toLowerCase().replace(/\s+/g, '_')}`}
+                  />
+                </div>
+                <label>{especialidad.descripcion}</label>
               </div>
-              <label>Comida Tradicional</label>
-            </div>
-            <div className="tabhome hamburguesa" onClick={() => handleTabChange("tab2")}>
-              <div className="tab-circle">
-                <img
-                  src="https://i.pinimg.com/474x/55/e2/69/55e269a11e28460a7f0ca9d965ee4f99.jpg"
-                  alt="Hamburguesa"
-                  className="tab-image"
-                />
-              </div>
-              <label>Comida Rápida</label>
-            </div>
-            <div className="tabhome gourmet" onClick={() => handleTabChange("tab3")}>
-              <div className="tab-circle">
-                <img
-                  src="https://i.pinimg.com/474x/75/26/4b/75264bc72d8c89518bafe23cc84a6ad4.jpg"
-                  alt="Plato gourmet"
-                  className="tab-image"
-                />
-              </div>
-              <label>Gourmet</label>
-            </div>
-            <div className="tabhome ensalada" onClick={() => handleTabChange("tab4")}>
-              <div className="tab-circle">
-                <img
-                  src="https://i.pinimg.com/736x/3b/59/13/3b5913f9ebcf327ad37205c5314d3b8f.jpg"
-                  alt="Ensalada"
-                  className="tab-image"
-                />
-              </div>
-              <label>Saludable</label>
-            </div>
-            <div className="tabhome mariscos" onClick={() => handleTabChange("tab5")}>
-              <div className="tab-circle">
-                <img
-                  src="https://i.pinimg.com/736x/2d/30/46/2d30462dacc0f3dd5b83c767f3eaa3de.jpg"
-                  alt="Mariscos"
-                  className="tab-image"
-                />
-              </div>
-              <label>Mariscos</label>
-            </div>
+            ))}
+          </div>
+          <div className="associated-restaurants">
+             {associatedRestaurants.length > 0 ? (
+                associatedRestaurants.map((restaurant) => (
+                  <div key={restaurant.restaurante_id}>
+                    <Link to={`/Restaurant/${restaurant.restaurante_id}`}>
+                      <h3>{restaurant.nombre_restaurante}</h3>
+                    </Link>
+                    <p>Precio Promedio: {restaurant.precio_promedio}</p>
+                    <p>Calificación Promedio: {restaurant.calificacion_promedio}</p>
+                    <p>Descripción: {restaurant.descripcion}</p>
+                  </div>
+                 ))
+             ) : (
+                activeTab && <p>No hay restaurantes asociados para esta especialidad.</p>
+             )}
           </div>
         </motion.div>
-        {activeTab === "tab1" && (
-          <div id="tab__content--1" className="tab__content active">
-            <CardsRestaurantes tipo="tradicional" />
-          </div>
-        )}
-        {activeTab === "tab2" && (
-          <div id="tab__content--2" className="tab__content active">
-            <CardsRestaurantes tipo="rapida" />
-          </div>
-        )}
-        {activeTab === "tab3" && (
-          <div id="tab__content--3" className="tab__content active">
-            <CardsRestaurantes tipo="Gourmet" />
-          </div>
-        )}
-        {activeTab === "tab4" && (
-          <div id="tab__content--4" className="tab__content active">
-            <CardsRestaurantes tipo="Saludable" />
-          </div>
-        )}
-        {activeTab === "tab5" && (
-          <div id="tab__content--5" className="tab__content active">
-            <CardsRestaurantes tipo="Mariscos" />
-          </div>
-        )}
       </div>
     </article>
   );
 };
 
 export default TabsHome;
-
-

@@ -1,9 +1,10 @@
-// const Token = "a53ecb17b9b53418b44507fe226c0cf6490508f1";
-const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
+const Token = "07881b7aeb97068cd9925d768fd3af4b77cb7eab";
 
-const CalendarioPOST = async (dateKey, restauranteId) => {
-    console.log(dateKey);
-    console.log(restauranteId)
+const CalendarioPOST = async ({ dia, restaurante_id, tipo, nota }) => {
+    console.log(dia);
+    console.log(restaurante_id);
+    console.log(tipo);
+    console.log(nota);
     try {
         const response = await fetch('http://localhost:8000/api/calendario/', {
             method: 'POST',
@@ -12,9 +13,10 @@ const CalendarioPOST = async (dateKey, restauranteId) => {
                 'Authorization': `Token ${Token}`,
             },
             body: JSON.stringify({
-                restaurante_id: restauranteId, 
-                dia: dateKey,
-                // nota: note,
+                restaurante_id: restaurante_id, 
+                dia: dia,
+                tipo: tipo,
+                nota: nota,
             }),
         });
         
@@ -32,4 +34,4 @@ const CalendarioPOST = async (dateKey, restauranteId) => {
     }
 };
 
-export default CalendarioPOST
+export default CalendarioPOST;

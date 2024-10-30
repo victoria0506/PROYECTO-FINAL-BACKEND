@@ -1,26 +1,24 @@
 import { useEffect, useState } from "react";
 import RestaGet from "../services/getRestaurant";
-import fetchImagen from "../services/imageGet"; // Asegúrate de importar el servicio de imágenes
+import fetchImagen from "../services/imageGet";
 import "../style/cardRestaurantes.css";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 const CardsRestaurantes = ({ especialidadSeleccionada }) => {
   const [restaurantes, setRestaurantes] = useState([]);
-  const [imagenesRestaurantes, setImagenesRestaurantes] = useState({}); // Estado para almacenar las imágenes
+  const [imagenesRestaurantes, setImagenesRestaurantes] = useState({}); 
   const { t } = useTranslation();
 
-  // Función para obtener los detalles de los restaurantes y sus imágenes
   const obtenerRestaurantConImagenes = async () => {
     const restaurantObte = await RestaGet();
     setRestaurantes(restaurantObte);
 
-    // Obtiene las imágenes para cada restaurante
     const imagenes = {};
     for (let resta of restaurantObte) {
       const img = await fetchImagen(resta.restaurante_id);
       if (img && img.length > 0) {
-        imagenes[resta.restaurante_id] = img[0].url_img; // Usa la primera imagen como perfil
+        imagenes[resta.restaurante_id] = img[0].url_img; 
       }
     }
     setImagenesRestaurantes(imagenes);

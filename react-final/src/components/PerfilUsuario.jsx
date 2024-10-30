@@ -10,6 +10,8 @@ import Cookies from 'js-cookie';
 import DeleteUser from "../services/DeleteUser";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 const PerfilUsuario = () => {
     const { usuario_id } = useParams();
@@ -63,24 +65,38 @@ const PerfilUsuario = () => {
     };
 
     const eliminar_cuenta = async () => {
-        if (window.confirm("¿Estás seguro? No podrás revertir esto!")) {
-            try {
-                await DeleteUser(usuario_id);
-                Cookies.remove("access_token");
-                Cookies.remove("refresh_token");
-                toast.success("¡Cuenta eliminada con éxito!");
-                setActu(actualizador + 1);
-                setTimeout(() => {
-                    navigate("/register");
-                }, 1000);
-                localStorage.removeItem("Usuario Autenticado_id");
-            } catch (error) {
-                toast.error("Error al eliminar la cuenta. Inténtalo de nuevo.");
-            }
-        } else {
-            toast.info("Eliminación cancelada.");
-        }
+        confirmAlert({
+            title: 'Confirmar eliminación',
+            message: '¿Estás seguro? No podrás revertir esto!',
+            buttons: [
+                {
+                    label: 'Sí',
+                    onClick: async () => {
+                        try {
+                            await DeleteUser(usuario_id);
+                            Cookies.remove("access_token");
+                            Cookies.remove("refresh_token");
+                            toast.success("¡Cuenta eliminada con éxito!");
+                            setActu(actualizador + 1);
+                            setTimeout(() => {
+                                navigate("/register");
+                            }, 2000);
+                            localStorage.removeItem("Usuario Autenticado_id");
+                        } catch (error) {
+                            toast.error("Error al eliminar la cuenta. Inténtalo de nuevo.");
+                        }
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => {
+                        toast.info("Eliminación cancelada.");
+                    }
+                }
+            ]
+        });
     };
+    
 
     const CambioFoto = (event) => {
         const archivo = event.target.files[0];

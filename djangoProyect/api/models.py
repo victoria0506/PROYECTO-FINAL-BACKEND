@@ -43,12 +43,12 @@ class Imagenes(models.Model):
 
 class Platillos_destacados(models.Model):
     id_platillo= models.AutoField(primary_key=True)
-    nombre= models.CharField(max_length=50)
-    descripcion= models.CharField(max_length=50)
-    precio= models.DecimalField(max_digits=7, decimal_places=3) 
-    estodo= models.BooleanField(default=True)
+    nombre_platillo = models.CharField(max_length=80,null=True, blank=True)
+    url_platillo_1 = models.URLField(max_length=500,null=True, blank=True)
+    url_platillo_2 = models.URLField(max_length=500,null=True, blank=True)
+    url_platillo_3 = models.URLField(max_length=500,null=True, blank=True)
+    url_platillo_4 = models.URLField(max_length=500,null=True, blank=True)
     restaurante_id = models.ForeignKey(restaurantes, on_delete=models.CASCADE)
-    id_imagen= models.ForeignKey(Imagenes, on_delete=models.CASCADE)
     
 class tipo_especialidad(models.Model):
     id_especialidad= models.AutoField(primary_key=True)
@@ -71,8 +71,13 @@ class favoritos(models.Model):
     restaurante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE)
     
 class calendario(models.Model):
+    TIPO_DIA_CHOICES = [
+        ('alta_demanda', 'Alta Demanda'),
+        ('evento', 'Evento'),
+        ('normal', 'Normal'),
+    ]
     calendario_id = models.AutoField(primary_key=True)
     dia = models.DateField()
-    alta_demanada = models.BooleanField(default=True)  
+    tipo = models.CharField(max_length=20, choices=TIPO_DIA_CHOICES, default='normal')
     nota = models.TextField(null=True, blank=True) 
     restaurante_id = models.ForeignKey(restaurantes, on_delete=models.CASCADE)

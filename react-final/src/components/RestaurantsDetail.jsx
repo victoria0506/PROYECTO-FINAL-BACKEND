@@ -18,7 +18,6 @@ import '../style/paginarestaurantes.css';
 import '../style/DetailRestau.css';
 import { useTranslation } from "react-i18next";
 
-
 const RestaurantsDetail = () => {
     const { restaurante_id } = useParams();
     const [restaurantDetail, setRestaurantDetail] = useState(null);
@@ -133,7 +132,7 @@ const RestaurantsDetail = () => {
                 )}
                 <h3 className="nombrerestaurante">{restaurantDetail.nombre_restaurante}</h3>
                 <h4 className="introrestaurantes">
-                    Restaurante & Sport Bar dentro del Hotel Cayuga con deliciosa variedad de comida y cócteles.
+                    {restaurantDetail.descripcion}
                 </h4>
                 <button className="añafavo-button" onClick={isFavorite ? eliminarFavoritos : anadirFavoritos}>
                     <FontAwesomeIcon
@@ -170,7 +169,7 @@ const RestaurantsDetail = () => {
                 </Modal>
             </div>
             <div>
-                <CarouselPlatillos/>
+                <CarouselPlatillos restaurante_id={restaurante_id}/>
             </div>
             <ToastContainer position="top-center"/>
         </div>

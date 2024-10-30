@@ -10,6 +10,7 @@ import authenticator from '../services/FetchImagekit';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Calendario from './Calendario';
+import FormPlatillos from './FormPlatillos';
 
 
 const FormAdmin = () => {
@@ -24,6 +25,7 @@ const FormAdmin = () => {
   const [imageURLHeader, setImageURLHeader] = useState(""); // Para la imagen de encabezado
   const { t } = useTranslation();
   const { distritos, cantones, especialidades } = UsedataRest(ubicacion.canton);
+  const [restauranteId, setRestauranteId] = useState("")
 
   // Manejo de cambios
   const CambiosDistritos = (e) => setUbicacion({ ...ubicacion, distrito: e.target.value });
@@ -42,7 +44,8 @@ const FormAdmin = () => {
     } else {
       const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
       try {
-        await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader); // Enviar ambas URLs
+        const restaNew = await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader);
+        setRestauranteId(restaNew.restaurante_id)
         toast.success('Restaurante añadido exitosamente')
       } catch (error) {
         toast.error('Hubo un error al añadir el restaurante. Por favor, inténtelo de nuevo.')
@@ -65,8 +68,6 @@ const FormAdmin = () => {
     console.log("Imagen de encabezado subida exitosamente:", res.url);
   };
 
-
-  
   return (
     <div>
       <div className='Datos'>
@@ -148,7 +149,8 @@ const FormAdmin = () => {
         <button className='buttonaddadmi' onClick={Añadir}>{t('Add')}</button>
       </div>
       <ToastContainer position="top-center"/>
-      <Calendario/>
+      <Calendario restauranteId={restauranteId}/>
+      <FormPlatillos restauranteId={restauranteId}/>
     </div>
   );
 };
