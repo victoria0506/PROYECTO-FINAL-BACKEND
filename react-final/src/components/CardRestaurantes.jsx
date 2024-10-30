@@ -1,3 +1,4 @@
+// Importaciones y definición del componente CardsRestaurantes
 import { useEffect, useState } from "react";
 import RestaGet from "../services/getRestaurant";
 import fetchImagen from "../services/imageGet";
@@ -7,25 +8,28 @@ import { Link } from "react-router-dom";
 
 const CardsRestaurantes = ({ especialidadSeleccionada }) => {
   const [restaurantes, setRestaurantes] = useState([]);
-  const [imagenesRestaurantes, setImagenesRestaurantes] = useState({}); 
   const { t } = useTranslation();
 
-  const obtenerRestaurantConImagenes = async () => {
+  const obtenerRestaurant = async () => {
     const restaurantObte = await RestaGet();
-    setRestaurantes(restaurantObte);
 
-    const imagenes = {};
-    for (let resta of restaurantObte) {
-      const img = await fetchImagen(resta.restaurante_id);
-      if (img && img.length > 0) {
-        imagenes[resta.restaurante_id] = img[0].url_img; 
-      }
-    }
-    setImagenesRestaurantes(imagenes);
+    // Obtener ambas imágenes para cada restaurante
+    const restaurantesConImagen = await Promise.all(
+      restaurantObte.map(async (restau) => {
+        const imagenes = await fetchImagen(restau.restaurante_id);
+        return {
+          ...restau,
+          imagen: imagenes.length > 0 ? imagenes[0].url_img : "/src/img/default.jpg", // Logo del restaurante
+          header: imagenes.length > 0 ? imagenes[0].url_header : "/src/img/default-header.jpg" // Imagen de encabezado
+        };
+      })
+    );
+
+    setRestaurantes(restaurantesConImagen);
   };
 
   useEffect(() => {
-    obtenerRestaurantConImagenes();
+    obtenerRestaurant();
   }, []);
 
   const restaurantesFiltrados = especialidadSeleccionada
@@ -36,18 +40,18 @@ const CardsRestaurantes = ({ especialidadSeleccionada }) => {
     <div className="maincontainer">
       <h1>{t('Discover your next favorite restaurant.')}</h1>
       <div className="container-cards">
-        {restaurantesFiltrados.map((restau) => (
-          <div key={restau.restaurante_id}>
+        {restaurantesFiltrados.map((restau, index) => (
+          <div key={index}>
             <article className="card">
               <img
                 className="card__background"
-                src={imagenesRestaurantes[restau.restaurante_id] || "/src/img/lasbrisasheader.jpeg"}
-                alt={`Photo of ${restau.nombre_restaurante}`}
+                src={restau.header}  // Usamos la imagen de encabezado
+                alt={`Header of ${restau.nombre_restaurante}`}
               />
               <img
                 className="card__profile-icon"
-                src={imagenesRestaurantes[restau.restaurante_id] || "/src/img/images.jpg"}
-                alt="Restaurant Profile"
+                src={restau.imagen} // Usamos el logo del restaurante
+                alt={`Logo of ${restau.nombre_restaurante}`}
               />
               <div className="card__content flow">
                 <div className="card__content--container flow">
@@ -71,3 +75,4 @@ const CardsRestaurantes = ({ especialidadSeleccionada }) => {
 };
 
 export default CardsRestaurantes;
+
