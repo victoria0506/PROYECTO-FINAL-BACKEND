@@ -139,6 +139,7 @@ class calendarioView(ModelViewSet):
         if restaurante_id is not None:
             queryset = queryset.filter(restaurante_id=restaurante_id)
         return queryset
+    
 
 class GenerateImageKitAuth(APIView):
     authentication_classes = [TokenAuthentication]

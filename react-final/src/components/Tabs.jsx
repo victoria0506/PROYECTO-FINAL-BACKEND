@@ -76,6 +76,7 @@ const Tabs = (restauranteId) => {
             {activeTab === "tab4" && (
               <div id="tab__content--4">
               <CalendarioUsuario restauranteId={restauranteId}/>
+              <Calendario/>
               </div>
             )}
           </Modal.Body>

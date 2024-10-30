@@ -33,6 +33,8 @@ class restaurantes(models.Model):
     accesibilidad= models.BooleanField(default=True)
     descripcion = models.CharField(max_length=200)
     id_distrito= models.ForeignKey(distrito, on_delete=models.CASCADE)
+    latitud_map = models.FloatField(null=True, blank=True) 
+    longitud_map = models.FloatField(null=True, blank=True) 
     
 class Imagenes(models.Model):
     id_imagen = models.AutoField(primary_key=True)

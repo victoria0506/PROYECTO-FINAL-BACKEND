@@ -1,8 +1,8 @@
 import { uploadImage } from "./imageService";
-const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
-// const Token= "a53ecb17b9b53418b44507fe226c0cf6490508f1";
+//const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
+const Token= "a53ecb17b9b53418b44507fe226c0cf6490508f1";
 
-const PostResta = async (nombre_restaurante, precio_promedio, capacidad, descripcion, id_distrito, especiSelect, imageURLPerfil, imageURLHeader) => {
+const PostResta = async (nombre_restaurante, precio_promedio, capacidad, descripcion, id_distrito, especiSelect, imageURLPerfil, imageURLHeader, latitud_map, longitud_map) => {
     console.log(imageURLPerfil);
     console.log(imageURLHeader);
     
@@ -19,6 +19,8 @@ const PostResta = async (nombre_restaurante, precio_promedio, capacidad, descrip
                 capacidad: parseFloat(capacidad),
                 descripcion: descripcion,
                 id_distrito: id_distrito.distrito,
+                latitud_map: latitud_map,
+                longitud_map: longitud_map,
             })
         });
 

@@ -5,17 +5,10 @@ import Modal from 'react-bootstrap/Modal';
 
 function ModalMap() {
   const [show, setShow] = useState(false);
-
-  function handleShow() {
-    setShow(true);
-  }
-
+   
   return (
     <>
-      {/* Muestra el mapa en la página */}
-      <div onClick={handleShow} style={{ cursor: 'pointer' }}>
-        <Map/>
-      </div>
+
 
       {/* Modal que se abre al hacer clic en el mapa */}
       <Modal show={show} onHide={() => setShow(false)} fullscreen>
