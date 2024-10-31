@@ -1,5 +1,5 @@
 from django.db import models
-    
+
 class TipoUsuario(models.Model):
     id_tipoUsuario= models.AutoField(primary_key=True)
     descripcion= models.CharField(max_length=25)
@@ -38,6 +38,11 @@ class restaurantes(models.Model):
     horario_apertura = models.TimeField(null=True, blank=True) 
     horario_cierre = models.TimeField(null=True, blank=True) 
     activo = models.BooleanField(default=True)
+    coordenadas = models.JSONField(null=True, blank=True)  # Almacena {'lat': valor_latitud, 'lng': valor_longitud}
+
+    def __str__(self):
+        return f"Coordenadas: {self.coordenadas}"
+
     
 class Imagenes(models.Model):
     id_imagen = models.AutoField(primary_key=True)
@@ -85,3 +90,17 @@ class calendario(models.Model):
     tipo = models.CharField(max_length=20, choices=TIPO_DIA_CHOICES, default='normal')
     nota = models.TextField(null=True, blank=True) 
     restaurante_id = models.ForeignKey(restaurantes, on_delete=models.CASCADE)
+    
+    
+class menu_restaurantes(models.Model):
+    id_menu = models.AutoField(primary_key=True)
+    pagina_1 = models.URLField(max_length=500,null=True, blank=True)
+    pagina_2 = models.URLField(max_length=500,null=True, blank=True)
+    pagina_3 = models.URLField(max_length=500,null=True, blank=True)
+    pagina_4 = models.URLField(max_length=500,null=True, blank=True)
+    pagina_5 = models.URLField(max_length=500,null=True, blank=True)
+    pagina_6 = models.URLField(max_length=500,null=True, blank=True)
+    pagina_7 = models.URLField(max_length=500,null=True, blank=True)
+    pagina_8 = models.URLField(max_length=500,null=True, blank=True)
+    restaurante_id = models.ForeignKey(restaurantes, on_delete=models.CASCADE)
+    

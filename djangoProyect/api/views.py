@@ -3,8 +3,8 @@ from rest_framework import status
 from rest_framework.viewsets import ModelViewSet
 from .serializers import (TipoUserSerializer,UsuariosSerializer,
 restaurantesSerializer,
-CalificacionSerializer,favoritosSerializer,calendarioSerializer,especialidadSerializer, CantonSerializer, distritoSerializer, RestaEspeciSerializer, ImagenSerializer, PlatillosSeralizer)
-from .models import TipoUsuario,Usuarios,restaurantes,calificaciones,favoritos,calendario,tipo_especialidad, Canton, distrito, RestaEspecialidades, Imagenes, Platillos_destacados
+CalificacionSerializer,favoritosSerializer,calendarioSerializer,especialidadSerializer, CantonSerializer, distritoSerializer, RestaEspeciSerializer, ImagenSerializer, PlatillosSeralizer, menuSerializer)
+from .models import TipoUsuario,Usuarios,restaurantes,calificaciones,favoritos, menu_restaurantes,calendario,tipo_especialidad, Canton, distrito, RestaEspecialidades, Imagenes, Platillos_destacados
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from .auth import registro_user, login_user, create_Authorization, create_Refresh
@@ -17,7 +17,7 @@ from rest_framework.permissions import IsAdminUser
 from django.core.files.storage import default_storage
 import requests
 from decimal import Decimal
-
+from rest_framework.decorators import api_view
 
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
@@ -138,6 +138,37 @@ class favoritosView(ModelViewSet):
     serializer_class=favoritosSerializer
     authentication_classes = [CookieAuthentication]
     permission_classes = [IsAuthenticated]
+    
+class MenuView(ModelViewSet):
+    queryset= menu_restaurantes.objects.all()
+    serializer_class= menuSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    
+@api_view(['POST'])
+def add_menu_images(request):
+    images_data = request.data.get('images')  # Supongamos que 'images' es una lista de URLs
+    restaurante_id = request.data.get('restaurante_id')
+
+    if not images_data:
+        return Response({"error": "No se encontraron imágenes"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if not restaurante_id:
+        return Response({"error": "restaurante_id es necesario"}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        for image_url in images_data:
+            # Aquí puedes agregar validaciones para cada URL si es necesario
+            menu_item = menu_restaurantes.objects.create(
+                url_image=image_url,  # Asegúrate de que el campo sea correcto
+                restaurante_id=restaurante_id
+            )
+        
+        return Response({"message": "Imágenes agregadas exitosamente"}, status=status.HTTP_201_CREATED)
+    
+    except Exception as e:
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
     
 class calendarioView(ModelViewSet):
     queryset=calendario.objects.all()

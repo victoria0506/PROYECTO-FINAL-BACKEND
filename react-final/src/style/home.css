@@ -1,4 +1,6 @@
 @import url('https://fonts.cdnfonts.com/css/bacasime-antique');
+@import url('https://fonts.cdnfonts.com/css/hello-bonia-serif');
+@import url('https://fonts.cdnfonts.com/css/frostbites');
 *{
   font-family: "Quicksand", sans-serif;
   font-optical-sizing: auto;
@@ -174,7 +176,7 @@
     z-index: -1; /* Asegura que el video esté detrás del contenido */
     margin-top: 140px;
   }
-  @import url('https://fonts.cdnfonts.com/css/hello-bonia-serif');
+ 
   .texto2carrusel{
     font-family: 'Hello Bonia Serif', sans-serif;
   }
@@ -182,7 +184,6 @@
   
 /* Importa la fuente */
 
-@import url('https://fonts.cdnfonts.com/css/frostbites');
 .titulotextobajohome {
   font-family: 'Frostbites', sans-serif;
                                                 

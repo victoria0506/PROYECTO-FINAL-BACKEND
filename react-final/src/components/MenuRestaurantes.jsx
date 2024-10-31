@@ -59,9 +59,6 @@ function MenuRestaurantes() {
           <img src='https://firebasestorage.googleapis.com/v0/b/mareaalcalina-f1545.appspot.com/o/Marea-Alcalina-Images%2FsKMl3XbzU0PHwyZ244k5718hKpc2%2FI6X57GAQfrNZyXiNJKGQ%2F1ft426vc4ec.webp?alt=media&token=d332c6da-b222-450a-b181-1cddfb9c81a2' alt="Postres" className="page-image" />
         </div>
 
-        <div className="page">
-          <img src='https://firebasestorage.googleapis.com/v0/b/mareaalcalina-f1545.appspot.com/o/Marea-Alcalina-Images%2FsKMl3XbzU0PHwyZ244k5718hKpc2%2FI6X57GAQfrNZyXiNJKGQ%2Fq5eph3m19j.webp?alt=media&token=4ff09777-a955-4ef4-af85-5a234b6e1c47' alt="Postres" className="page-image" />
-        </div>
 
       </HTMLFlipBook>
     </div>

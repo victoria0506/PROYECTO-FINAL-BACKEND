@@ -64,7 +64,7 @@ const Tabs = (restauranteId) => {
             )}
             {activeTab === "tab2" && (
               <div id="tab__content--2">
-                <MenuRestaurantes />
+                <MenuRestaurantes/>
               </div>
             )}
             {activeTab === "tab3" && (
