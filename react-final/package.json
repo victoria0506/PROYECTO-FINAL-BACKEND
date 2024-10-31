@@ -37,6 +37,7 @@
     "react-bootstrap": "^2.10.5",
     "react-confirm-alert": "^3.0.6",
     "react-dom": "^18.3.1",
+    "react-dropzone": "^14.2.10",
     "react-flickity-component": "^4.0.7",
     "react-flip-page": "^1.6.4",
     "react-i18next": "^15.0.2",

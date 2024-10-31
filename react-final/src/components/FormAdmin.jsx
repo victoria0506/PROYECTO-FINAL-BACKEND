@@ -10,22 +10,28 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Calendario from './Calendario';
 import FormPlatillos from './FormPlatillos';
+import MenuRestaurantes from './MenuRestaurantes';
+import Map from './Map'; // Importar el componente de mapa
 
 const FormAdmin = () => {
-  const [nomResta, setNomresta] = useState("");
-  const [precioPro, setPrecioPro] = useState("");
-  const [capacidad, setCapacidad] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [ubicacion, setUbicacion] = useState({ canton: "", distrito: "" });
-  const [especiSelect, setEspeciSelect] = useState([]);
-  const [imageURLPerfil, setImageURLPerfil] = useState("");
-  const [imageURLHeader, setImageURLHeader] = useState("");
-  const [latitud, setLatitud] = useState("");
-  const [longitud, setLongitud] = useState("");
-  const { t } = useTranslation();
-  const { distritos, cantones, especialidades } = UsedataRest(ubicacion.canton);
-  const [restauranteId, setRestauranteId] = useState("")
+  const [nomResta, setNomresta] = useState(""); // Nombre del restaurante
+  const [precioPro, setPrecioPro] = useState(""); // Precio promedio
+  const [capacidad, setCapacidad] = useState(""); // Capacidad
+  const [descripcion, setDescripcion] = useState(""); // Descripción del restaurante
+  const [ubicacion, setUbicacion] = useState({ canton: "", distrito: "" }); // Ubicación
+  const [especiSelect, setEspeciSelect] = useState([]); // Especialidades seleccionadas
+  const [imageURLPerfil, setImageURLPerfil] = useState(""); // URL de imagen de perfil
+  const [imageURLHeader, setImageURLHeader] = useState(""); // URL de imagen de encabezado
+  const { t } = useTranslation(); // Para traducciones
+  const { distritos, cantones, especialidades } = UsedataRest(ubicacion.canton); // Datos para los select
+  const [restauranteId, setRestauranteId] = useState(""); // ID del restaurante añadido
 
+  const [menuImages, setMenuImages] = useState(Array(8).fill("")); // 8 campos para las imágenes del menú
+  
+  // Coordenadas
+  const [coordenadas, setCoordenadas] = useState({ lat: '', lng: '' }); // Estado para las coordenadas
+
+  // Funciones para manejar cambios en los select
   const CambiosDistritos = (e) => setUbicacion({ ...ubicacion, distrito: e.target.value });
   const CambiosCantones = (e) => setUbicacion({ canton: e.target.value, distrito: "" });
   const CambiosEspecialidades = (e) => {
@@ -34,7 +40,7 @@ const FormAdmin = () => {
   };
 
   const Añadir = async () => {
-    // Validaciones
+    // Validación de campos
     if (
       nomResta.trim() === "" || 
       precioPro.trim() === "" || 
@@ -44,34 +50,27 @@ const FormAdmin = () => {
       !ubicacion.distrito || 
       imageURLPerfil.trim() === "" || 
       imageURLHeader.trim() === "" || 
-      latitud.trim() === "" || 
-      longitud.trim() === ""
+      menuImages.some(url => url.trim() === "") ||
+      coordenadas.lat.trim() === "" || // Validar latitud
+      coordenadas.lng.trim() === "" // Validar longitud
     ) {
       toast.error("Ingrese todos los datos de manera correcta");
       return;
     }
 
-    // Validar que precioPro y capacidad sean números
-    if (isNaN(precioPro) || isNaN(capacidad)) {
-      toast.error('El precio promedio y la capacidad deben ser números válidos');
-      return;
-    }
-
-    // Validar latitud y longitud
-    const latNum = parseFloat(latitud);
-    const lngNum = parseFloat(longitud);
-    if (latNum < -90 || latNum > 90 || lngNum < -180 || lngNum > 180) {
-      toast.error('Latitud y longitud deben ser valores válidos');
+    if (isNaN(precioPro) || isNaN(capacidad) || isNaN(coordenadas.lat) || isNaN(coordenadas.lng)) {
+      toast.error('El precio promedio, la capacidad, y las coordenadas deben ser números válidos');
       return;
     }
 
     const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
     try {
-      const restaNew = await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader, latitud, longitud);
-      setRestauranteId(restaNew.restaurante_id)
+      // Llamada a la función para añadir el restaurante
+      const restaNew = await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader, menuImages, coordenadas);
+      setRestauranteId(restaNew.restaurante_id);
       toast.success('Restaurante añadido exitosamente');
 
-      // Limpiar campos después de agregar
+      // Limpiar campos después de añadir
       setNomresta("");
       setPrecioPro("");
       setCapacidad("");
@@ -80,8 +79,8 @@ const FormAdmin = () => {
       setEspeciSelect([]);
       setImageURLPerfil("");
       setImageURLHeader("");
-      setLatitud("");
-      setLongitud("");
+      setMenuImages(Array(8).fill("")); 
+      setCoordenadas({ lat: '', lng: '' }); // Limpiar coordenadas
     } catch (error) {
       toast.error('Hubo un error al añadir el restaurante. Por favor, inténtelo de nuevo.');
     }
@@ -102,41 +101,48 @@ const FormAdmin = () => {
     console.log("Imagen de encabezado subida exitosamente:", res.url);
   };
 
+  const handleMenuImageUploadSuccess = (index) => (res) => {
+    const updatedMenuImages = [...menuImages];
+    updatedMenuImages[index] = res.url; // Agregar URL al índice correspondiente
+    setMenuImages(updatedMenuImages);
+    console.log(`Imagen de menú ${index + 1} subida exitosamente:`, res.url);
+  };
+
   return (
     <div>
       <div className='Datos'>
-        <label>{t('Restaurant name')} : </label>
+        <label>{t('Nombre del restaurante')} : </label>
         <input 
           type="text" 
-          placeholder={t('Restaurant')} 
+          placeholder={t('Restaurante')} 
           value={nomResta} 
           onChange={e => setNomresta(e.target.value)} 
         />
         <br />
-        <label>{t('Average price')}: </label>
+        <label>{t('Precio promedio')}: </label>
         <input 
           type="text" 
-          placeholder={t('Average price')} 
+          placeholder={t('Precio promedio')} 
           value={precioPro} 
           onChange={e => setPrecioPro(e.target.value)} 
         />
-        <label htmlFor="">{t('Ability')}</label>
+        <label htmlFor="">{t('Capacidad')}</label>
         <input 
           type="text" 
-          placeholder={t('Ability')} 
+          placeholder={t('Capacidad')} 
           value={capacidad} 
           onChange={e => setCapacidad(e.target.value)} 
         />
         <br />
-        <label htmlFor="">{t('Description')}</label>
+        <label htmlFor="">{t('Descripción')}</label>
         <input 
           type="text" 
-          placeholder={t('Description')} 
+          placeholder={t('Descripción')} 
           value={descripcion} 
           onChange={e => setDescripcion(e.target.value)} 
         />
         <br />
-        <label>{t('Specialty')}:</label>
+        <label>{t('Especialidad')}:</label>
         <Select
           onChange={setEspeciSelect}
           isMulti
@@ -162,21 +168,20 @@ const FormAdmin = () => {
             <option key={distrito.id_distrito} value={distrito.id_distrito}>{distrito.nombre_distrito}</option>
           ))}
         </select>
+
         <br />
-        <label htmlFor="">Latitud:</label>
+        <label htmlFor="">Coordenadas:</label>
         <input 
           type="text" 
-          placeholder="Ingrese la latitud" 
-          value={latitud} 
-          onChange={e => setLatitud(e.target.value)} 
+          placeholder={t('Latitud')} 
+          value={coordenadas.lat} 
+          onChange={e => setCoordenadas({ ...coordenadas, lat: e.target.value })} 
         />
-        <br />
-        <label htmlFor="">Longitud:</label>
         <input 
           type="text" 
-          placeholder="Ingrese la longitud" 
-          value={longitud} 
-          onChange={e => setLongitud(e.target.value)} 
+          placeholder={t('Longitud')} 
+          value={coordenadas.lng} 
+          onChange={e => setCoordenadas({ ...coordenadas, lng: e.target.value })} 
         />
         <br />
         <label>Subir imagen de perfil:</label>
@@ -195,16 +200,29 @@ const FormAdmin = () => {
             authenticator={authenticator}
           />
         </IKContext>
-        <button onClick={Añadir}>{t('Add restaurant')}</button>
-        <ToastContainer />
+        {Array.from({ length: 8 }).map((_, index) => (
+          <div key={index}>
+            <label>Subir imagen de menú {index + 1}:</label>
+            <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
+              <IKUpload
+                onError={handleImageUploadError}
+                onSuccess={handleMenuImageUploadSuccess(index)}
+                authenticator={authenticator}
+              />
+            </IKContext>
+          </div>
+        ))}
+        <button onClick={Añadir}>{t('Añadir Restaurante')}</button>
       </div>
-      <ToastContainer position="top-center"/>
-      <Calendario restauranteId={restauranteId}/>
-      <FormPlatillos restauranteId={restauranteId}/>
+      <ToastContainer />
+      <Map coordenadas={coordenadas} /> {/* Componente de mapa */}
     </div>
   );
 };
 
 export default FormAdmin;
+
+
+
 
 

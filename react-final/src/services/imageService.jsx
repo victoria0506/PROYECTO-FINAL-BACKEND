@@ -17,7 +17,7 @@ export const uploadImage = async (url_img,url_header,restaurante_id, tipo_imagen
                 url_header: url_header,
                 restaurante_id: restaurante_id,
                 tipo_imagen: tipo_imagen, // Solo envía los datos necesarios
-                
+            
             })
         });
         return await response.json();

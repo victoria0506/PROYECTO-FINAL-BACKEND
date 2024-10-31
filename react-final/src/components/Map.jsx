@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const Map = ({ latitud_map, longitud_map }) => {
+const Map = () => {
     useEffect(() => {
-        // Inicializar el mapa
+        // Inicializar el mapa solo una vez
         const map = L.map('map', {
-            center: [latitud_map, longitud_map], // Usar las coordenadas proporcionadas
-            zoom: 15, // Nivel de zoom
+            center: [9.981390403755313, -84.75704731772372], // Coordenadas iniciales
+            zoom: 30, // Nivel de zoom
             dragging: true,
             scrollWheelZoom: true,
             touchZoom: true,
@@ -17,19 +17,15 @@ const Map = ({ latitud_map, longitud_map }) => {
             maxZoom: 19,
         }).addTo(map);
 
-        // Crear un marcador y agregarlo al mapa
-        const marker = L.marker([latitud_map, longitud_map]).addTo(map);
-
         // Limpiar el mapa al desmontar el componente
         return () => {
             map.remove(); // Eliminar el mapa
         };
-    }, [latitud, longitud]); // Cambiar el mapa y el marcador cuando cambian las coordenadas
+    }, []); // Añadir el array vacío para que se ejecute solo una vez al montar
 
     return <div id="map" style={{ height: "500px" }} />; // Establecer altura para el mapa
 };
 
 export default Map;
-
 
 
