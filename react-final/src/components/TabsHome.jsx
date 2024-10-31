@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../style/TabsHome.css";
 import { motion } from 'framer-motion';
 import { useTranslation } from "react-i18next";
@@ -9,7 +9,6 @@ import { Link } from "react-router-dom";
 const TabsHome = () => {
   const [activeTab, setActiveTab] = useState("");
   const [associatedRestaurants, setAssociatedRestaurants] = useState([]);
-  const [allRestaurants, setAllRestaurants] = useState([])
   const { t } = useTranslation(); 
   const { especialidades, restaurantesEspecialidades } = UsedataRest(); 
 
@@ -25,28 +24,21 @@ const TabsHome = () => {
 
   const handleTabChange = async (especialidadId) => {
     setActiveTab((prevTab) => (prevTab === especialidadId ? "" : especialidadId))
-    console.log("Speciality ID clicked:", especialidadId);
-    console.log("Restaurantes Especialidades:", restaurantesEspecialidades);
     const filteredRestaurants = restaurantesEspecialidades.filter(
         (restaurantEspecialidad) => restaurantEspecialidad.id_especialidad === especialidadId
     );
-    console.log('Filtered Restaurants:', filteredRestaurants);
     const restaurantIds = filteredRestaurants.map((relation) => relation.restaurante_id);
-    console.log('Restaurant IDs:', restaurantIds)
     try{
       const allRestaurants = await RestaGet()
       const restaurantsDetails = restaurantIds.map((id) => {
           return allRestaurants.find((rest) => rest.restaurante_id === id);
       }).filter(Boolean);
-      console.log('Restaurants Details:', restaurantsDetails);
       setAssociatedRestaurants(restaurantsDetails);
     }catch (error){
-      console.error("Error fetching restaurants:", error)
+      console.log("error");
     }
-
   };
-
-
+  
   return (
     <article className="articlehome">
       <div className="grid__item--1of1 text-center">
@@ -88,7 +80,7 @@ const TabsHome = () => {
                   </div>
                  ))
              ) : (
-                activeTab && <p>No hay restaurantes asociados para esta especialidad.</p>
+                activeTab && <p>{t('There are no associated restaurants for this specialty.')}</p>
              )}
           </div>
         </motion.div>

@@ -1,19 +1,21 @@
-
 import '../style/about.css';  // Asegúrate de tener un archivo CSS vinculado
+import { useTranslation } from 'react-i18next';
 
 function About() {
+  const { t } = useTranslation()
+
   return (
     <div className="about-container">
       <div className="about-content">
-        <h1>Sobre RestaurApp</h1>
+        <h1>{t('About RestaurApp')}</h1>
         <p>
-          RestaurApp nació con el objetivo de conectar a las personas con la increíble diversidad de restaurantes en Puntarenas. Queremos que tanto residentes como turistas disfruten de la oferta gastronómica de la región, desde pequeños locales familiares hasta reconocidos restaurantes.
+          {t('RestaurApp was born with the goal of connecting people with the incredible diversity of restaurants in Puntarenas. We want both residents and tourists to enjoy the culinary offerings of the region, from small family-run establishments to well-known restaurants.')}
         </p>
         <p>
-          Nuestra plataforma te permite buscar y descubrir los lugares que mejor se adapten a tus preferencias. ¡Apoyemos juntos a la comunidad gastronómica mientras disfrutamos de lo mejor que tiene para ofrecer!
+          {t('Our platform allows you to search and discover the places that best fit your preferences. Let’s support the culinary community together while enjoying the best it has to offer!')}
         </p>
         <p>
-          Únete a nosotros y explora los sabores únicos que solo Puntarenas puede ofrecer. ¡Tu próxima experiencia culinaria está a un clic de distancia!
+          {t('Join us and explore the unique flavors that only Puntarenas can offer. Your next culinary experience is just a click away!')}
         </p>
       </div>
       <div className="about-image">
@@ -24,4 +26,3 @@ function About() {
 }
 
 export default About;
-

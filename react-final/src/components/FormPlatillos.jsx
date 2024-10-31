@@ -5,7 +5,6 @@ import authenticator from '../services/FetchImagekit';
 import { t } from "i18next";
 
 const FormPlatillos = ({restauranteId}) => {
-    const [titulo, setTitulo] = useState("");
     const [urlPlatillo1, setUrlPlatillo1] = useState("");
     const [urlPlatillo2, setUrlPlatillo2] = useState("");
     const [urlPlatillo3, setUrlPlatillo3] = useState("");
@@ -13,8 +12,8 @@ const FormPlatillos = ({restauranteId}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log("Datos de platillo a enviar:", restauranteId, urlPlatillo1, urlPlatillo2, urlPlatillo3, urlPlatillo4, titulo)
-        await PlatilloPost(restauranteId, urlPlatillo1, urlPlatillo2, urlPlatillo3, urlPlatillo4, titulo)
+        console.log("Datos de platillo a enviar:", restauranteId, urlPlatillo1, urlPlatillo2, urlPlatillo3, urlPlatillo4)
+        await PlatilloPost(restauranteId, urlPlatillo1, urlPlatillo2, urlPlatillo3, urlPlatillo4)
     }
 
     const handleImageUploadError = (err) => {
@@ -44,15 +43,8 @@ const FormPlatillos = ({restauranteId}) => {
 
 return (
         <form onSubmit={handleSubmit}>
-          <label>Nombre Platillo : </label>
-          <input 
-          type="text" 
-          placeholder={t("nombre platillo")}
-          value={titulo}
-          onChange={e => setTitulo(e.target.value)}
-          />
           {/* Subida de imagenes con IKUpload */}
-          <label>Imagen 1:</label>
+          <label>{t('Image 1 :')}</label>
           <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
             <IKUpload 
             onError={handleImageUploadError} 
@@ -61,7 +53,7 @@ return (
             />
           </IKContext>
     
-          <label>Imagen 2:</label>
+          <label>{t('Image 2 :')}</label>
           <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
             <IKUpload 
             onError={handleImageUploadError} 
@@ -70,7 +62,7 @@ return (
             />
           </IKContext>
     
-          <label>Imagen 3:</label>
+          <label>{t('Image 3 :')}</label>
           <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
             <IKUpload 
             onError={handleImageUploadError} 
@@ -79,7 +71,7 @@ return (
             />
           </IKContext>
     
-          <label>Imagen 4:</label>
+          <label>{t('Image 4 :')}</label>
           <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
             <IKUpload 
             onError={handleImageUploadError} 
@@ -87,7 +79,8 @@ return (
             authenticator={authenticator}
             />
           </IKContext>
-          <button type="submit">Guardar platillo destacado</button>
+          <br /><br />
+          <button className="añaplatillos" type="submit">{t("Save Featured Dish")}</button>
         </form>
     );    
 }

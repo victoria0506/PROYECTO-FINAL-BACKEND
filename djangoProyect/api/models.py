@@ -35,6 +35,9 @@ class restaurantes(models.Model):
     id_distrito= models.ForeignKey(distrito, on_delete=models.CASCADE)
     latitud_map = models.FloatField(null=True, blank=True) 
     longitud_map = models.FloatField(null=True, blank=True) 
+    horario_apertura = models.TimeField(null=True, blank=True) 
+    horario_cierre = models.TimeField(null=True, blank=True) 
+    activo = models.BooleanField(default=True)
     
 class Imagenes(models.Model):
     id_imagen = models.AutoField(primary_key=True)
@@ -45,7 +48,6 @@ class Imagenes(models.Model):
 
 class Platillos_destacados(models.Model):
     id_platillo= models.AutoField(primary_key=True)
-    nombre_platillo = models.CharField(max_length=80,null=True, blank=True)
     url_platillo_1 = models.URLField(max_length=500,null=True, blank=True)
     url_platillo_2 = models.URLField(max_length=500,null=True, blank=True)
     url_platillo_3 = models.URLField(max_length=500,null=True, blank=True)

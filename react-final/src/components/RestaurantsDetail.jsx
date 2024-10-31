@@ -48,8 +48,6 @@ const RestaurantsDetail = () => {
         }
     };
     
-    
-
     // Función para obtener los favoritos del usuario
     const obtenerFavoritos = () => {
         const favoritesKey = `favoritos_${usuario_id}`;
@@ -82,7 +80,7 @@ const RestaurantsDetail = () => {
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
             const favoritoExistente = favoritos.find(fav => fav.restaurante_id === restaurante_id);
             if (!favoritoExistente) {
-                const confirmacion = confirm("¿Deseas añadir este restaurante a tus favoritos?");
+                const confirmacion = confirm(t("loginToAddFavorites"));
                 if (confirmacion) {
                     setIsFavorite(true);                    
                     const resultado = await favoritosRestaurants(usuario_id, restaurante_id);
@@ -95,7 +93,7 @@ const RestaurantsDetail = () => {
                 }
             }
         } else {
-            toast.warning("Regístrate o inicia sesión si quieres añadir a favoritos.")
+            toast.warning(t("loginToAddFavorites"))
         }
     };
     
@@ -118,7 +116,6 @@ const RestaurantsDetail = () => {
             }
         }
     };
-    console.log("IMAGENES: ", restaurantImages);
     
     return (
         <div>
@@ -142,25 +139,6 @@ const RestaurantsDetail = () => {
                 </button>
                 <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
                 <Tabs restauranteId={restaurantDetail.restaurante_id}/>
-
-                {/* Carrusel de imágenes adicionales del restaurante */}
-                {/* {restaurantImages.length > 1 && (
-                    <div className="carousel-container">
-                        <h3>Galería de Imágenes</h3>
-                        <div className="image-carousel">
-                            {restaurantImages.slice(1).map((imagen) => (
-                                <img
-                                    key={imagen.id}
-                                    src={imagen.url_img}
-                                    alt={`Imagen del restaurante`}
-                                    className="carousel-image"
-                                    style={{ width: "200px", height: "auto", margin: "10px" }}
-                                />
-                            ))}
-                        </div>
-                    </div>
-                )} */}
-
                 <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
                     <Modal.Header closeButton className="custom-header" />
                     <Modal.Body className="custom-body">

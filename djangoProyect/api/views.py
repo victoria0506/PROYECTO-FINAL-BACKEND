@@ -16,6 +16,7 @@ import json
 from rest_framework.permissions import IsAdminUser
 from django.core.files.storage import default_storage
 import requests
+from decimal import Decimal
 
 
 class TipouserView(ModelViewSet):
@@ -117,10 +118,21 @@ class CalificacionView(ModelViewSet):
     authentication_classes = [CookieAuthentication]
     permission_classes = [IsAuthenticated]
     
-    def list(self, request, *args, **kwargs):
-        print("Request user:", request.user)  
-        return super().list(request, *args, **kwargs)
-    
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            calificacion = serializer.save(usuario_id=request.user)
+            print(f"Restaurante ID en calificación creada: {calificacion.restaurante_id}")
+            promedio_calificacion = Calificacion.objects.filter(
+                restaurante_id=calificacion.restaurante_id
+            ).aggregate(promedio=Avg('calificacion'))['promedio'] or 0  
+            print(f"Promedio calculado para restaurante_id {calificacion.restaurante_id}: {promedio_calificacion}")
+            Restaurantes.objects.filter(
+                restaurante_id=calificacion.restaurante_id
+            ).update(calificacion_promedio=promedio_calificacion)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
 class favoritosView(ModelViewSet):
     queryset=favoritos.objects.all()
     serializer_class=favoritosSerializer

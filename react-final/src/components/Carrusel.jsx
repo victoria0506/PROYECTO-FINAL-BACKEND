@@ -23,12 +23,11 @@ const Carrusel2 = () => {
           <div className="overlay"></div>
           <img
             className="d-block w-100"
-            src="src/img/rest.jpg"
+            src="https://i.pinimg.com/564x/6b/f1/2a/6bf12a8ef07ce770de444e734ad758b2.jpg"
             alt="Second slide"
           />
           <Carousel.Caption className="caption-centered">
             <div className="caption-content">
-          
               <h2 className='texto2carrusel' style={{color: "white"}}>Si te encanta el marisco, no te puedes perder estos restaurantes que son famosos por ofrecer los platillos más frescos del océano.</h2>
               <button className="btn btn-primary">Ver más</button>
             </div>

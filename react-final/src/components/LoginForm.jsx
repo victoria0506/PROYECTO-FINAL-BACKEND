@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import SweetAlert2 from 'react-sweetalert2';
 import LoginFech from "../services/loginPost";
 import GET from "../services/GET";
 import { useTranslation } from "react-i18next";
@@ -10,11 +9,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function LoginForm () {
-    const [swalProps, setSwalProps] = useState({})
     const [usuario, setUsu] = useState("")
     const [correo, setcorreo] = useState("")
     const [contrasena, setcontrasena] = useState("")
-    const [mensaje, setMensaje] = useState("")
     const navigate = useNavigate();
     const [cargando, setcargando] = useState(false)
     const { t } = useTranslation();
@@ -26,9 +23,8 @@ function LoginForm () {
     }
 
     const Inicio = async () => {
-        // Validaciones de entrada
         if (usuario.trim() === "" || correo.trim() === "" || contrasena.trim() === "" || !validarEmail(correo) || contrasena.length < 5) {
-            toast.error('Ingrese sus datos de manera correcta')
+            toast.error(t("enterCorrectData"))
             return;
         }
         try {
@@ -41,23 +37,23 @@ function LoginForm () {
                     if (validarUser.nombre_usuario === "Administrador" || validarUser.email === "Admi@RestaurApp.com") {
                         localStorage.setItem("Admi-id", validarUser.nombre_usuario)
                         navigate("/admi") 
-                        toast.success('Bienvenido Administrador')
+                        toast.success(t("welcomeAdmin"))
                         setActu(actualizador + 1)
                     } else {
                         localStorage.setItem("Usuario Autenticado_id", validarUser.usuario_id)
                         navigate("/home")
-                        setMensaje("Logueo Exitoso")
+                        toast.success(t("loginSuccess"))
                         setActu(actualizador + 1)
                     }
                 } else {
-                    toast.error('Usuario no encontrado en la base de datos')
+                    toast.error(t("userNotFound"))
                 }
             } else {
-                toast.error('Correo o/y Contraseña incorrectas')
+                toast.error(t("incorrectEmailPassword"))
             }
         } catch (error) {
             console.error("Error durante el login:", error.message)
-            toast.error('Ocurrió un error en la autenticación')
+            toast.error(t("authError"))
         }
     }
     
@@ -65,7 +61,6 @@ function LoginForm () {
         <div className="login-page">
             <div className="login">
                 <img className="logologinregister" src="/src/img/logonav.png" alt="" />
-                <h5>{mensaje}</h5>
                 <input
                     type="text"
                     placeholder={t('User')}
@@ -88,7 +83,7 @@ function LoginForm () {
                     onChange={e => setcontrasena(e.target.value)}
                 />
                 <button className="boton-login" onClick={Inicio}>
-                     {cargando ? t('Charging') : t('Login')}
+                     {cargando ? t('loading...') : t('Login')}
                 </button>
                 <p className="text">{t('You dont have an account?')} <Link to='/register'>{t('Register')}</Link></p>
             </div>

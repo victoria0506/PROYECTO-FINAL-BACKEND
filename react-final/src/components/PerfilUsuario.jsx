@@ -135,11 +135,11 @@ const PerfilUsuario = () => {
     };
 
     if (loading) {
-        return <div>Cargando...</div>; 
+        return <div>{t("loading...")}</div>; 
     }
 
     if (!usuariosDetail) {
-        return <div>No se encontró el usuario.</div>;
+        return <div>{t("User not found.")}</div>;
     }
 
     return (
@@ -195,7 +195,3 @@ const PerfilUsuario = () => {
 };
 
 export default PerfilUsuario;
-
-
-
-

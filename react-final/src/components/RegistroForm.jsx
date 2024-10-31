@@ -9,13 +9,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function RegistroForm() {
-  // declaramos los hooks
     const [usuario, setUsuario] = useState("")
     const [correo, setCorreo] = useState("")
     const [contraseña, setContraseña] = useState("")
-    const [mensaje, setMensaje] = useState("")
     const [cargando, setcargando] = useState(false);
-    const navigate = useNavigate(); // hookpara navegar entre paginas
+    const navigate = useNavigate(); 
     const { t } = useTranslation();
 
     const validarEmail = (correo) => {
@@ -25,7 +23,7 @@ function RegistroForm() {
     
     const mostrar = async () => {
       if (usuario.trim() === "" || contraseña.trim() === "" || correo.trim() === "" || !validarEmail(correo) || contraseña.length < 5) {
-        toast.error('Ingrese todos los datos correctamente, incluyendo un correo válido y una contraseña de al menos 5 caracteres.');
+        toast.error(t("fillAllDataCorrectly"));
         return;
       } else {
         setcargando(true); 
@@ -35,26 +33,26 @@ function RegistroForm() {
         ); 
         if (!validarRegistro) { 
           await userPost(usuario, correo, contraseña);
-          setMensaje("Registro exitoso"); 
+          toast.success(t("registrationSuccessful")) 
           setTimeout(() => {
             navigate("/login"); 
           }, 1000);
         } else {
-          toast.error('El correo o el nombre de usuario ya están registrados')
+          toast.error(t("userAlreadyRegistered"))
         }
       }
     };
+
   return (
     <div className="login4">
        <div className="logn6">
        <img className="logologinregister" src="/src/img/logonav.png" alt="" />
-        <h5>{mensaje}</h5>
         <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder={t('User')}/>
         <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder={t('Email')}/>
         <input type="text" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder={t('Password')}/>
         <div className="botones">
         <button onClick={mostrar}>
-          {cargando ? t('Charging...') : t('Register')}
+          {cargando ? t('loading...') : t('Register')}
         </button>
         <p className="text">{t('Do you have an account?')} <Link to='/login'>{t('Login')}</Link></p>
         </div>

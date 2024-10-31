@@ -3,12 +3,11 @@ import { Modal } from "react-bootstrap";
 import "../style/Tabs.css";
 import MenuRestaurantes from "./MenuRestaurantes";
 import Map from "./Map";
-import Calendario from "./Calendario";
 import CalendarioUsuario from "./CalendarioUsuario";
+import { useTranslation } from "react-i18next";
 
 const Tabs = (restauranteId) => {
-  console.log(restauranteId);
-  
+  const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState(""); // Estado inicial vacío
   const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
 
@@ -30,25 +29,25 @@ const Tabs = (restauranteId) => {
           {/* Pestaña 1 */}
           <div className="tab" onClick={() => handleTabChange("tab1")}>
             <i className="icon email-cal"></i>
-            <label htmlFor="text">Información</label>
+            <label htmlFor="text">{t('Information')}</label>
           </div>
 
           {/* Pestaña 2 */}
           <div className="tab" onClick={() => handleTabChange("tab2")}>
             <i className="icon snapshot"></i>
-            <label htmlFor="text">Menú</label>
+            <label htmlFor="text">{t('Menu')}</label>
           </div>
 
           {/* Pestaña 3 */}
           <div className="tab" onClick={() => handleTabChange("tab3")}>
             <i className="icon inbox-apps"></i>
-            <label htmlFor="text">Ubicación</label>
+            <label htmlFor="text">{t('Location')}</label>
           </div>
 
           {/* Pestaña 4: Nueva pestaña de Eventos */}
           <div className="tab" onClick={() => handleTabChange("tab4")}>
             <i className="icon events-icon"></i>
-            <label htmlFor="text">Calendario</label>
+            <label htmlFor="text">{t('Calendar')}</label>
           </div>
         </div>
 
@@ -76,7 +75,6 @@ const Tabs = (restauranteId) => {
             {activeTab === "tab4" && (
               <div id="tab__content--4">
               <CalendarioUsuario restauranteId={restauranteId}/>
-              <Calendario/>
               </div>
             )}
           </Modal.Body>

@@ -85,6 +85,11 @@ class CalificacionSerializer(ModelSerializer):
     class Meta:
       model= calificaciones
       fields= '__all__'
+      
+    def validate_calificacion(self, value):
+        if value < 0.0 or value > 5.0:
+            raise serializers.ValidationError("La calificación debe estar entre 0.0 y 5.0.")
+        return value
     
 class favoritosSerializer(ModelSerializer):
     class Meta:

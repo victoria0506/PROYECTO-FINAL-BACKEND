@@ -2,11 +2,9 @@
   margin-top: 80px;
 }
 
-
 .container-cards {
   display: flex;
   flex-wrap: wrap;
-
 }
 
 .card {
@@ -66,7 +64,7 @@
   text-decoration: none;
   font-weight: bold;
   cursor: pointer;
-  top: 10px;
+  top: -10px;
   position: relative; /* Now moves independently */
   left: 0; /* Adjust horizontal position */
 }

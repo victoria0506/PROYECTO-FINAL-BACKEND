@@ -48,8 +48,6 @@ const UsedataRest = (canton) => {
         loadRestaurantesEspecialidades();
     }, [])
 
-    
-
     return { distritos, cantones, especialidades, restaurantesEspecialidades };
 };
 

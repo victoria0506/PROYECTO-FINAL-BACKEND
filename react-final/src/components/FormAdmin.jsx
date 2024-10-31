@@ -25,6 +25,8 @@ const FormAdmin = () => {
   const { t } = useTranslation();
   const { distritos, cantones, especialidades } = UsedataRest(ubicacion.canton);
   const [restauranteId, setRestauranteId] = useState("")
+  const [horarioApertura, setHorarioApertura] = useState("");
+  const [horarioCierre, setHorarioCierre] = useState("");
 
   const CambiosDistritos = (e) => setUbicacion({ ...ubicacion, distrito: e.target.value });
   const CambiosCantones = (e) => setUbicacion({ canton: e.target.value, distrito: "" });
@@ -45,14 +47,17 @@ const FormAdmin = () => {
       imageURLPerfil.trim() === "" || 
       imageURLHeader.trim() === "" || 
       latitud.trim() === "" || 
-      longitud.trim() === ""
+      longitud.trim() === "" ||
+      horarioApertura.trim() === "" || 
+      horarioCierre.trim() === "" ||
+      precioPro.trim("") === ""
     ) {
-      toast.error("Ingrese todos los datos de manera correcta");
+      toast.error(t("Enter all data correctly"));
       return;
     }
 
     // Validar que precioPro y capacidad sean números
-    if (isNaN(precioPro) || isNaN(capacidad)) {
+    if (isNaN(capacidad)) {
       toast.error('El precio promedio y la capacidad deben ser números válidos');
       return;
     }
@@ -61,15 +66,15 @@ const FormAdmin = () => {
     const latNum = parseFloat(latitud);
     const lngNum = parseFloat(longitud);
     if (latNum < -90 || latNum > 90 || lngNum < -180 || lngNum > 180) {
-      toast.error('Latitud y longitud deben ser valores válidos');
+      toast.error(t('Latitude and longitude must be valid values'));
       return;
     }
 
     const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
     try {
-      const restaNew = await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader, latitud, longitud);
+      const restaNew = await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader, latitud, longitud, horarioApertura, horarioCierre);
       setRestauranteId(restaNew.restaurante_id)
-      toast.success('Restaurante añadido exitosamente');
+      toast.success(t('Restaurant added successfully'));
 
       // Limpiar campos después de agregar
       setNomresta("");
@@ -82,8 +87,10 @@ const FormAdmin = () => {
       setImageURLHeader("");
       setLatitud("");
       setLongitud("");
+      setHorarioApertura("");
+      setHorarioApertura("")
     } catch (error) {
-      toast.error('Hubo un error al añadir el restaurante. Por favor, inténtelo de nuevo.');
+      toast.error(t("errorAddingRestaurant"));
     }
   };
 
@@ -103,7 +110,7 @@ const FormAdmin = () => {
   };
 
   return (
-    <div>
+    <div className="form-admin">
       <div className='Datos'>
         <label>{t('Restaurant name')} : </label>
         <input 
@@ -148,14 +155,14 @@ const FormAdmin = () => {
           className="basic"
         />
         <br />
-        <label htmlFor="">Cantones:  </label>
+        <label htmlFor="">{t('Cantons')} : </label>
         <select onChange={CambiosCantones}>
           <option value="">Seleccione un canton</option>
           {cantones.map(canton => (
             <option key={canton.id_canton} value={canton.id_canton}>{canton.nombre_canton}</option>
           ))}
         </select>
-        <label htmlFor="">Distrito:  </label>
+        <label htmlFor="">{t('District')} : </label>
         <select onChange={CambiosDistritos}>
           <option value="">Seleccione un distrito</option>
           {distritos.map(distrito => (
@@ -163,23 +170,37 @@ const FormAdmin = () => {
           ))}
         </select>
         <br />
-        <label htmlFor="">Latitud:</label>
+        <label htmlFor="">{t('Latitude')}:</label>
         <input 
           type="text" 
-          placeholder="Ingrese la latitud" 
+          placeholder={t("Enter the latitude")} 
           value={latitud} 
           onChange={e => setLatitud(e.target.value)} 
         />
         <br />
-        <label htmlFor="">Longitud:</label>
+        <label htmlFor="">{t('Longitude')}:</label>
         <input 
           type="text" 
-          placeholder="Ingrese la longitud" 
+          placeholder={t("Enter the Longitude")} 
           value={longitud} 
           onChange={e => setLongitud(e.target.value)} 
         />
         <br />
-        <label>Subir imagen de perfil:</label>
+        <label>{t('Opening hours')}:</label>
+          <input 
+            type="time" 
+            value={horarioApertura} 
+            onChange={e => setHorarioApertura(e.target.value)} 
+          />
+        <br />
+        <label>{t('Closing hours')}:</label>
+          <input 
+            type="time" 
+            value={horarioCierre} 
+            onChange={e => setHorarioCierre(e.target.value)} 
+          />
+        <br /><br />
+        <label>{t('Upload profile image')}:</label>
         <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
           <IKUpload
             onError={handleImageUploadError}
@@ -187,7 +208,7 @@ const FormAdmin = () => {
             authenticator={authenticator}
           />
         </IKContext>
-        <label>Subir imagen de encabezado:</label>
+        <label>{t('Upload header image')}:</label>
         <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
           <IKUpload
             onError={handleImageUploadError}
@@ -195,16 +216,16 @@ const FormAdmin = () => {
             authenticator={authenticator}
           />
         </IKContext>
-        <button onClick={Añadir}>{t('Add restaurant')}</button>
-        <ToastContainer />
+        <br /><br />
+        <button className='añadir' onClick={Añadir}>{t('Add restaurant')}</button>
+        <br />
       </div>
       <ToastContainer position="top-center"/>
       <Calendario restauranteId={restauranteId}/>
+      <br />
       <FormPlatillos restauranteId={restauranteId}/>
     </div>
   );
 };
 
 export default FormAdmin;
-
-

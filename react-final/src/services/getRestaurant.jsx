@@ -15,7 +15,7 @@ const RestaGet = async () => {
             throw new Error('Error al obtener restaurantes');
         }
         const restaurantes = await response.json();
-        return restaurantes;
+        return restaurantes.filter(restaurante => restaurante.activo);
     } catch (error) {
         console.error("Error al obtener restaurantes:", error);
         throw error; 

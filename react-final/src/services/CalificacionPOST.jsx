@@ -1,7 +1,10 @@
 import Cookies from 'js-cookie'
 import refreshToken from './TokenRefresh'
 
-const calificacionPOST = async (restaurante_id, usuario_id, calificacion) => {
+const calificacionPOST = async (restaurante_id, usuario_id, rate) => {
+    console.log(restaurante_id);
+    console.log(usuario_id);
+    console.log(rate);
     try {
         const accessToken = Cookies.get('access_token')
         const response = await fetch('http://localhost:8000/api/califiRestaur/', {
@@ -14,7 +17,7 @@ const calificacionPOST = async (restaurante_id, usuario_id, calificacion) => {
             body: JSON.stringify({
                 restaurante_id: restaurante_id,
                 usuario_id: usuario_id,
-                calificacion: calificacion,
+                calificacion: rate,
             }),
         })
         if (response.status === 403 || response.status === 401) {

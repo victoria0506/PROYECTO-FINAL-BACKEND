@@ -2,12 +2,14 @@ import emailjs from 'emailjs-com';
 import '../style/contact.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTranslation } from 'react-i18next';
 
 const SERVICE_ID = "service_cfe5cjv";
 const TEMPLATE_ID = "template_mdxf1vv";
 const PUBLIC_KEY = "ABs5xbm6PLuOPnJNm";
 
 function Contacto() {
+  const { t } = useTranslation()
   const handleOnSubmit = (e) => {
     e.preventDefault();
     emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, e.target, PUBLIC_KEY)
@@ -24,7 +26,7 @@ function Contacto() {
   return (
     <div className="contact-container">
       <div className="info-box">
-        <h2>Contáctanos</h2>
+        <h2>{t("Contact Us")}</h2>
         <p className="contact-info">Teléfono: +506 12345678</p>
         <p className="contact-info">Email: ConsultasRestaurApp@gmail.com</p>
       </div>

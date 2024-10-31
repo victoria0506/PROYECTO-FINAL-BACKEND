@@ -1,7 +1,7 @@
 // const Token = "a53ecb17b9b53418b44507fe226c0cf6490508f1";
 const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
 
-export const PlatilloPost = async (restauranteId,urlPlatillo1, urlPlatillo2, urlPlatillo3,urlPlatillo4, titulo) => {
+export const PlatilloPost = async (restauranteId,urlPlatillo1, urlPlatillo2, urlPlatillo3,urlPlatillo4) => {
     console.log(typeof restauranteId);
     console.log(urlPlatillo1);
     console.log(urlPlatillo2);
@@ -21,7 +21,6 @@ export const PlatilloPost = async (restauranteId,urlPlatillo1, urlPlatillo2, url
                 url_platillo_2: urlPlatillo2,
                 url_platillo_3: urlPlatillo3,
                 url_platillo_4: urlPlatillo4,
-                nombre_platillo: titulo
             })
         });
         return await response.json();
