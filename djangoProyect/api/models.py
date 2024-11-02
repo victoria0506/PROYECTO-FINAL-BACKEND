@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models import Avg
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class TipoUsuario(models.Model):
     id_tipoUsuario= models.AutoField(primary_key=True)
@@ -33,17 +36,23 @@ class restaurantes(models.Model):
     accesibilidad= models.BooleanField(default=True)
     descripcion = models.CharField(max_length=200)
     id_distrito= models.ForeignKey(distrito, on_delete=models.CASCADE)
-    latitud_map = models.FloatField(null=True, blank=True) 
-    longitud_map = models.FloatField(null=True, blank=True) 
     horario_apertura = models.TimeField(null=True, blank=True) 
     horario_cierre = models.TimeField(null=True, blank=True) 
     activo = models.BooleanField(default=True)
-    coordenadas = models.JSONField(null=True, blank=True)  # Almacena {'lat': valor_latitud, 'lng': valor_longitud}
-
-    def __str__(self):
-        return f"Coordenadas: {self.coordenadas}"
-
+    coordenadas = models.JSONField(null=True, blank=True)
     
+    def actualizar_promedio(self):
+        """Actualiza la calificación promedio del restaurante."""
+        promedio_calificacion = calificaciones.objects.filter(
+            restaurante_id=self
+        ).aggregate(promedio=Avg('calificacion'))['promedio']
+        
+        if promedio_calificacion is not None:
+            self.calificacion_promedio = promedio_calificacion
+            self.save()  # Guardar el nuevo promedio en el restaurante
+        else:
+            print(f"No se encontraron calificaciones para el restaurante_id {self.restaurante_id}")
+
 class Imagenes(models.Model):
     id_imagen = models.AutoField(primary_key=True)
     url_img = models.URLField(max_length=500)
@@ -73,6 +82,10 @@ class calificaciones(models.Model):
     usuario_id= models.ForeignKey(Usuarios, on_delete=models.CASCADE)
     restaurante_id= models.ForeignKey(restaurantes, on_delete=models.CASCADE)
     calificacion= models.DecimalField(max_digits=2, decimal_places=1)
+    
+    def __str__(self):
+        return f"Calificación {self.calificacion} por {self.usuario_id} para {self.restaurante_id}"
+    
     
 class favoritos(models.Model):
     favorito_id= models.AutoField(primary_key=True)

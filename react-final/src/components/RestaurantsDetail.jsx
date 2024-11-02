@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { Modal } from "react-bootstrap"; 
-import CalificacionEstrellas from "./calificacionEstrellas";
+import CalificacionEstrellas from "./CalificacionEstrellas";
 import CarouselPlatillos from "./CarouselPlatillos";
 import Tabs from "../components/Tabs";
 import { ToastContainer, toast } from 'react-toastify';
@@ -55,7 +55,10 @@ const RestaurantsDetail = () => {
         setFavoritos(favoritos);
         const favoritoExistente = favoritos.some(fav => fav.restaurante_id === restaurante_id);
         setIsFavorite(favoritoExistente);
+        console.log("Favoritos del usuario:", favoritos);
+        console.log("Favorito existente:", favoritoExistente);
     };
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -102,20 +105,29 @@ const RestaurantsDetail = () => {
             const favoritesKey = `favoritos_${usuario_id}`;
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
             const favorito = favoritos.find(fav => fav.restaurante_id === restaurante_id);
+    
             if (favorito) {
                 const confirmacion = confirm("¿Deseas eliminar este restaurante de tus favoritos?");
                 if (confirmacion) {
-                    setIsFavorite(false);                    
+                    setIsFavorite(false);
+                    console.log("Favorito ID para eliminar:", favorito.favorito_id); // Log para verificar el ID
                     const resultado = await deleteRestau(String(favorito.favorito_id));
                     if (resultado) {
                         favoritos = favoritos.filter(fav => fav.favorito_id !== favorito.favorito_id);
                         localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
-                        setFavoritos(favoritos); 
+                        setFavoritos(favoritos);
+                        toast.success("Restaurante eliminado de favoritos.");
+                    } else {
+                        toast.error("No se pudo eliminar el restaurante de favoritos.");
                     }
                 }
             }
+        } else {
+            toast.warning(t("loginToAddFavorites"));
         }
     };
+    
+    
     
     return (
         <div>
@@ -137,7 +149,7 @@ const RestaurantsDetail = () => {
                         className={`heart-icon ${isFavorite ? "favorite" : ""}`}
                     />
                 </button>
-                <CalificacionEstrellas restauranteId={restaurantDetail.restaurante_id}/>
+                <CalificacionEstrellas restauranteId={restaurante_id}/>
                 <Tabs restauranteId={restaurantDetail.restaurante_id}/>
                 <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
                     <Modal.Header closeButton className="custom-header" />

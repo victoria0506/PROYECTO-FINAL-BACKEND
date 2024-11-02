@@ -1,4 +1,4 @@
-const Token = "07881b7aeb97068cd9925d768fd3af4b77cb7eab";
+const Token = "7c16915bdb9a49db600e785ae7cd9f0bf17eb4d1";
 
 export const DesactivarResta = async (restauranteId) => {
     try {

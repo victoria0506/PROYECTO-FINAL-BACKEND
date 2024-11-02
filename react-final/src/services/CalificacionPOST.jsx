@@ -4,7 +4,7 @@ import refreshToken from './TokenRefresh'
 const calificacionPOST = async (restaurante_id, usuario_id, rate) => {
     console.log(restaurante_id);
     console.log(usuario_id);
-    console.log(rate);
+    console.log(typeof rate);
     try {
         const accessToken = Cookies.get('access_token')
         const response = await fetch('http://localhost:8000/api/califiRestaur/', {

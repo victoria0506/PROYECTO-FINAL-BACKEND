@@ -18,6 +18,10 @@ from django.core.files.storage import default_storage
 import requests
 from decimal import Decimal
 from rest_framework.decorators import api_view
+from rest_framework.exceptions import PermissionDenied
+from rest_framework.decorators import action
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
@@ -113,8 +117,8 @@ class RestaEspecilidadesView(ModelViewSet):
     permission_classes = [IsAuthenticated]
     
 class CalificacionView(ModelViewSet):
-    queryset=calificaciones.objects.all()
-    serializer_class=CalificacionSerializer
+    queryset = calificaciones.objects.all()
+    serializer_class = CalificacionSerializer
     authentication_classes = [CookieAuthentication]
     permission_classes = [IsAuthenticated]
     
@@ -122,22 +126,33 @@ class CalificacionView(ModelViewSet):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             calificacion = serializer.save(usuario_id=request.user)
-            print(f"Restaurante ID en calificación creada: {calificacion.restaurante_id}")
-            promedio_calificacion = Calificacion.objects.filter(
-                restaurante_id=calificacion.restaurante_id
-            ).aggregate(promedio=Avg('calificacion'))['promedio'] or 0  
-            print(f"Promedio calculado para restaurante_id {calificacion.restaurante_id}: {promedio_calificacion}")
-            Restaurantes.objects.filter(
-                restaurante_id=calificacion.restaurante_id
-            ).update(calificacion_promedio=promedio_calificacion)
+            # No es necesario llamar a actualizar_promedio aquí,
+            # se hará automáticamente gracias a la señal.
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        if serializer.is_valid():
+            calificacion = serializer.save()
+            # No es necesario llamar a actualizar_promedio aquí,
+            # se hará automáticamente gracias a la señal.
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @receiver(post_save, sender=calificaciones)
+    def actualizar_promedio_signal(sender, instance, created, **kwargs):
+        if created or instance.calificacion:  # Llama a la función de promedio si se crea o se actualiza
+            instance.restaurante_id.actualizar_promedio()  # Asegúrate de que este método exista
+
 class favoritosView(ModelViewSet):
     queryset=favoritos.objects.all()
     serializer_class=favoritosSerializer
     authentication_classes = [CookieAuthentication]
     permission_classes = [IsAuthenticated]
+    
     
 class MenuView(ModelViewSet):
     queryset= menu_restaurantes.objects.all()

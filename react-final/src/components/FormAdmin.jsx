@@ -26,13 +26,10 @@ const FormAdmin = () => {
   const [longitud, setLongitud] = useState("");
   const { t } = useTranslation();
   const { distritos, cantones, especialidades } = UsedataRest(ubicacion.canton);
-  const [restauranteId, setRestauranteId] = useState("")
+  const [restauranteId, setRestauranteId] = useState("");
   const [horarioApertura, setHorarioApertura] = useState("");
   const [horarioCierre, setHorarioCierre] = useState("");
-
-
   const [menuImages, setMenuImages] = useState(Array(8).fill("")); // 8 campos para las imágenes del menú
-  
   // Coordenadas
   const [coordenadas, setCoordenadas] = useState({ lat: '', lng: '' }); // Estado para las coordenadas
 
@@ -53,40 +50,40 @@ const FormAdmin = () => {
       descripcion.trim() === "" || 
       !ubicacion.canton || 
       !ubicacion.distrito || 
-      imageURLPerfil.trim() === "" || 
-      imageURLHeader.trim() === "" || 
-      latitud.trim() === "" || 
-      longitud.trim() === "" ||
+      // imageURLPerfil.trim() === "" || 
+      // imageURLHeader.trim() === "" || 
+      // latitud.trim() === "" || 
+      // longitud.trim() === "" ||
       horarioApertura.trim() === "" || 
-      horarioCierre.trim() === "" ||
-      precioPro.trim("") === "" ||
-      menuImages.some(url => url.trim() === "") ||
-      coordenadas.lat.trim() === "" || // Validar latitud
-      coordenadas.lng.trim() === "" // Validar longitud
-
+      horarioCierre.trim() === "" 
+      // ||
+      // // menuImages.some(url => url.trim() === "") 
+      // // ||
+      // coordenadas.lat.trim() === "" || // Validar latitud
+      // coordenadas.lng.trim() === "" // Validar longitud
     ) {
-      toast.error(t("Enter all data correctly"));
+      // toast.error(t("Enter all data correctly"));
       return;
     }
+    
     // Validar latitud y longitud
-    const latNum = parseFloat(latitud);
-    const lngNum = parseFloat(longitud);
-    if (latNum < -90 || latNum > 90 || lngNum < -180 || lngNum > 180) {
-      toast.error(t('Latitude and longitude must be valid values'));
+    // const latNum = parseFloat(latitud);
+    // const lngNum = parseFloat(longitud);
+    // if (latNum < -90 || latNum > 90 || lngNum < -180 || lngNum > 180) {
+    //   toast.error(t('Latitude and longitude must be valid values'));
+    //   return; // Agrega este return para evitar que se continúe ejecutando
+    // }
 
-    if (isNaN(precioPro) || isNaN(capacidad) || isNaN(coordenadas.lat) || isNaN(coordenadas.lng)) {
+    if (isNaN(capacidad)) {
       toast.error('El precio promedio, la capacidad, y las coordenadas deben ser números válidos');
-
       return; 
     }
 
     const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
     try {
-      const restaNew = await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader, latitud, longitud, horarioApertura, horarioCierre, menuImages, coordenadas);
-      setRestauranteId(restaNew.restaurante_id)
+      const restaNew = await PostResta(nomResta, precioPro, capacidad, descripcion, ubicacion, especialidadesValues, imageURLPerfil, imageURLHeader, horarioApertura, horarioCierre, menuImages, coordenadas);
+      setRestauranteId(restaNew.restaurante_id);
       toast.success(t('Restaurant added successfully'));
-
-      // Limpiar campos después de añadir
       setNomresta("");
       setPrecioPro("");
       setCapacidad("");
@@ -98,7 +95,7 @@ const FormAdmin = () => {
       setLatitud("");
       setLongitud("");
       setHorarioApertura("");
-      setHorarioApertura("")
+      setHorarioCierre("");
       setMenuImages(Array(8).fill("")); 
       setCoordenadas({ lat: '', lng: '' }); // Limpiar coordenadas
     } catch (error) {
@@ -131,7 +128,7 @@ const FormAdmin = () => {
   return (
     <div className="form-admin">
       <div className='Datos'>
-        <label>{t('Nombre del restaurante')} : </label>
+        <label>{t('Nombre del restaurante')}:</label>
         <input 
           type="text" 
           placeholder={t('Restaurante')} 
@@ -139,14 +136,14 @@ const FormAdmin = () => {
           onChange={e => setNomresta(e.target.value)} 
         />
         <br />
-        <label>{t('Precio promedio')}: </label>
+        <label>{t('Precio promedio')}:</label>
         <input 
           type="text" 
           placeholder={t('Precio promedio')} 
           value={precioPro} 
           onChange={e => setPrecioPro(e.target.value)} 
         />
-        <label htmlFor="">{t('Capacidad')}</label>
+        <label>{t('Capacidad')}:</label>
         <input 
           type="text" 
           placeholder={t('Capacidad')} 
@@ -154,7 +151,7 @@ const FormAdmin = () => {
           onChange={e => setCapacidad(e.target.value)} 
         />
         <br />
-        <label htmlFor="">{t('Descripción')}</label>
+        <label>{t('Descripción')}:</label>
         <input 
           type="text" 
           placeholder={t('Descripción')} 
@@ -174,14 +171,14 @@ const FormAdmin = () => {
           className="basic"
         />
         <br />
-        <label htmlFor="">{t('Cantons')} : </label>
+        <label>{t('Cantons')}:</label>
         <select onChange={CambiosCantones}>
           <option value="">Seleccione un canton</option>
           {cantones.map(canton => (
             <option key={canton.id_canton} value={canton.id_canton}>{canton.nombre_canton}</option>
           ))}
         </select>
-        <label htmlFor="">{t('District')} : </label>
+        <label>{t('District')}:</label>
         <select onChange={CambiosDistritos}>
           <option value="">Seleccione un distrito</option>
           {distritos.map(distrito => (
@@ -190,7 +187,7 @@ const FormAdmin = () => {
         </select>
 
         <br />
-        <label htmlFor="">Coordenadas:</label>
+        <label>{t('Coordenadas')}:</label>
         <input 
           type="text" 
           placeholder={t('Latitud')} 
@@ -205,18 +202,18 @@ const FormAdmin = () => {
         />
         <br />
         <label>{t('Opening hours')}:</label>
-          <input 
-            type="time" 
-            value={horarioApertura} 
-            onChange={e => setHorarioApertura(e.target.value)} 
-          />
+        <input 
+          type="time" 
+          value={horarioApertura} 
+          onChange={e => setHorarioApertura(e.target.value)} 
+        />
         <br />
         <label>{t('Closing hours')}:</label>
-          <input 
-            type="time" 
-            value={horarioCierre} 
-            onChange={e => setHorarioCierre(e.target.value)} 
-          />
+        <input 
+          type="time" 
+          value={horarioCierre} 
+          onChange={e => setHorarioCierre(e.target.value)} 
+        />
         <br /><br />
         <label>{t('Upload profile image')}:</label>
         <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
@@ -234,9 +231,15 @@ const FormAdmin = () => {
             authenticator={authenticator}
           />
         </IKContext>
+        <br /><br />
+        <button onClick={Añadir}>{t('Añadir Restaurante')}</button>
+        <br />
+        <Calendario restauranteId={restauranteId} />
+        <br />
+        <FormPlatillos restauranteId={restauranteId} />
         {Array.from({ length: 8 }).map((_, index) => (
           <div key={index}>
-            <label>Subir imagen de menú {index + 1}:</label>
+            <label>{t('Subir imagen de menú')} {index + 1}:</label>
             <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
               <IKUpload
                 onError={handleImageUploadError}
@@ -246,13 +249,11 @@ const FormAdmin = () => {
             </IKContext>
           </div>
         ))}
-        <button onClick={Añadir}>{t('Añadir Restaurante')}</button>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
       <Map coordenadas={coordenadas} /> {/* Componente de mapa */}
     </div>
   );
 };
-}
 
 export default FormAdmin;

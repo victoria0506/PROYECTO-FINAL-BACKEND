@@ -81,9 +81,8 @@ class RestaEspeciSerializer(ModelSerializer):
         model= RestaEspecialidades
         fields= '__all__'
         
-        
-    
 class CalificacionSerializer(ModelSerializer):
+    promedio = serializers.FloatField(read_only=True)
     class Meta:
       model= calificaciones
       fields= '__all__'
