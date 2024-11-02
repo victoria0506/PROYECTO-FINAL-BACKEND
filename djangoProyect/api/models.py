@@ -33,17 +33,13 @@ class restaurantes(models.Model):
     accesibilidad= models.BooleanField(default=True)
     descripcion = models.CharField(max_length=200)
     id_distrito= models.ForeignKey(distrito, on_delete=models.CASCADE)
-    latitud_map = models.FloatField(null=True, blank=True) 
-    longitud_map = models.FloatField(null=True, blank=True) 
     horario_apertura = models.TimeField(null=True, blank=True) 
     horario_cierre = models.TimeField(null=True, blank=True) 
     activo = models.BooleanField(default=True)
-    coordenadas = models.JSONField(null=True, blank=True)  # Almacena {'lat': valor_latitud, 'lng': valor_longitud}
+    latitud_map = models.FloatField(null=True, blank=True) 
+    longitud_map = models.FloatField(null=True, blank=True) 
 
-    def __str__(self):
-        return f"Coordenadas: {self.coordenadas}"
 
-    
 class Imagenes(models.Model):
     id_imagen = models.AutoField(primary_key=True)
     url_img = models.URLField(max_length=500)

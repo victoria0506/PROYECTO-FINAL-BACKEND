@@ -2,12 +2,18 @@ import { useEffect } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-const Map = () => {
+const Map = ({ restaurantCoordinates }) => {
     useEffect(() => {
-        // Inicializar el mapa solo una vez
+        // Asegúrate de que las coordenadas son válidas antes de inicializar el mapa
+        if (!restaurantCoordinates || restaurantCoordinates.includes(null)) {
+            return; // No hacer nada si las coordenadas son inválidas
+        }
+        console.log(restaurantCoordinates);
+        
+        // Inicializa el mapa solo una vez
         const map = L.map('map', {
-            center: [9.981390403755313, -84.75704731772372], // Coordenadas iniciales
-            zoom: 30, // Nivel de zoom
+            center: restaurantCoordinates, // Coordenadas iniciales
+            zoom: 15, // Ajusta el nivel de zoom según sea necesario
             dragging: true,
             scrollWheelZoom: true,
             touchZoom: true,
@@ -17,11 +23,17 @@ const Map = () => {
             maxZoom: 19,
         }).addTo(map);
 
+        // Añadir el marcador en las coordenadas del restaurante
+        L.marker(restaurantCoordinates)
+            .addTo(map)
+            .bindPopup('Restaurante aquí') // Mensaje que aparece al hacer clic en el marcador
+            .openPopup();
+
         // Limpiar el mapa al desmontar el componente
         return () => {
             map.remove(); // Eliminar el mapa
         };
-    }, []); // Añadir el array vacío para que se ejecute solo una vez al montar
+    }, [restaurantCoordinates]); // Re-renderizar cuando cambian las coordenadas
 
     return <div id="map" style={{ height: "500px" }} />; // Establecer altura para el mapa
 };

@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import "../style/Tabs.css";
 import MenuRestaurantes from "./MenuRestaurantes";
 import Map from "./Map";
 import CalendarioUsuario from "./CalendarioUsuario";
 import { useTranslation } from "react-i18next";
+import RestaGet from "../services/getRestaurant";
 
 const Tabs = (restauranteId) => {
   const { t } = useTranslation()
   const [activeTab, setActiveTab] = useState(""); // Estado inicial vacío
-  const [showModal, setShowModal] = useState(false); // Estado para controlar el modal
+  const [showModal, setShowModal] = useState(false);
+   // Estado para controlar el modal
+  const [restaurantCoordinates, setRestaurantCoordinates]= useState([null, null])
 
   const handleTabChange = (tabId) => {
     // Actualizar el estado de la pestaña activa y mostrar el modal
@@ -21,6 +24,25 @@ const Tabs = (restauranteId) => {
     // Cerrar el modal
     setShowModal(false);
   };
+
+  useEffect(() => {
+    const obtenerCordena = async () => {
+      try {
+        const  { lat, lng } = await RestaGet(restauranteId); // Asume que esta función devuelve el objeto { lat, lng }
+        const parsedLat = parseFloat(lat);
+        const parsedLng = parseFloat(lng);
+        if (!isNaN(parsedLat) && !isNaN(parsedLng)) {
+          setRestaurantCoordinates([parsedLat, parsedLng]);
+        } else {
+          console.error("Invalid coordinates received:", [parsedLat, parsedLng]);
+        }
+      } catch (error) {
+        console.log("Error fetching restaurant coordinates:", error);
+      }
+    };
+
+    obtenerCordena();
+  }, [restauranteId]);
 
   return (
     <article className="article">
@@ -69,7 +91,7 @@ const Tabs = (restauranteId) => {
             )}
             {activeTab === "tab3" && (
               <div id="tab__content--3">
-                <Map />
+                <Map restaurantCoordinates={restaurantCoordinates} />
               </div>
             )}
             {activeTab === "tab4" && (

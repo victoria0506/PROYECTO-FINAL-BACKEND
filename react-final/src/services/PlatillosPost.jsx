@@ -1,4 +1,4 @@
-const Token = "a53ecb17b9b53418b44507fe226c0cf6490508f1";
+const Token = "f866b41d3b0472f21a4cf5befa3a687c8c47f2ff";
 //const Token= "07881b7aeb97068cd9925d768fd3af4b77cb7eab"
 
 export const PlatilloPost = async (restauranteId,urlPlatillo1, urlPlatillo2, urlPlatillo3,urlPlatillo4) => {
@@ -7,7 +7,7 @@ export const PlatilloPost = async (restauranteId,urlPlatillo1, urlPlatillo2, url
     console.log(urlPlatillo2);
     console.log(urlPlatillo3);
     console.log(urlPlatillo4);
-    console.log(titulo);
+    // console.log(titulo);
     try {
         const response = await fetch('http://localhost:8000/api/Platillos/', {
             method: 'POST',
