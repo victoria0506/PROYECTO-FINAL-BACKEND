@@ -1,9 +1,13 @@
 import { uploadImage } from "./imageService";
 const Token= "7c16915bdb9a49db600e785ae7cd9f0bf17eb4d1"
-// const Token= "a53ecb17b9b53418b44507fe226c0cf6490508f1";
+// const Token = "f866b41d3b0472f21a4cf5befa3a687c8c47f2ff";
 
-const PostResta = async (nombre_restaurante, precio_promedio, capacidad, descripcion, id_distrito, especiSelect, imageURLPerfil, imageURLHeader, horarioApertura,horarioCierre,menuImages, coordenadas) => {
-    console.log(nombre_restaurante, precio_promedio, capacidad, descripcion, id_distrito, especiSelect, imageURLPerfil, imageURLHeader, horarioApertura,horarioCierre,menuImages, coordenadas);
+const PostResta = async (
+    nombre_restaurante, precio_promedio, capacidad, descripcion,
+    ubicacion, especiSelect, imageURLPerfil,
+    imageURLHeader, horarioApertura, horarioCierre,
+    latitud, longitud) => {
+    console.log (nombre_restaurante, precio_promedio, capacidad, descripcion, ubicacion, horarioApertura, horarioCierre, especiSelect, imageURLPerfil, imageURLHeader, latitud, longitud);
     try {
         const response = await fetch('http://localhost:8000/api/admiRestaur/', {
             method: 'POST',
@@ -16,22 +20,23 @@ const PostResta = async (nombre_restaurante, precio_promedio, capacidad, descrip
                 precio_promedio: precio_promedio,
                 capacidad: parseFloat(capacidad),
                 descripcion: descripcion,
-                id_distrito: id_distrito.distrito,
+                id_distrito: ubicacion.distrito,
                 horario_apertura: horarioApertura,
                 horario_cierre: horarioCierre,
-                coordenadas: coordenadas
+                latitud_map: latitud,
+                longitud_map: longitud
             })
         });
 
         const data = await response.json();
         const restauranteId = data.restaurante_id; 
-        console.log(data.restaurante_id);
-        // Aquí llamamos a la función para subir la imagen
+        console.log("Nuevo ID de Restaurante:", restauranteId);
+        // Subir imágenes si están disponibles
         if (imageURLPerfil && imageURLHeader) {
-            console.log(imageURLPerfil);
-            console.log(imageURLHeader);
-            await uploadImage(imageURLPerfil, imageURLHeader, restauranteId);
+            await uploadImage(imageURLPerfil, imageURLHeader, "perfil", restauranteId);
         }
+
+        // Subir especialidades
         await Promise.all(
             especiSelect.map(async (especialidadId) => {
                 await fetch('http://localhost:8000/api/RestaEspecialidades/', {
@@ -49,8 +54,10 @@ const PostResta = async (nombre_restaurante, precio_promedio, capacidad, descrip
         );
         return data;
     } catch (error) {
-        console.log(error);
+        console.error("Error al añadir restaurante:", error);
     }
 };
 
 export default PostResta;
+
+

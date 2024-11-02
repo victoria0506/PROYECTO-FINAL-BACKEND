@@ -1,5 +1,5 @@
 const Token= "7c16915bdb9a49db600e785ae7cd9f0bf17eb4d1"
-// const Token= "a53ecb17b9b53418b44507fe226c0cf6490508f1"
+// const Token= "f866b41d3b0472f21a4cf5befa3a687c8c47f2ff"
 
 const PutRestaur = async (restaurante_id,nombre_restaurante,precio_promedio,capacidad,calificacion_promedio ,id_distrito, especiSelect) => { 
     try {
