@@ -1,65 +1,72 @@
+import { useState, useEffect } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import '../style/menurestaurante.css';
+import menuGet from '../services/menuGet';
 
-function MenuRestaurantes() {
+function MenuRestaurantes({ restauranteId }) {
+  const [menuImages, setMenuImages] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchMenuImages = async () => {
+      setLoading(true);
+      try {
+        const images = await menuGet(restauranteId);
+        if (images) {
+          setMenuImages(images);
+        } else {
+          setError("No se encontraron imágenes del menú.");
+        }
+      } catch (error) {
+        setError("Error al cargar las imágenes del menú.");
+        console.error("Error al cargar las imágenes del menú:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchMenuImages();
+  }, [restauranteId]);
+
+  if (loading) return <p>Cargando imágenes del menú...</p>;
+  if (error) return <p>{error}</p>;
+  if (!menuImages) return <p>No hay imágenes para mostrar.</p>;
+
   return (
     <div className="flipbook-container">
       <HTMLFlipBook
-        width={400}  // Ancho del libro en píxeles
-        height={500}  // Altura del libro en píxeles
-        size="fixed"  // El tamaño es fijo, pero se adapta en un rango con los minWidth/maxWidth
-        minWidth={315}  // Ancho mínimo del libro
-        maxWidth={1000}  // Ancho máximo del libro
-        minHeight={400}  // Altura mínima del libro
-        maxHeight={1533}  // Altura máxima del libro
-        maxShadowOpacity={0.5}  // Opacidad máxima de la sombra en las páginas al pasarlas
-        showCover={true}  // Mostrar una portada del libro
-        mobileScrollSupport={true}  // Soporte de scroll para móviles
-        drawShadow={true}  // Habilita la sombra alrededor de las páginas
-        useMouseEvents={true}  // Permite pasar páginas con el mouse
-        autoSize={true}  // Ajusta automáticamente el tamaño del libro a la pantalla
-        clickEventForward={true}  // Pasa la página al hacer clic en ella
-        flippingTime={2000}  // Tiempo para pasar una página (en milisegundos)
+        width={400}
+        height={500}
+        size="fixed"
+        minWidth={315}
+        maxWidth={1000}
+        minHeight={400}
+        maxHeight={1533}
+        maxShadowOpacity={0.5}
+        showCover={true}
+        mobileScrollSupport={true}
+        drawShadow={true}
+        useMouseEvents={true}
+        autoSize={true}
+        clickEventForward={true}
+        flippingTime={2000}
         className="flipbook"
       >
         {/* Portada */}
-        <div className="page cover">
-          <img src='https://firebasestorage.googleapis.com/v0/b/mareaalcalina-f1545.appspot.com/o/Marea-Alcalina-Images%2FsKMl3XbzU0PHwyZ244k5718hKpc2%2FI6X57GAQfrNZyXiNJKGQ%2Fz7odg9398a.webp?alt=media&token=e4a5a77f-f394-4daa-8d5d-78707b941fdc' alt="Portada del Restaurante" className="cover-image" />
-        </div>
-
-        {/* Página 1: Entradas */}
-        <div className="page">
-          <img src='https://firebasestorage.googleapis.com/v0/b/mareaalcalina-f1545.appspot.com/o/Marea-Alcalina-Images%2FsKMl3XbzU0PHwyZ244k5718hKpc2%2FI6X57GAQfrNZyXiNJKGQ%2F66b5h82lmpx.webp?alt=media&token=5d1c77d2-cbd0-46c9-94ef-ece1bcab54df' alt="Entradas" className="page-image" />
-        </div>
-
-        {/* Página 2: Platos Principales */}
-        <div className="page">
-          <img src='https://firebasestorage.googleapis.com/v0/b/mareaalcalina-f1545.appspot.com/o/Marea-Alcalina-Images%2FsKMl3XbzU0PHwyZ244k5718hKpc2%2FI6X57GAQfrNZyXiNJKGQ%2Ftextokk9oer.webp?alt=media&token=74022e44-259f-4dc4-948c-ca6d9328c5b1' alt="Platos Principales" className="page-image" />
-        </div>
-
-        {/* Página 3: Bebidas */}
-        <div className="page">
-          <img src='https://firebasestorage.googleapis.com/v0/b/mareaalcalina-f1545.appspot.com/o/Marea-Alcalina-Images%2FsKMl3XbzU0PHwyZ244k5718hKpc2%2FI6X57GAQfrNZyXiNJKGQ%2Fw99tw24zxe.webp?alt=media&token=17f52908-6d21-4d96-a688-2d1738621a3a' alt="Bebidas" className="page-image" />
-        </div>
-
-        {/* Página 4: Postres */}
-        <div className="page">
-          <img src='https://firebasestorage.googleapis.com/v0/b/mareaalcalina-f1545.appspot.com/o/Marea-Alcalina-Images%2FsKMl3XbzU0PHwyZ244k5718hKpc2%2FI6X57GAQfrNZyXiNJKGQ%2Fx5m241i819.webp?alt=media&token=24262d94-c4f5-4b4c-99f8-30f87dd7013c' alt="Postres" className="page-image" />
-        </div>
-
-        <div className="page">
-          <img src='https://firebasestorage.googleapis.com/v0/b/mareaalcalina-f1545.appspot.com/o/Marea-Alcalina-Images%2FsKMl3XbzU0PHwyZ244k5718hKpc2%2FI6X57GAQfrNZyXiNJKGQ%2F67y1h0gfp25.webp?alt=media&token=7cfa1849-0dc2-40bb-ae28-1dab45c8a935' alt="Postres" className="page-image" />
-        </div>
-
-        <div className="page">
-          <img src='https://firebasestorage.googleapis.com/v0/b/mareaalcalina-f1545.appspot.com/o/Marea-Alcalina-Images%2FsKMl3XbzU0PHwyZ244k5718hKpc2%2FI6X57GAQfrNZyXiNJKGQ%2F9ygq18jaw3.webp?alt=media&token=8999523c-6ba2-4504-9240-1bf5d11a2052' alt="Postres" className="page-image" />
-        </div>
-
-        <div className="page">
-          <img src='https://firebasestorage.googleapis.com/v0/b/mareaalcalina-f1545.appspot.com/o/Marea-Alcalina-Images%2FsKMl3XbzU0PHwyZ244k5718hKpc2%2FI6X57GAQfrNZyXiNJKGQ%2F1ft426vc4ec.webp?alt=media&token=d332c6da-b222-450a-b181-1cddfb9c81a2' alt="Postres" className="page-image" />
-        </div>
-
-
+        {menuImages.pagina_1 && (
+          <div className="page cover">
+            <img src={menuImages.pagina_1} alt="Portada del Restaurante" className="cover-image" />
+          </div>
+        )}
+        {/* Páginas del menú */}
+        {[menuImages.pagina_2, menuImages.pagina_3, menuImages.pagina_4, menuImages.pagina_5, menuImages.pagina_6, menuImages.pagina_7].map((image, index) => (
+          image && (
+            <div className="page" key={index}>
+              <img src={image} alt={`Página ${index + 2}`} className="page-image" />
+            </div>
+          )
+        ))}
       </HTMLFlipBook>
     </div>
   );

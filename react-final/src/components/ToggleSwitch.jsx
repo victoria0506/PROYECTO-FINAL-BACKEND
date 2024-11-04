@@ -68,7 +68,7 @@ const ToggleSwitch = () => {
 
   return (
     <div className="toggleContainer">
-      {usuario ? ( // Si hay un usuario autenticado
+      {usuario ? (
         <div className="user-container">
           <a className="btnlogincuenta" href={`/Perfilusuario/${usuario}`}>
             {fotoPerfil ? (

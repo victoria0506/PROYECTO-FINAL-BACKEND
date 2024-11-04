@@ -131,19 +131,87 @@ margin-top: 18px;
 }
 
 
-@media (max-width: 768px) {
+.restaurant-card {
+  background-color: #fff; /* Fondo blanco para la tarjeta */
+  border-radius: 10px; /* Bordes redondeados */
+  padding: 20px; /* Espaciado interno */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.087); /* Sombra para profundidad */
+  margin: 20px auto; /* Margen automático para centrar */
+  max-width: 800px; /* Ancho máximo para la tarjeta */
+  transition: transform 0.3s ease; /* Transición suave */
+}
+
+
+.restaurant-name {
+  font-size: 3.5rem; /* Tamaño del nombre del restaurante */
+  color: #333; /* Color del texto */
+  text-align: center; /* Centrar el nombre */
+  margin-bottom: 10px; /* Espacio debajo del nombre */
+  font-family: 'Hello Bonia Serif', sans-serif;
+}
+
+.restaurant-description {
+  font-size: 1.5rem; /* Tamaño de la descripción */
+  color: #666; /* Color más suave para la descripción */
+  text-align: center; /* Centrar la descripción */
+  margin-bottom: 15px; /* Espacio debajo de la descripción */
+  font-family: 'Bacasime Antique', sans-serif;
+}
+
+.restaurant-info {
+  margin: 10px 0; /* Espaciado vertical de la sección de información */
+}
+
+.info-row {
+  display: flex; /* Usar flexbox para alinear íconos y texto */
+  justify-content: space-between; /* Distribuir espacio entre íconos y texto */
+  padding: 10px; /* Espaciado interno */
+  border-radius: 5px; /* Bordes redondeados para las filas */
+  transition: background-color 0.3s ease; /* Transición para el color de fondo */
+}
+
+.info-row:nth-child(odd) {
+  background-color: #f9f9f9; /* Color de fondo para filas impares */
+}
+
+.info-row:nth-child(even) {
+  background-color: #e9e9e9; /* Color de fondo para filas pares */
+}
+
+.info-row strong {
+  margin-left: auto; /* Alinear el texto después de los dos puntos al final */
+}
+
+.info-row svg {
+  margin-right: 10px; /* Espacio a la derecha de los íconos */
+  color: #755e54; /* Color para los íconos */
+}
+
+
+@media (max-width: 450px) {
   .logorestaurante {
       width: 30%; /* Ajusta el tamaño en pantallas más pequeñas */
   }
 
   .nombrerestaurante {
+
       font-size: 5vw; /* Ajusta el tamaño de la fuente */
-      margin-left: 4%; /* Reduce margen */
+      margin-left: 32%; /* Reduce margen */
+      margin-top: -20%;
   }
 
   .introrestaurantes {
-      font-size: 4vw; /* Ajusta el tamaño de la fuente */
-      margin-left: 5%; /* Reduce margen */
+    font-size:15px;
+    margin: -10px 0 0 130px; 
+    line-height: 1.2; /* Ajustar el espaciado entre líneas */
+    font-family: 'Bacasime Antique', sans-serif;
+                                           
+    width: 790px; /* Ajusta el ancho según sea necesario */
+    max-width: 100%; /* Asegúrate de que no exceda el contenedor padre */
+    background: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    box-shadow: none; /* Sin sombra */
+    transform: translateY(-7px); /* Eleva el texto */
   }
 
   .añafavo-button {
@@ -155,30 +223,4 @@ margin-top: 18px;
       margin-left: 20px; /* Ajusta la posición de estrellas */
   }
 
-}
-
-@media (max-width: 480px) {
-  .nombrerestaurante {
-      font-size: 8vw; /* Aumenta tamaño para móviles */
-      
-  }
-
-  .introrestaurantes {
-      font-size: 3vw; /* Aumenta tamaño para móviles */
-      margin-left: 0; /* Elimina margen en móviles */
-  }
-
-  .añafavo-button {
-      margin-left: 80%; /* Ajusta el botón de favorito para móviles */
-  }
-  .img-normalizada {
-    object-fit: cover;
-    width: 100%;
-    height: 350px;
-  }
-  .nombrerestaurante{
-    margin-left: 150px;
-    margin-top: -100px;
-    position: relative; 
-  }
 }

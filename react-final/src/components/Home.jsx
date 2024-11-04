@@ -5,7 +5,8 @@ const Home = () => {
   const { t } = useTranslation();
   return (
     <div className="home-page">
-      <img className="background-video" src="src/img/Pure.jpg" alt="" />
+      {/* <img className="background-video" src="src/img/Pure.jpg" alt="" /> */}
+      <div className='background-video'></div>
       <div className="imglogohomecenter">
         <img className="imglogohome" src="src/img/file.png" alt="" />
       </div>

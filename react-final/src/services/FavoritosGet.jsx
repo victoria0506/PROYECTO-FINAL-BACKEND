@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import refreshToken from './TokenRefresh';
 const Token= "f083b6b41d2cecbd2ddd54743696a65ae3269f6a";
 
+
 const favoritosGET = async (usuario_id) => { 
     console.log(usuario_id);
     try {

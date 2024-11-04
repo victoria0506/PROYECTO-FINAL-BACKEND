@@ -1,145 +1,108 @@
-/* Estilos generales */
 .navbar {
-  display: flex;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  display: grid;
-  grid-template-columns: auto repeat(3, auto);
-  align-items: center;
-  padding: 1px;
   background-color: transparent;
   z-index: 1;
   width: 100%;
   transition: background-color 0.3s ease, color 0.3s ease;
+  background-color: #fffffff5;
+  padding: 10px;
+  height: 70px;
 }
 
-/* Navbar con fondo blanco al hacer scroll */
 .navbar.scrolled {
-  background-color: rgba(255, 255, 255, 0.74);
+  background-color: rgb(255, 255, 255);
   backdrop-filter: blur(15px);
 }
 
 .navbar.scrolled .menu-item {
-  color: #484038; /* Cambia el color del texto a oscuro */
+  color: #484038;
 }
 
-.navbar.scrolled .search-input {
-  color: #484038; /* Cambia el color del texto en el input de búsqueda */
-  border-color: #484038; /* Cambia el borde del input */
-}
-
+.navbar.scrolled .search-input,
 .navbar.scrolled .btnlogin, .navbar.scrolled .btn {
-  background-color: #484038; /* Botones oscuros con fondo blanco */
-  color: white;
+  color: #484038;
 }
 
 .navbar.scrolled .logonav {
-  filter: invert(1); /* Invertir el logo si es necesario para que sea visible en fondo blanco */
+  filter: invert(1);
 }
 
-.navbar-brand {
-  font-size: 1.25rem;
-  color: white; /* Logo y marca en blanco */
-  padding-left: 2rem;
+.navbar-collapse {
+  background-color: white; /* Color de fondo blanco para el menú colapsable */
 }
 
-/* Ajustar el color del logo según el estado */
-.navbar.scrolled .navbar-brand {
-  color: #484038; /* Cambia el color de la marca a oscuro */
+/* Opcional: Estilos para los elementos del menú cuando están en el menú colapsable */
+.navbar-collapse .nav-link {
+  color: #000; /* Color del texto de los enlaces */
+}
+
+.navbar-collapse .nav-link:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Color de fondo en hover */
 }
 
 .menu {
-  color: white;
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  align-items: center;
-  justify-content: center;
+  display: flex;
+  gap: 1rem;
 }
 
 .menu-item {
-  padding: 0.5rem 1rem;
   font-weight: bold;
-  border-radius: 0.25rem;
+  color: white;
   text-decoration: none;
-  color: white; /* Letra en blanco en fondo transparente */
 }
 
 .menu-item:hover {
-  color: white;
+  border-radius: 15px;
 }
 
 .search-bar {
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
   align-items: center;
 }
 
-.search-bar input {
-  border: 1px solid #E5E7EB;
-  padding: 0.2rem;
-  border-radius: 0.80rem;
-  background-color: transparent;
-  color: white; /* Texto en blanco para el fondo transparente */
-  transition: color 0.3s ease;
-}
-
-/* Botones */
 .btn {
   padding: 0.3rem;
   color: #ffffff;
   border-radius: 1rem;
   background-color: rgb(0, 0, 0);
   margin: 2px;
-  height: 35px;
-  text-align: center;
   font-size: 70%;
-  width: 60px;
   font-weight: 700;
 }
 
 .btnlogin {
-  padding: 0.1rem;
-  color: #ffffff;
-  border-radius: 1rem;
-  background-color: rgb(0, 0, 0);
-  margin: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 35px;
-  text-align: center;
-  font-size: 70%;
   width: 60px;
   font-weight: 700;
-  text-decoration: none;
+  border-radius: 10px;
+  background-color: rgb(0, 0, 0);
+  color: #ffffff;
+  border: 1.5px solid black;
+  font-size: 12px;
+  margin-top: 8px;
 }
 
+
 .btnlogincuenta {
- 
   color: #ffffff;
-  border-radius: 50%; /* Para asegurarse de que sea circular */
+  border-radius: 50%;
   background-color: rgb(0, 0, 0);
-  
   display: flex;
   justify-content: center;
   align-items: center;
   height: 40px;
-  width: 40px; /* Asegura que sea un círculo perfecto */
-  text-align: center;
-}
-
-.btnlogincuenta img {
-  width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
-  height: 100%; /* Hace que la imagen ocupe todo el alto del contenedor */
-  border-radius: 50%; /* Hace que la imagen también sea circular */
-  object-fit: cover; /* Asegura que la imagen se adapte sin distorsión */
+  width: 40px;
+  margin-top: 8px;
 }
 
 .btn:hover, .btnlogin:hover {
   background-color: #322b2584;
-  color: white;
 }
 
 .actions {
@@ -148,8 +111,8 @@
 }
 
 .logonav {
-  width: 120px;
-  margin-left: -15px;
+  width: 80px;
+  filter: invert(100);
 }
 
 .toggleContainer {
@@ -172,7 +135,7 @@
   position: relative;
   display: block;
   background: rgba(211, 211, 211, 0.434);
-  width: 90px;
+  width: 80px;
   height: 30px;
   cursor: pointer;
   border-radius: 30px;
@@ -230,5 +193,18 @@
   opacity: 0;
 }
 
-/* Responsividad */
+/* Estilo para asegurar que el menú es responsivo */
+@media (max-width: 768px) {
+  .menu {
+    flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+    gap: 0.5rem; /* Espaciado entre los elementos */
+  }
+  
+  .navbar-collapse {
+    padding: 1rem; /* Añadir padding al menú colapsable */
+  }
 
+  .navbar-toggler {
+    margin-left: auto; /* Mueve el botón a la derecha */
+  }
+}

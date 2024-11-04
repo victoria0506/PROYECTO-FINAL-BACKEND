@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"; 
-import MenuRestaurantes from "./MenuRestaurantes"; 
 import { useParams } from "react-router-dom";
 import RestaGet from "../services/getRestaurant";
 import fetchImagen from "../services/imageGet";
@@ -8,12 +7,12 @@ import deleteRestau from "../services/DELETEFAVO";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
-import { Modal } from "react-bootstrap"; 
 import CalificacionEstrellas from "./CalificacionEstrellas";
 import CarouselPlatillos from "./CarouselPlatillos";
 import Tabs from "../components/Tabs";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import toastr from 'toastr'; 
+import Swal from 'sweetalert2'; // Importa SweetAlert
+import 'toastr/build/toastr.min.css'; 
 import '../style/paginarestaurantes.css';
 import '../style/DetailRestau.css';
 import { useTranslation } from "react-i18next";
@@ -28,7 +27,6 @@ const RestaurantsDetail = () => {
     const [isFavorite, setIsFavorite] = useState(false); // Estado que indica si el restaurante es favorito
     const [showMenu, setShowMenu] = useState(false); // Estado para controlar la visualización del menú
 
-    // Función para obtener los detalles del restaurante
     const obtenerDetallesRestaurante = async () => {
         const restaurantes = await RestaGet();
         const Restaurante = restaurantes.find(resta => String(resta.restaurante_id) === restaurante_id);
@@ -43,13 +41,12 @@ const RestaurantsDetail = () => {
     const obtenerImagenesRestaurante = async () => {
         try {
             const imagenes = await fetchImagen(restaurante_id);
-            setRestaurantImages(imagenes || []); // Verifica que imagenes contenga la url_header
+            setRestaurantImages(imagenes || []); 
         } catch (error) {
             console.error("Error al obtener imágenes:", error);
         }
     };
-    
-    // Función para obtener los favoritos del usuario
+
     const obtenerFavoritos = () => {
         const favoritesKey = `favoritos_${usuario_id}`;
         const favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
@@ -85,20 +82,28 @@ const RestaurantsDetail = () => {
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
             const favoritoExistente = favoritos.find(fav => fav.restaurante_id === restaurante_id);
             if (!favoritoExistente) {
-                const confirmacion = confirm(t("loginToAddFavorites"));
-                if (confirmacion) {
-                    setIsFavorite(true);                    
+                const confirmacion = await Swal.fire({
+                    title: t("loginToAddFavorites"),
+                    text: t("Do you want to add this restaurant to your favorites?"),
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: t("Yes"),
+                    cancelButtonText: t("No"),
+                });
+
+                if (confirmacion.isConfirmed) {
+                    setIsFavorite(true);
                     const resultado = await favoritosRestaurants(usuario_id, restaurante_id);
                     if (resultado) {
                         favoritos.push({ favorito_id: resultado.favorito_id, restaurante_id });
                         localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
                         setFavoritos(favoritos); 
-                        toast.success(t("Restaurant added to favorites.")); // Mensaje de éxito
+                        toastr.success("Restaurante añadido a favoritos.");
                     }
                 }
             }
         } else {
-            toast.warning(t("loginToAddFavorites")); // Mensaje si el usuario no está autenticado
+            toastr.warning(t("loginToAddFavorites"));
         }
     };
     
@@ -109,30 +114,37 @@ const RestaurantsDetail = () => {
             let favoritos = JSON.parse(localStorage.getItem(favoritesKey)) || [];
             const favorito = favoritos.find(fav => fav.restaurante_id === restaurante_id);
             if (favorito) {
-                const confirmacion = confirm("¿Deseas eliminar este restaurante de tus favoritos?");
-                if (confirmacion) {
+                const confirmacion = await Swal.fire({
+                    title: t("Are you sure?"),
+                    text: "¿Deseas eliminar este restaurante de tus favoritos?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: t("Yes"),
+                    cancelButtonText: t("No"),
+                });
+
+                if (confirmacion.isConfirmed) {
                     setIsFavorite(false);
                     const resultado = await deleteRestau(String(favorito.favorito_id));
                     if (resultado) {
                         favoritos = favoritos.filter(fav => fav.favorito_id !== favorito.favorito_id);
                         localStorage.setItem(favoritesKey, JSON.stringify(favoritos));
                         setFavoritos(favoritos);
-                        toast.success("Restaurante eliminado de favoritos.");
+                        toastr.success("Restaurante eliminado de favoritos.");
                     } else {
-                        toast.error("No se pudo eliminar el restaurante de favoritos.");
+                        toastr.error("No se pudo eliminar el restaurante de favoritos.");
                     }
                 }
             }
         } else {
-            toast.warning(t("loginToAddFavorites")); // Mensaje si el usuario no está autenticado
+            toastr.warning(t("loginToAddFavorites"));
         }
     };
 
     return (
         <div>
             <div>
-                {/* Usa la primera imagen para el header y logo */}
-                {restaurantImages.length > 0 && (
+                {restaurantImages.length > 0 &&  (
                     <>
                         <img className="img-normalizada" src={restaurantImages[0].url_header} alt="header" />
                         <img className="logorestaurante" src={restaurantImages[0].url_img} alt="Logo del Restaurante" />
@@ -148,26 +160,17 @@ const RestaurantsDetail = () => {
                         className={`heart-icon ${isFavorite ? "favorite" : ""}`}
                     />
                 </button>
-                <CalificacionEstrellas restauranteId={restaurante_id} />
-                <Tabs restauranteId={restaurantDetail.restaurante_id} />
-                <Modal show={showMenu} onHide={toggleMenu} fullscreen={true} className="custom-modal">
-                    <Modal.Header closeButton className="custom-header" />
-                    <Modal.Body className="custom-body">
-                        <MenuRestaurantes />
-                    </Modal.Body>
-                </Modal>
+                <CalificacionEstrellas restauranteId={restaurante_id}/>
+                <Tabs restauranteId={restaurantDetail.restaurante_id}/>
             </div>
             <div>
                 <CarouselPlatillos restaurante_id={restaurante_id} />
             </div>
-            <ToastContainer position="top-center" />
         </div>
     );
 };
 
-export default RestaurantsDetail;
-
-
+export default RestaurantsDetail; 
 
 
 

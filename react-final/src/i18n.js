@@ -156,7 +156,7 @@ i18n
           "errorAddingRestaurant": "Hubo un error al añadir el restaurante. Por favor, inténtelo de nuevo.",
           "confirmAddToFavorites": "¿Deseas añadir este restaurante a tus favoritos?",
           "restaurantAddedToFavorites": "Restaurante añadido a favoritos.",
-          "loginToAddFavorites": "Regístrate o inicia sesión si quieres añadir a favoritos.",
+          "loginToAddFavorites": "Deseas añadir este Restaurante a favoritos?",
           "enterCorrectData": "Ingrese sus datos de manera correcta",
           "welcomeAdmin": "Bienvenido Administrador",
           "userNotFound": "Usuario no encontrado en la base de datos",

@@ -49,11 +49,14 @@ class Restaurantes(models.Model):
     longitud_map = models.FloatField(null=True, blank=True) 
 
     def actualizar_promedio(self):
-        """Actualiza la calificación promedio del restaurante basado en las calificaciones registradas."""
-        promedio_calificacion = Calificaciones.objects.filter(restaurante_id=self).aggregate(promedio=Avg('calificacion'))['promedio']
+        """Actualiza la calificación promedio del restaurante."""
+        promedio_calificacion = Calificaciones.objects.filter(
+            restaurante_id=self
+        ).aggregate(promedio=Avg('calificacion'))['promedio']
+        
         if promedio_calificacion is not None:
             self.calificacion_promedio = promedio_calificacion
-            self.save()
+            self.save()  # Guardar el nuevo promedio en el restaurante
         else:
             print(f"No se encontraron calificaciones para el restaurante_id {self.restaurante_id}")
 

@@ -1,17 +1,15 @@
-import {useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import GET from "../services/GET";
-import { useNavigate } from "react-router-dom"
-import userPost from "../services/postUser";
 import { useTranslation } from "react-i18next";
-import '../style/register.css'
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import '../style/register.css';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 function RegistroForm() {
-    const [usuario, setUsuario] = useState("")
-    const [correo, setCorreo] = useState("")
-    const [contraseña, setContraseña] = useState("")
+    const [usuario, setUsuario] = useState("");
+    const [correo, setCorreo] = useState("");
+    const [contraseña, setContraseña] = useState("");
     const [cargando, setcargando] = useState(false);
     const navigate = useNavigate(); 
     const { t } = useTranslation();
@@ -28,7 +26,7 @@ function RegistroForm() {
     
     const mostrar = async () => {
       if (usuario.trim() === "" || !validarNombre(usuario) || contraseña.trim() === "" || correo.trim() === "" || !validarEmail(correo) || contraseña.length < 5) {
-        toast.error(t("fillAllDataCorrectly"));
+        toastr.error(t("fillAllDataCorrectly"));
         return;
       } else {
         setcargando(true); 
@@ -38,12 +36,12 @@ function RegistroForm() {
         ); 
         if (!validarRegistro) { 
           await userPost(usuario, correo, contraseña);
-          toast.success(t("registrationSuccessful")) 
+          toastr.success(t("registrationSuccessful")); 
           setTimeout(() => {
             navigate("/login"); 
           }, 1000);
         } else {
-          toast.error(t("userAlreadyRegistered"))
+          toastr.error(t("userAlreadyRegistered"));
         }
       }
     };
@@ -61,11 +59,9 @@ function RegistroForm() {
         </button>
         <p className="text">{t('Do you have an account?')} <Link to='/login'>{t('Login')}</Link></p>
         </div>
-       </div>
-       <div>
-       <ToastContainer position="top-center"/>
-       </div>
+        </div>
     </div>
-  )
-}
-export default RegistroForm
+    );
+  };
+
+export default RegistroForm;
