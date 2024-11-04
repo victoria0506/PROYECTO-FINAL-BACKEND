@@ -1,6 +1,18 @@
 import '../style/about.css';  // Asegúrate de tener un archivo CSS vinculado
 import { useTranslation } from 'react-i18next';
 
+
+
+
+
+
+
+
+
+
+
+
+
 function About() {
   const { t } = useTranslation()
 
