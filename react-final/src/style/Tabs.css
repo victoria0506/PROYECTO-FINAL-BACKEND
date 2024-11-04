@@ -1,0 +1,65 @@
+.tabs {
+  list-style: none;
+display: grid;
+grid-template-columns: 300px 300px 300px 300px;
+  margin-top: 9%;
+  justify-content: center;
+}
+
+.tabs label {
+  display: flex; /* Cambiar a flexbox para alinear verticalmente */
+  flex-direction: column; /* Alinear en columna */
+  align-items: center; /* Centrar horizontalmente */
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.tabs label:hover {
+  color: #3498db;
+}
+
+.tabs label span {
+  display: block;
+  font-size: 1rem;
+  margin-top: 10px; /* Añadir espacio entre el círculo y el texto */
+}
+
+.icon {
+  margin: 2px auto; /* Acercar más los círculos */
+  display: inline-block;
+  width: 150px; /* Tamaño del círculo */
+  height: 150px; /* Tamaño del círculo */
+  border-radius: 100%; /* Circular */
+  border: 2px solid #cacfd6;
+  background-size: 100px 100px; /* Mantener el tamaño de la imagen constante */
+  background-position: center; /* Centrar la imagen dentro del círculo */
+  background-color: white; /* Fondo blanco */
+  box-sizing: border-box;
+}
+
+.email-cal {
+  background-image: url("https://i.pinimg.com/474x/fa/db/7a/fadb7a9954146795f296cde591fda75f.jpg");
+  background-size: 100%;
+  filter: brightness(1.1);
+  mix-blend-mode: multiply;
+}
+
+.snapshot {
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-Oi6VLnrIOjk25FOfr5UPz207uEPsKnEOTQ&s");
+  background-size: 140%;
+  filter: brightness(1.1);
+  mix-blend-mode: multiply;
+}
+
+.inbox-apps {
+  background-image: url("https://i.pinimg.com/474x/3f/2b/6a/3f2b6adfcf0c80982be71e1a68af82cb.jpg");
+  background-size: 150%;
+}
+
+.events-icon {
+  background-image: url("https://i.pinimg.com/474x/ea/eb/ba/eaebba8ce2e045a69aef272715e81493.jpg");
+  background-size: 121%;
+  filter: brightness(1.1);
+  mix-blend-mode: multiply;
+}

@@ -1,0 +1,25 @@
+.search-img{
+width: 200px;
+    cursor: pointer;
+}
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+}
+.modal-content {
+    border-radius: 10px; 
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
+}
+.search-bar {
+    width: 100%; 
+    padding: 10px;
+    margin-bottom: 15px; 
+    border: 1px solid #ced4da; 
+    border-radius: 5px; 
+}
+.mjs {
+    color: red; 
+    text-align: center; 
+}

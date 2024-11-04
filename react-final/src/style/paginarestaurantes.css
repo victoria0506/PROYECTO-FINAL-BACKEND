@@ -1,0 +1,124 @@
+.img-normalizada{
+	width: 100%;
+	height: 350px;
+	object-fit: cover;
+}
+
+.logorestaurante{
+    border-radius: 100%;
+    width: 19%;
+    margin-top: -8%;
+    margin-left: 10px;
+    border: 5px solid rgb(255, 255, 255); /* Grosor, estilo y color del borde */
+    
+}
+
+.conta{
+  margin-top: 10%
+}
+
+@import url('https://fonts.cdnfonts.com/css/hello-bonia-serif');
+.nombrerestaurante{
+  font-family: 'Hello Bonia Serif', sans-serif;
+  font-size: 70px;
+  margin-left: 260px;
+  margin-top: -130px;
+  position: relative; /* Esto permite que el botón de favorito se posicione relativamente al nombre */
+}
+@import url('https://fonts.cdnfonts.com/css/bacasime-antique');
+.introrestaurantes {
+    font-size: 20px;
+    margin: -10px 0 0 265px; 
+    line-height: 1.2; /* Ajustar el espaciado entre líneas */
+    font-family: 'Bacasime Antique', sans-serif;
+                                                
+                                                
+    width: 790px; /* Ajusta el ancho según sea necesario */
+    max-width: 100%; /* Asegúrate de que no exceda el contenedor padre */
+    background: transparent; /* Fondo transparente */
+    border: none; /* Sin borde */
+    box-shadow: none; /* Sin sombra */
+    transform: translateY(-7px); /* Eleva el texto */
+}
+
+
+.menu-image{
+  cursor: pointer;
+  width: 140px;
+  height: 170px;
+  filter: brightness(1.1);
+  mix-blend-mode: multiply;
+  margin: 0 auto; /* Centraliza la imagen sin margen */
+}
+
+
+
+/* Estilo personalizado para el encabezado del modal */
+.custom-header {
+    background-color: #291d1d; /* Color de fondo del header */
+    color: white; /* Color del texto del header */
+    border-bottom: 2px solid #33333300; /* Línea de separación personalizada */
+}
+
+/* Estilo personalizado para el cuerpo del modal */
+.custom-body {
+    background-color: #291d1d; /* Color de fondo del cuerpo del modal */
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Mueve el contenido hacia arriba */
+    height: 100%; /* Ocupa todo el alto del modal */
+}
+
+/* Cambiar el color del botón de cierre del modal */
+.custom-modal .btn-close {
+    background-color: #e8cece; /* Color del botón de cierre */
+    border-radius: 50%;
+}
+
+
+/*boton favorito*/
+    .añafavo-button {
+      font-size: 3rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      position: absolute; /* Posicionamiento absoluto */
+     margin-left: 92%;
+      margin-top: -110px; /* Ajusta la altura del botón a la misma del nombre del restaurante */
+      }
+      
+      .heart-icon {
+        padding: 0.2rem; /* Optional padding for spacing */
+        border-radius: 50%; /* Optional rounded corners */
+        transition: color 0.3s ease; /* Smooth color transition */
+        font-size: 40px;
+      }
+      
+      .heart-icon:not(.favorite) {
+        color: black; /* Color when not favorite */
+        border: 1px solid transparent; /* Border for unselected */
+        font-size: 40px;
+      }
+      
+      .heart-icon.favorite {
+        color: rgb(210, 8, 8); /* Color when favorite */
+      }
+      
+/*mapa*/
+#map {
+    height: 280px; /* Altura del mapa */
+    width: 18%; /* Ancho completo del contenedor */
+    border: 2px solid #ccc; /* Borde alrededor del mapa */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Sombra del mapa */
+    margin-left: 80%;
+    bottom: 10px;
+}
+
+
+.estrellas{
+margin-left: 30px;
+position: absolute;
+margin-top: 18px;
+}
