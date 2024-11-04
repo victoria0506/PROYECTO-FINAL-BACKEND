@@ -1,35 +1,32 @@
-import {useState } from "react"
-import { Link } from "react-router-dom"
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import GET from "../services/GET";
-import { useNavigate } from "react-router-dom"
-import SweetAlert2 from 'react-sweetalert2';
-import userPost from "../services/postUser";
 import { useTranslation } from "react-i18next";
-import '../style/register.css'
+import '../style/register.css';
+import toastr from 'toastr';
+import 'toastr/build/toastr.min.css';
 
 function RegistroForm() {
-  // declaramos los hooks
-    const [usuario, setUsuario] = useState("")
-    const [correo, setCorreo] = useState("")
-    const [contraseña, setContraseña] = useState("")
-    const [mensaje, setMensaje] = useState("")
-    const [swalProps, setSwalProps] = useState({});
+    const [usuario, setUsuario] = useState("");
+    const [correo, setCorreo] = useState("");
+    const [contraseña, setContraseña] = useState("");
     const [cargando, setcargando] = useState(false);
-    const navigate = useNavigate(); // hookpara navegar entre paginas
+    const navigate = useNavigate(); 
     const { t } = useTranslation();
 
     const validarEmail = (correo) => {
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return re.test(correo);
     };
+
+    const validarNombre = (usuario) => {
+      const nombreValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/; 
+      return nombreValido.test(usuario.trim());
+    };
     
     const mostrar = async () => {
-      if (usuario.trim() === "" || contraseña.trim() === "" || correo.trim() === "" || !validarEmail(correo) || contraseña.length < 5) {
-        setSwalProps({ 
-          show: true,
-          title: 'Error',
-          text: 'Ingrese todos los datos correctamente, incluyendo un correo válido y una contraseña de al menos 5 caracteres.',
-        });
+      if (usuario.trim() === "" || !validarNombre(usuario) || contraseña.trim() === "" || correo.trim() === "" || !validarEmail(correo) || contraseña.length < 5) {
+        toastr.error(t("fillAllDataCorrectly"));
         return;
       } else {
         setcargando(true); 
@@ -39,38 +36,32 @@ function RegistroForm() {
         ); 
         if (!validarRegistro) { 
           await userPost(usuario, correo, contraseña);
-          setMensaje("Registro exitoso"); 
+          toastr.success(t("registrationSuccessful")); 
           setTimeout(() => {
             navigate("/login"); 
           }, 1000);
         } else {
-          setSwalProps({
-            show: true,
-            title: 'Error',
-            text: 'El correo/contraseña ya se encuentran registrados',
-          });
+          toastr.error(t("userAlreadyRegistered"));
         }
       }
     };
+
   return (
     <div className="login4">
        <div className="logn6">
        <img className="logologinregister" src="/src/img/logonav.png" alt="" />
-        <h5>{mensaje}</h5>
-        <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder={t('User')}/>
-        <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder={t('Email')}/>
-        <input type="text" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder={t('Password')}/>
+        <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder={t('User')} required/>
+        <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder={t('Email')} required/>
+        <input type="password" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder={t('Password')} required/>
         <div className="botones">
         <button onClick={mostrar}>
-          {cargando ? t('Charging...') : t('Register')}
+          {cargando ? t('loading...') : t('Register')}
         </button>
         <p className="text">{t('Do you have an account?')} <Link to='/login'>{t('Login')}</Link></p>
         </div>
-       </div>
-       <div>
-       <SweetAlert2 {...swalProps} />
-       </div>
+        </div>
     </div>
-  )
-}
-export default RegistroForm
+    );
+  };
+
+export default RegistroForm;

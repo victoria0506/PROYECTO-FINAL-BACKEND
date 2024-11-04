@@ -1,14 +1,26 @@
+# services:
+#   react:
+#     container_name: react_proyect
+#     image: react_proyect
+#     build:
+#       context: ./react-final
+#     volumes:
+#       - ./react-final:/app
+#       - /app/node_modules
+#     ports:
+#       - "5173:5173"
 services:
-  react:
-    container_name: react_proyect
-    image: react_proyect
+  app:
+    container_name: react-production
+    image: react-production:prod
     build:
       context: ./react-final
-    volumes:
-      - ./react-final:/app
-      - /app/node_modules
+      target: production
+      args:
+        - NODE_ENV=production
+      dockerfile: Dockerfile.prod
     ports:
-      - "5173:5173"
+      - 80:80
   django:
     image: django_proyect
     container_name: django_proyect

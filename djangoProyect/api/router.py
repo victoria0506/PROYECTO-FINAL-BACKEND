@@ -1,5 +1,5 @@
 from rest_framework.routers import DefaultRouter
-from .views import TipouserView,RegisterView,LoginView,RestauranteView,CalificacionView,favoritosView, calendarioView, especialidadesView, CantonView, distritoView, RestaEspecilidadesView, ImagenesView, PlatillosView
+from .views import TipouserView,RegisterView,LoginView,RestauranteView,CalificacionView,favoritosView, calendarioView, especialidadesView, CantonView, distritoView, RestaEspecilidadesView, ImagenesView, PlatillosView, MenuView
 
 router = DefaultRouter()
 
@@ -31,7 +31,7 @@ router.register(
     prefix='califiRestaur', basename="califiRestaur", viewset=CalificacionView
 )
 router.register(
-    prefix='favoritos', basename="favoritos", viewset=favoritosView
+    prefix='favoritos', viewset=favoritosView
 )
 router.register(
     prefix='calendario', basename="calendario", viewset=calendarioView
@@ -41,4 +41,7 @@ router.register(
 )
 router.register(
     prefix= 'Platillos', basename= "platillosDesta", viewset=PlatillosView
+)
+router.register(
+    prefix='menu', basename='menu', viewset=MenuView
 )

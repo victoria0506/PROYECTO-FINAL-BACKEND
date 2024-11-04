@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import  TipoUsuario,Usuarios,restaurantes, calificaciones, favoritos, calendario, tipo_especialidad, Canton, distrito, RestaEspecialidades, Imagenes, Platillos_destacados
+from .models import  TipoUsuario,Usuarios,restaurantes, calificaciones, favoritos, calendario, tipo_especialidad, Canton, distrito, RestaEspecialidades, Imagenes, Platillos_destacados, menu_restaurantes
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
@@ -51,12 +51,25 @@ class restaurantesSerializer(ModelSerializer):
 class ImagenSerializer(ModelSerializer):
     class Meta:
         model= Imagenes
-        fields = ['id_imagen', 'url_img', 'restaurante_id', 'tipo_imagen']
+        fields = '__all__'
         
 class PlatillosSeralizer(ModelSerializer):
+    platillo_urls = serializers.SerializerMethodField()
     class Meta:
         model= Platillos_destacados
         fields= '__all__'
+        
+    def get_platillo_urls(self, obj):
+        urls = []
+        if obj.url_platillo_1:
+            urls.append({"imgSrc": obj.url_platillo_1})
+        if obj.url_platillo_2:
+            urls.append({"imgSrc": obj.url_platillo_2})
+        if obj.url_platillo_3:
+            urls.append({"imgSrc": obj.url_platillo_3})
+        if obj.url_platillo_4:
+            urls.append({"imgSrc": obj.url_platillo_4})
+        return urls
       
 class especialidadSerializer(ModelSerializer):
     class Meta:
@@ -67,11 +80,17 @@ class RestaEspeciSerializer(ModelSerializer):
     class Meta:
         model= RestaEspecialidades
         fields= '__all__'
-    
+        
 class CalificacionSerializer(ModelSerializer):
+    promedio = serializers.FloatField(read_only=True)
     class Meta:
       model= calificaciones
       fields= '__all__'
+      
+    def validate_calificacion(self, value):
+        if value < 0.0 or value > 5.0:
+            raise serializers.ValidationError("La calificación debe estar entre 0.0 y 5.0.")
+        return value
     
 class favoritosSerializer(ModelSerializer):
     class Meta:
@@ -83,3 +102,9 @@ class calendarioSerializer(ModelSerializer):
       model= calendario
       fields= '__all__'
 
+class menuSerializer(ModelSerializer):
+    class Meta:
+      model= menu_restaurantes
+      fields= '__all__'
+      
+      

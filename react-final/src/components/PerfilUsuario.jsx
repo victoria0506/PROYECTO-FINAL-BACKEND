@@ -7,8 +7,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { compartirContexto } from "../context/contextProvider";
 import Cookies from 'js-cookie';
-import swal from 'sweetalert';
 import DeleteUser from "../services/DeleteUser";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css'; 
 
 const PerfilUsuario = () => {
     const { usuario_id } = useParams();
@@ -18,6 +21,7 @@ const PerfilUsuario = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { actualizador, setActu } = compartirContexto();
+    const Admi_Acceso = localStorage.getItem("Admi-id")
 
     useEffect(() => {
         const usuario_authen = localStorage.getItem("Usuario Autenticado_id");
@@ -29,7 +33,7 @@ const PerfilUsuario = () => {
             const usuario = { usuario_id: parseInt(usuario_id), foto: fotoPerfil || null }; 
             setUsuarioDetail(usuario); 
         }
-    }, [usuario_id, navigate]);
+    }, [usuario_id, navigate, Admi_Acceso]);
 
     const obtenerDetallesUsuarios = async () => {
         try {
@@ -62,40 +66,38 @@ const PerfilUsuario = () => {
     };
 
     const eliminar_cuenta = async () => {
-      swal({
-        title: "¿Estás seguro?",
-        text: "No podrás revertir esto!",
-        icon: "warning",
-        buttons: {
-            cancel: {
-                text: "No, cancelar",
-                visible: true,
-                className: "btn btn-danger",
-                closeModal: true,
-            },
-            confirm: {
-                text: "Sí, eliminarlo!",
-                className: "btn btn-success",
-                closeModal: true,
-            },
-        },
-        dangerMode: true,
-    }).then((willDelete) => {
-        if (willDelete) {
-            DeleteUser(usuario_id);
-            Cookies.remove("access_token");
-            Cookies.remove("refresh_token");
-            swal("¡Eliminado!");
-            setActu(actualizador + 1);
-            setTimeout(() => {
-                navigate("/register");
-            }, 1000);
-            localStorage.removeItem("Usuario Autenticado_id");
-        } else {
-            swal("Cancelado", "error");
-        }
-    });
-    }
+        confirmAlert({
+            title: 'Confirmar eliminación',
+            message: '¿Estás seguro? No podrás revertir esto!',
+            buttons: [
+                {
+                    label: 'Sí',
+                    onClick: async () => {
+                        try {
+                            await DeleteUser(usuario_id);
+                            Cookies.remove("access_token");
+                            Cookies.remove("refresh_token");
+                            toast.success("¡Cuenta eliminada con éxito!");
+                            setActu(actualizador + 1);
+                            setTimeout(() => {
+                                navigate("/register");
+                            }, 2000);
+                            localStorage.removeItem("Usuario Autenticado_id");
+                        } catch (error) {
+                            toast.error("Error al eliminar la cuenta. Inténtalo de nuevo.");
+                        }
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => {
+                        toast.info("Eliminación cancelada.");
+                    }
+                }
+            ]
+        });
+    };
+    
 
     const CambioFoto = (event) => {
         const archivo = event.target.files[0];
@@ -134,11 +136,11 @@ const PerfilUsuario = () => {
     };
 
     if (loading) {
-        return <div>Cargando...</div>; 
+        return <div>{t("loading...")}</div>; 
     }
 
     if (!usuariosDetail) {
-        return <div>No se encontró el usuario.</div>;
+        return <div>{t("User not found.")}</div>;
     }
 
     return (
@@ -177,23 +179,20 @@ const PerfilUsuario = () => {
             <h3 className="perfil-titulo">{usuariosDetail.nombre_usuario}</h3>
             <h3 className="perfil-email">{usuariosDetail.email}</h3>
             <div className="containerlogfav">
-                <button className="btnlogout" onClick={cerrar_sesion}>
-                    {t('Log Out')}
+            <button className="btnlogout" onClick={cerrar_sesion}> {t('Log Out')}</button>
+            {Admi_Acceso && (
+                <button className="ir-admin" onClick={() => navigate('/admi')}>
+                    Página de Administración
                 </button>
-                <button className="cerrar-secion" onClick={() => navigate(`/favoritos/${usuario_id}`)}>
-                    Mis Favoritos
-                </button>
-                <button className="Eliminar" onClick={eliminar_cuenta}>
-                    Eliminar Cuenta
-                </button>
+            )}
+                 <button className="Eliminar" onClick={eliminar_cuenta}>
+                 Eliminar Cuenta
+             </button>
             </div>
             <br /><br />
+            <ToastContainer position="top-center"/>
         </div>
     );
 };
 
 export default PerfilUsuario;
-
-
-
-

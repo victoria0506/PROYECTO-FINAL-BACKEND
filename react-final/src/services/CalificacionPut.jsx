@@ -2,6 +2,9 @@ import Cookies from 'js-cookie'
 import refreshToken from './TokenRefresh'
 
 const CaliPut = async (calificacion_id, usuario_id, restaurante_id, calificacion) => {
+    console.log(calificacion_id);
+    console.log(usuario_id);
+    console.log(restaurante_id);
     try {
         const accessToken = Cookies.get('access_token')
         const response = await fetch(`http://localhost:8000/api/califiRestaur/${calificacion_id}/`, {
@@ -12,6 +15,7 @@ const CaliPut = async (calificacion_id, usuario_id, restaurante_id, calificacion
                 'Authorization': `Bearer ${accessToken}`, 
             },
             body: JSON.stringify({
+                calificacion_id: calificacion_id,
                 usuario_id: usuario_id,
                 restaurante_id: restaurante_id,
                 calificacion: calificacion,

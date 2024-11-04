@@ -1,9 +1,10 @@
-const Token= "a53ecb17b9b53418b44507fe226c0cf6490508f1"
+const Token= "f083b6b41d2cecbd2ddd54743696a65ae3269f6a"
+// const Token= "7059f86a1d940265ab5befed073aa4c03ecb0bd6"
 
-//obtiene imágenes desde la API
-const fetchImagen = async () => {
+
+const fetchImagen = async (restaurante_id) => {
     try {
-        const response = await fetch('http://localhost:8000/api/Imagenes/', {
+        const response = await fetch(`http://localhost:8000/api/Imagenes/?restaurante_id=${restaurante_id}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Token ${Token}`
@@ -22,3 +23,4 @@ const fetchImagen = async () => {
 };
 
 export default fetchImagen
+

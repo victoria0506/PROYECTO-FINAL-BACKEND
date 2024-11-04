@@ -1,20 +1,18 @@
-.articlehome{
+.articlehome {
   margin-top: 100px;
 }
 
-
 .tabshome {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Ajusta el número de columnas según el ancho */
   gap: 20px; /* Espaciado entre las pestañas */
   margin-top: 6%;
   justify-content: center;
-  
 }
 
-.titulotabshome{
-
+.titulotabshome {
   font-weight: 400;
+  text-align: center;
 }
 
 .tabhome {
@@ -33,8 +31,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 150px; /* Tamaño del círculo */
-  height: 150px; /* Tamaño del círculo */
+  width: 100px; /* Tamaño base del círculo */
+  height: 100px; /* Tamaño base del círculo */
   border-radius: 50%; /* Hace que sea circular */
   border: 2px solid #cacfd6;
   background-color: white; /* Fondo blanco */
@@ -53,17 +51,100 @@ label {
   font-weight: 400;
 }
 
-
 .tab__content {
   margin-top: 20px; /* Espacio arriba del contenido */
-  padding: 120px; /* Espacio interno */
-  border: 1px solid #ddddddb7; /* O cualquier estilo que prefieras */
-  border-radius: 5px; /* Bordes redondeados opcionales */
-  background-color: #f9f9f9; /* Fondo opcional */
+  padding: 60px; /* Espacio interno */
+  border: 1px solid #ddddddb7; /* Estilo del borde */
+  border-radius: 5px; /* Bordes redondeados */
+  background-color: #f9f9f9; /* Fondo */
   transition: all 0.3s ease; /* Transición suave */
+}
+
+.tab__content.active {
+  display: block; /* Muestra solo el contenido activo */
+}
+
+/* Media Queries para dispositivos más pequeños */
+@media (min-width: 768px) {
+  .tab-circle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .tab__content {
+    padding: 80px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tab-circle {
+    width: 150px;
+    height: 150px;
+  }
+
+.tab__content {
+    padding: 100px;
+  }
 }
 
 .tab__content.active {
   display: block; /* Asegurarte de que se muestre solo el contenido activo */
 }
   
+.tab-image_saludable{
+  width: 15vh;
+}
+
+.tab-image_carnes{
+  width: 17vh;
+}
+
+.tab-image_pasta{
+  width: 16vh;
+}
+.tab-image_comida_rapida{
+  width: 16vh;
+}
+
+.tab-image_comida_tradicional {
+  width: 15vh;
+  transform: rotate(-12deg);
+}
+
+.tab-image_mariscos{
+  width: 18vh;
+}
+
+.tab-image_pastas{
+  width: 16vh;
+}
+
+.tab-image_comida_asiatica{
+  width: 17vh;
+}
+
+.associated-restaurants {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.associated-restaurants > div {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.associated-restaurants h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.associated-restaurants p {
+  margin: 5px 0;
+  color: #666;
+}

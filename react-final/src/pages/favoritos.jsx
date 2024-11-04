@@ -1,11 +1,11 @@
-import FavoritosUser from "../components/FavoritosUser"
+// import FavoritosUser from "../components/FavoritosUser"
 
-const Favoritos = () => {
-  return (
-    <div>
-      <FavoritosUser/>
-    </div>
-  )
-}
+// const Favoritos = () => {
+//   return (
+//     <div>
+//       <FavoritosUser/>
+//     </div>
+//   )
+// }
 
-export default Favoritos
+// export default Favoritos

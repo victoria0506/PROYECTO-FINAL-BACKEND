@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import canton2 from "../services/cantonFech";
 import distritos2 from "../services/distritoFech";
 import especiali from "../services/especialidadesGet";
-import GET from "../services/GET";
+import especialiGet from "../services/EspecialidaGet";
 
 const UsedataRest = (canton) => {
     const [distritos, setDistritos] = useState([]);
     const [cantones, setCantones] = useState([]);
     const [especialidades, setEspecialidades] = useState([]);
+    const [restaurantesEspecialidades, setRestaurantesEspecialidades] = useState([])
     
     useEffect(() => {
         const loadCantones = async () => {
@@ -37,7 +38,17 @@ const UsedataRest = (canton) => {
         loadEspecialidades();
     }, []);
 
-    return { distritos, cantones, especialidades };
+
+    useEffect(() => {
+        const loadRestaurantesEspecialidades = async () => {
+            const restaurantesData = await especialiGet(); 
+            console.log('Restaurantes Especialidades cargados:', restaurantesData)
+            setRestaurantesEspecialidades(restaurantesData);
+        };
+        loadRestaurantesEspecialidades();
+    }, [])
+
+    return { distritos, cantones, especialidades, restaurantesEspecialidades };
 };
 
 export default UsedataRest

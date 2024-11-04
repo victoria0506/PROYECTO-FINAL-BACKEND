@@ -2,11 +2,9 @@
   margin-top: 80px;
 }
 
-
 .container-cards {
   display: flex;
   flex-wrap: wrap;
-
 }
 
 .card {
@@ -19,6 +17,15 @@
   margin: 10px;
   text-align: center;
   position: relative;
+}
+
+.card > a {
+  text-decoration: none;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Añade un efecto de hover */
+  transition: transform 0.6s; /* Suaviza la transición del hover */
 }
 
 .card__background {
@@ -57,24 +64,55 @@
   margin-top: -10px;
 }
 
-.card__button {
-  background-color: #ffffff;
-  color: #000000;
-  padding: 5px 10px;
-  border: 1px solid black;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-  top: 10px;
-  position: relative; /* Now moves independently */
-  left: 0; /* Adjust horizontal position */
+.titulocards{
+  text-align: center;
+  font-family: 'Hello Bonia Serif', sans-serif;
 }
 
-.card__button:hover {
-  background-color: #c0c0c0;
-  
+
+@media (max-width: 500px) {
+  .container-cards {
+    display: flex;
+    flex-wrap: wrap;
+   justify-content: center;
+  }
+  .card{
+    width: 100px;   /* Fixed width */
+    height: 160px; 
+  }
+  .card__background {
+    width: 100%;
+    height: 50px;
+    object-fit: cover;
+  }
+  .card__profile-icon {
+    top: 25px; /* Adjusted to fit card's new dimensions */
+    width: 50px; /* Slightly smaller profile */
+    border-radius: 100%;
+    position: absolute;
+    
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid #fff;
+  }
+  .card__content {
+    padding-top: 5px;
+  }
+  .card__title {
+    font-size: 0.6rem;
+    font-weight: 700;
+    margin-top: 20px;
+    position: relative;
+  }
+  .card__description {
+    font-size: 0.4rem;
+    color: #666;
+    font-weight: 500;
+    margin-top: -10px;
+  }
 }
+
+
 
 
 
