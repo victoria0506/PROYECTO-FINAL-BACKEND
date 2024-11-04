@@ -21,6 +21,7 @@ const PerfilUsuario = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
     const { actualizador, setActu } = compartirContexto();
+    const Admi_Acceso = localStorage.getItem("Admi-id")
 
     useEffect(() => {
         const usuario_authen = localStorage.getItem("Usuario Autenticado_id");
@@ -32,7 +33,7 @@ const PerfilUsuario = () => {
             const usuario = { usuario_id: parseInt(usuario_id), foto: fotoPerfil || null }; 
             setUsuarioDetail(usuario); 
         }
-    }, [usuario_id, navigate]);
+    }, [usuario_id, navigate, Admi_Acceso]);
 
     const obtenerDetallesUsuarios = async () => {
         try {
@@ -178,15 +179,15 @@ const PerfilUsuario = () => {
             <h3 className="perfil-titulo">{usuariosDetail.nombre_usuario}</h3>
             <h3 className="perfil-email">{usuariosDetail.email}</h3>
             <div className="containerlogfav">
-                <button className="btnlogout" onClick={cerrar_sesion}>
-                    {t('Log Out')}
+            <button className="btnlogout" onClick={cerrar_sesion}> {t('Log Out')}</button>
+            {Admi_Acceso && (
+                <button className="ir-admin" onClick={() => navigate('/admi')}>
+                    Página de Administración
                 </button>
-                <button className="cerrar-secion" onClick={() => navigate(`/favoritos/${usuario_id}`)}>
-                    Mis Favoritos
-                </button>
-                <button className="Eliminar" onClick={eliminar_cuenta}>
-                    Eliminar Cuenta
-                </button>
+            )}
+                 <button className="Eliminar" onClick={eliminar_cuenta}>
+                 Eliminar Cuenta
+             </button>
             </div>
             <br /><br />
             <ToastContainer position="top-center"/>

@@ -102,7 +102,8 @@ i18n
           "Image 3 :" : "Image 3 :",
           "Image 4 :" : "Image 4 :",
           "Deactivate": "Deactivate",
-          "Description" : "Description"
+          "Description" : "Description",
+          "High demand day": "High demand day",
 
         },
       },
@@ -209,7 +210,8 @@ i18n
           "Image 3 :" : "Imagen 3 :",
           "Image 4 :" : "Imagen 4 :",
           "Deactivate" : "Desactivar",
-          "Description" : "Descripción"
+          "Description" : "Descripción",
+          "High demand day": "Dia de lata demanda"
         },
       },
     },

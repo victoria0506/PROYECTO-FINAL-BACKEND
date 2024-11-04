@@ -20,9 +20,14 @@ function RegistroForm() {
       const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       return re.test(correo);
     };
+
+    const validarNombre = (usuario) => {
+      const nombreValido = /^[A-Za-zÁÉÍÓÚáéíóúÑñ]+$/; 
+      return nombreValido.test(usuario.trim());
+    };
     
     const mostrar = async () => {
-      if (usuario.trim() === "" || contraseña.trim() === "" || correo.trim() === "" || !validarEmail(correo) || contraseña.length < 5) {
+      if (usuario.trim() === "" || !validarNombre(usuario) || contraseña.trim() === "" || correo.trim() === "" || !validarEmail(correo) || contraseña.length < 5) {
         toast.error(t("fillAllDataCorrectly"));
         return;
       } else {
@@ -47,9 +52,9 @@ function RegistroForm() {
     <div className="login4">
        <div className="logn6">
        <img className="logologinregister" src="/src/img/logonav.png" alt="" />
-        <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder={t('User')}/>
-        <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder={t('Email')}/>
-        <input type="text" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder={t('Password')}/>
+        <input type="text" className="inRegi" value={usuario} onChange={e => setUsuario(e.target.value)} placeholder={t('User')} required/>
+        <input type="text" className="inRegi" value={correo} onChange={e => setCorreo(e.target.value)} placeholder={t('Email')} required/>
+        <input type="password" className="inRegi" value={contraseña} onChange={e => setContraseña(e.target.value)} placeholder={t('Password')} required/>
         <div className="botones">
         <button onClick={mostrar}>
           {cargando ? t('loading...') : t('Register')}

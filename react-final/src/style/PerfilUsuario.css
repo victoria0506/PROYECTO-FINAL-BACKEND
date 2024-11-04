@@ -80,7 +80,7 @@ grid-template-columns: 50px 50px;
 justify-content: center;
 }
 
-.btnlogout{
+button{
     padding: 10px 15px; 
     margin: 5px; 
     background-color: #c0c0c0; 
@@ -90,10 +90,9 @@ justify-content: center;
     cursor: pointer; 
     text-align: center; 
     width: auto; 
-
     font-weight: 600;  
 }
-.cerrar-secion {
+/* .cerrar-secion {
     padding: 10px 15px; 
     margin: 5px; 
     background-color: #c0c0c0; 
@@ -105,7 +104,7 @@ justify-content: center;
     width: auto; 
     
     font-weight: 600;
-}
+} */
     
 
 .btn-container{

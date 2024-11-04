@@ -8,17 +8,17 @@ import Quiz from "../components/Quiz";
 import CarouselHomePlatosDest from "../components/CarouselHomePlatosDest";
 
 function HomePage() {
-  const [especialidadSeleccionada, setEspecialidadSeleccionada] = useState("");
+
 
   return (
     <div>
       <Nav />
       <Home />
-      <TabsHome setEspecialidadSeleccionada={setEspecialidadSeleccionada} />
+      <TabsHome/>
       <Carrusel2 />
       <CarouselHomePlatosDest />
       <Quiz />
-      <CardsRestaurantes especialidadSeleccionada={especialidadSeleccionada} />
+      <CardsRestaurantes/>
     </div>
   );
 }

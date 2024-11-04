@@ -25,6 +25,7 @@
   }
   
   .about-image img {
+    display: flex;
     max-width: 60%; /* Ajusta el tamaño para pantallas más grandes */
     height: auto; /* Mantiene la proporción de la imagen */
     margin: 0; /* Elimina los márgenes */
@@ -46,6 +47,9 @@
   
     .about-image {
       margin-top: 20px;
+      display: flex;
+      position: relative;
     }
   }
+  
   

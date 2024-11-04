@@ -28,6 +28,7 @@ const FormAdmin = () => {
   const [menuImages, setMenuImages] = useState(Array(8).fill("")); // 8 campos para las imágenes del menú
   const [latitud, setLatitud] = useState("")
   const [longitud, setLongitud] = useState("")
+  const [altaDemanda, setAltaDemanda] = useState("")
 
   // Manejo de ubicaciones y especialidades
   const CambiosDistritos = (e) => setUbicacion({ ...ubicacion, distrito: e.target.value });
@@ -63,9 +64,8 @@ const FormAdmin = () => {
         nomResta, precioPro, capacidad, descripcion,
         ubicacion, especialidadesValues, imageURLPerfil,
         imageURLHeader, horarioApertura, horarioCierre,
-        latitud, longitud);
-      setRestauranteId(restaNew.restaurante_id);
-      toast.success(t('Restaurant added successfully'));
+        latitud, longitud, );
+        setRestauranteId(restaNew.restaurante_id);
 
       // Reset de campos
       setNomresta("");
@@ -205,6 +205,14 @@ const FormAdmin = () => {
         </IKContext>
         <br /><br />
         <button onClick={Añadir}>{t('Añadir Restaurante')}</button>
+        <br />
+        <label>{t('High demand day')}:</label>
+        <input
+          type="text"
+          placeholder={t('High demand day')}
+          value={altaDemanda}
+          onChange={e => setAltaDemanda(e.target.value)}
+        />
         <br />
         <Calendario restauranteId={restauranteId} />
         <br />

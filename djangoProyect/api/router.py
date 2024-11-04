@@ -31,7 +31,7 @@ router.register(
     prefix='califiRestaur', basename="califiRestaur", viewset=CalificacionView
 )
 router.register(
-    prefix='favoritos', basename="favoritos", viewset=favoritosView
+    prefix='favoritos', viewset=favoritosView
 )
 router.register(
     prefix='calendario', basename="calendario", viewset=calendarioView

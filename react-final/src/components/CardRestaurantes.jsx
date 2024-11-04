@@ -35,7 +35,6 @@ const CardsRestaurantes = ({ especialidadSeleccionada }) => {
   const restaurantesFiltrados = especialidadSeleccionada
     ? restaurantes.filter((restau) => restau.especialidad === especialidadSeleccionada)
     : restaurantes;
-
     const verificarDisponibilidad = (horarioApertura, horarioCierre) => {
       const ahora = new Date();
       const horaActual = `${ahora.getHours().toString().padStart(2, '0')}:${ahora.getMinutes().toString().padStart(2, '0')}`;
