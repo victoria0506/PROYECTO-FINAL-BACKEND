@@ -16,6 +16,7 @@ function HomePage() {
       <TabsHome/>
       <Carrusel2 />
       <CarouselHomePlatosDest />
+      <Quiz />
       <CardsRestaurantes/>
     </div>
   );
