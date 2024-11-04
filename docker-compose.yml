@@ -14,7 +14,7 @@ services:
     container_name: react-production
     image: react-production:prod
     build:
-      context: ./react-production
+      context: ./react-final
       target: production
       args:
         - NODE_ENV=production
