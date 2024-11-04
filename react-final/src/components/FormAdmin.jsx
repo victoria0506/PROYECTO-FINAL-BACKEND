@@ -6,10 +6,11 @@ import Select from 'react-select';
 import UsedataRest from './UsedataRest';
 import { IKContext, IKUpload } from 'imagekitio-react';
 import authenticator from '../services/FetchImagekit';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Calendario from './Calendario';
 import FormPlatillos from './FormPlatillos';
+import FileUploaderMenu from './FileUploaderMenu';
+import toastr from 'toastr'; // Importar Toastr
+import 'toastr/build/toastr.min.css'; // Importar estilos de Toastr
 
 const FormAdmin = () => {
   const [nomResta, setNomresta] = useState("");
@@ -25,9 +26,8 @@ const FormAdmin = () => {
   const [restauranteId, setRestauranteId] = useState("");
   const [horarioApertura, setHorarioApertura] = useState("");
   const [horarioCierre, setHorarioCierre] = useState("");
-  const [menuImages, setMenuImages] = useState(Array(8).fill("")); // 8 campos para las imágenes del menú
-  const [latitud, setLatitud] = useState("")
-  const [longitud, setLongitud] = useState("")
+  const [latitud, setLatitud] = useState("");
+  const [longitud, setLongitud] = useState("");
 
   // Manejo de ubicaciones y especialidades
   const CambiosDistritos = (e) => setUbicacion({ ...ubicacion, distrito: e.target.value });
@@ -36,7 +36,9 @@ const FormAdmin = () => {
     setEspeciSelect(options || []);
   };
 
+  // Función para añadir un nuevo restaurante
   const Añadir = async () => {
+    // Validar que todos los campos estén llenos
     if (
       nomResta.trim() === "" || 
       precioPro.trim() === "" || 
@@ -44,28 +46,23 @@ const FormAdmin = () => {
       descripcion.trim() === "" || 
       !ubicacion.canton || 
       !ubicacion.distrito || 
-      // imageURLPerfil.trim() === "" || 
-      // imageURLHeader.trim() === "" || 
-      // latitud.trim() === "" || 
-      // longitud.trim() === "" ||
       horarioApertura.trim() === "" || 
-      horarioCierre.trim() === "" 
-      // ||
-      // // menuImages.some(url => url.trim() === "") 
-      // // ||
+      horarioCierre.trim() === ""
     ) {
-      // toast.error(t("Enter all data correctly"));
+      toastr.error(t("Enter all data correctly")); // Usar Toastr para mostrar error
       return;
     }
     try {
+      // Obtener los valores de especialidades seleccionadas
       const especialidadesValues = especiSelect.map(especialidad => especialidad.value);
       const restaNew = await PostResta(
         nomResta, precioPro, capacidad, descripcion,
         ubicacion, especialidadesValues, imageURLPerfil,
         imageURLHeader, horarioApertura, horarioCierre,
-        latitud, longitud);
+        latitud, longitud
+      );
       setRestauranteId(restaNew.restaurante_id);
-      toast.success(t('Restaurant added successfully'));
+      toastr.success(t('Restaurant added successfully')); // Usar Toastr para mostrar éxito
 
       // Reset de campos
       setNomresta("");
@@ -80,26 +77,30 @@ const FormAdmin = () => {
       setHorarioCierre("");
     } catch (error) {
       console.error("Error al añadir restaurante:", error);
-      toast.error(t("Hubo un error al añadir el restaurante. Por favor, inténtelo de nuevo."));
+      toastr.error(t("Hubo un error al añadir el restaurante. Por favor, inténtelo de nuevo.")); // Usar Toastr para mostrar error
     }
   };
 
+  // Manejo de errores y éxitos de carga de imágenes
   const handleImageUploadError = (err) => {
     console.error("Error subiendo la imagen:", err);
-    toast.error('Error al subir la imagen. Por favor, inténtelo de nuevo.');
+    toastr.error('Error al subir la imagen. Por favor, inténtelo de nuevo.'); // Usar Toastr para mostrar error
   };
 
   const handleImageUploadSuccessPerfil = (res) => {
     setImageURLPerfil(res.url);
+    toastr.success(t('Profile image uploaded successfully')); // Usar Toastr para mostrar éxito al subir imagen de perfil
   };
 
   const handleImageUploadSuccessHeader = (res) => {
     setImageURLHeader(res.url);
+    toastr.success(t('Header image uploaded successfully')); // Usar Toastr para mostrar éxito al subir imagen de cabecera
   };
 
   return (
     <div className="form-admin">
       <div className='Datos'>
+        {/* Campos para ingresar datos del restaurante */}
         <label>{t('Nombre del restaurante')}:</label>
         <input
           type="text"
@@ -147,73 +148,82 @@ const FormAdmin = () => {
         <select onChange={CambiosCantones}>
           <option value="">Seleccione un canton</option>
           {cantones.map(canton => (
-            <option key={canton.id_canton} value={canton.id_canton}>{canton.nombre_canton}</option>
+            <option key={canton.id_canton} value={canton.id_canton}>
+              {canton.nombre}
+            </option>
           ))}
         </select>
-        <label>{t('District')}:</label>
+        <br />
+        <label>{t('Distritos')}:</label>
         <select onChange={CambiosDistritos}>
           <option value="">Seleccione un distrito</option>
           {distritos.map(distrito => (
-            <option key={distrito.id_distrito} value={distrito.id_distrito}>{distrito.nombre_distrito}</option>
+            <option key={distrito.id_distrito} value={distrito.id_distrito}>
+              {distrito.nombre}
+            </option>
           ))}
         </select>
         <br />
-        <label>{t('Latitude')}:</label>
-        <input
-          type="text"
-          placeholder={t('Latitud')}
-          value={latitud}
-          onChange={e => setLatitud(e.target.value)}
-        />
-        <label>{t('Longitud')}:</label>
-        <input
-          type="text"
-          placeholder={t('Longitud')}
-          value={longitud}
-          onChange={e => setLongitud(e.target.value)}
-        />
-        <br />
-        <label>{t('Opening hours')}:</label>
+        <label>{t('Horario de apertura')}:</label>
         <input
           type="time"
           value={horarioApertura}
           onChange={e => setHorarioApertura(e.target.value)}
         />
         <br />
-        <label>{t('Closing hours')}:</label>
+        <label>{t('Horario de cierre')}:</label>
         <input
           type="time"
           value={horarioCierre}
           onChange={e => setHorarioCierre(e.target.value)}
         />
-        <br /><br />
-        <label>{t('Upload profile image')}:</label>
-        <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
+        <br />
+        <label>{t('Ubicación')}:</label>
+        <input
+          type="text"
+          placeholder={t('Ubicación')}
+          value={latitud}
+          onChange={e => setLatitud(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder={t('Ubicación')}
+          value={longitud}
+          onChange={e => setLongitud(e.target.value)}
+        />
+        <br />
+        {/* Botón para añadir restaurante */}
+        <button onClick={Añadir}>{t('Añadir Restaurante')}</button>
+      </div>
+
+      {/* Carga de imágenes */}
+      <h3>{t('Subir imágenes del restaurante')}</h3>
+      <IKContext 
+        publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o="
+        urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/"
+        authenticator={authenticator}
+      >
+        <div>
+          <p>{t('Subir imagen de perfil')}</p>
           <IKUpload
             onError={handleImageUploadError}
             onSuccess={handleImageUploadSuccessPerfil}
-            authenticator={authenticator}
           />
-        </IKContext>
-        <label>{t('Upload header image')}:</label>
-        <IKContext publicKey="public_0YV+YM5fadPtV/mPsMsRyJNcT6o=" urlEndpoint="https://ik.imagekit.io/sox1oxatj/restaurapp/">
+        </div>
+        <div>
+          <p>{t('Subir imagen de cabecera')}</p>
           <IKUpload
             onError={handleImageUploadError}
             onSuccess={handleImageUploadSuccessHeader}
-            authenticator={authenticator}
           />
-        </IKContext>
-        <br /><br />
-        <button onClick={Añadir}>{t('Añadir Restaurante')}</button>
-        <br />
-        <Calendario restauranteId={restauranteId} />
-        <br />
-  
-        <FormPlatillos restauranteId={restauranteId} />
-      </div>
-      <ToastContainer />
+        </div>
+      </IKContext>
+
+      {/* Componente para subir el menú del restaurante */}
+      <FileUploaderMenu restauranteId={restauranteId} />
     </div>
   );
 };
 
 export default FormAdmin;
+

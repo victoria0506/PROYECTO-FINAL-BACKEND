@@ -8,14 +8,14 @@ const Carrusel2 = () => {
           <div className="overlay"></div> {/* Overlay para oscurecer la imagen */}
           <img
             className="d-block w-100"
-            src="https://www.denia.com/wp-content/uploads/2012/07/mariscos-restaurante-mena.jpg"
+            src="https://ik.imagekit.io/sox1oxatj/headercayuga__1__o5ms7lhnD.jpeg?updatedAt=1730483755885"
             alt="First slide"
           />
           <Carousel.Caption className="caption-centered">
-            <div className="caption-content">
-              <h3>¿Eres amantes de los mariscos?</h3>
-              <p style={{color: "white"}}>Aqui hay algunas opciones donde podrás encontrar lo que buscas. </p>
-              <button className="btn btn-primary">Descubrir</button>
+            <div className="caption-content-home">
+              <h3 className='textocarruselhome'>Disfruta de la auténtica experiencia gastronómica de Puntarenas, 
+                donde el ceviche <br /> es solo
+                 el comienzo de un viaje culinario por los mejores restaurantes de la costa.</h3>
             </div>
           </Carousel.Caption>
         </Carousel.Item>
@@ -27,9 +27,8 @@ const Carrusel2 = () => {
             alt="Second slide"
           />
           <Carousel.Caption className="caption-centered">
-            <div className="caption-content">
-              <h2 className='texto2carrusel' style={{color: "white"}}>Si te encanta el marisco, no te puedes perder estos restaurantes que son famosos por ofrecer los platillos más frescos del océano.</h2>
-              <button className="btn btn-primary">Ver más</button>
+            <div className="caption-content-home">
+              <h3 className='textocarruselhome'>Haz de cada comida en Puntarenas una experiencia memorable, llena de sabor y alegría.</h3>
             </div>
           </Carousel.Caption>
         </Carousel.Item>
@@ -37,14 +36,13 @@ const Carrusel2 = () => {
           <div className="overlay"></div>
           <img
             className="d-block w-100"
-            src="src/img/rest.jpg"
+            src="https://images.unsplash.com/photo-1465512585831-856a0bfd5e0b?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8UHVudGFyZW5hcyUyMFByb3ZpbmNlJTJDJTIwUHVudGFyZW5hcyUyQyUyMENvc3RhJTIwUmljYXxlbnwwfHwwfHx8MA%3D%3D"
             alt="Third slide"
           />
           <Carousel.Caption className="caption-centered">
-            <div className="caption-content">
-              <h3>Tercera Imagen</h3>
-              <p style={{color: "white"}}>Este es un breve texto para describir la tercera imagen.</p>
-              <button className="btn btn-primary">Ver más</button>
+            <div className="caption-content-home">
+              <h3 className='textocarruselhome'>Disfruta de una deliciosa comida con vista al mar, <br />donde cada plato es un homenaje a la frescura del océano.</h3>
+
             </div>
           </Carousel.Caption>
         </Carousel.Item>

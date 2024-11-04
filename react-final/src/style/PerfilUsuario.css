@@ -76,7 +76,7 @@
 
 .containerlogfav{
 display: flex;
-grid-template-columns: 50px 50px;
+grid-template-columns: 50px 50px 50px;
 justify-content: center;
 }
 
@@ -106,7 +106,20 @@ justify-content: center;
     
     font-weight: 600;
 }
+
+.Eliminar{
+    padding: 10px 15px; 
+    margin: 5px; 
+    background-color: #c0c0c0; 
+    color: rgb(0, 0, 0); 
+    border: none; 
+    border-radius: 25px; 
+    cursor: pointer; 
+    text-align: center; 
+    width: auto; 
     
+    font-weight: 600;
+}
 
 .btn-container{
     display: flex;
@@ -141,4 +154,20 @@ justify-content: center;
 .mini-modal-content p {
     cursor: pointer; /* Cambia el cursor a puntero */
     margin: 10px 0; /* Espaciado entre las opciones */
+}
+
+
+@media (max-width: 768px) {
+    .perfil-container {
+        max-width: 800px; /* Ancho máximo del contenedor */
+        margin: 20px auto; /* Centrar horizontalmente */
+        padding: 10px; /* Espaciado interno */
+        
+        /* Elimina las siguientes dos líneas para quitar el cuadro del contenedor */
+        /* border: 1px solid #ddd; Eliminar el borde */
+        /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); Eliminar la sombra */
+    
+        background-color: #ffffff; /* Color de fondo */
+        margin-top: 60%;
+    }
 }

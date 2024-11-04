@@ -22,6 +22,8 @@ from rest_framework.exceptions import PermissionDenied
 from rest_framework.decorators import action
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 class TipouserView(ModelViewSet):
     queryset= TipoUsuario.objects.all()
@@ -160,30 +162,29 @@ class MenuView(ModelViewSet):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
     
-@api_view(['POST'])
-def add_menu_images(request):
-    images_data = request.data.get('images')  # Supongamos que 'images' es una lista de URLs
-    restaurante_id = request.data.get('restaurante_id')
-
-    if not images_data:
-        return Response({"error": "No se encontraron imágenes"}, status=status.HTTP_400_BAD_REQUEST)
     
-    if not restaurante_id:
-        return Response({"error": "restaurante_id es necesario"}, status=status.HTTP_400_BAD_REQUEST)
+    def get_queryset(self):
+        restaurante_id = self.request.query_params.get('restaurante_id')
+        if restaurante_id:
+            return menu_restaurantes.objects.filter(restaurante_id=restaurante_id)
+        return super().get_queryset()
+    
+def guardar_menu(request):
+    if request.method == 'POST':
+        restaurante_id = request.data.get('restaurante_id')
+        menu = get_object_or_404(menu_restaurantes, restaurante_id=restaurante_id)
 
-    try:
-        for image_url in images_data:
-            # Aquí puedes agregar validaciones para cada URL si es necesario
-            menu_item = menu_restaurantes.objects.create(
-                url_image=image_url,  # Asegúrate de que el campo sea correcto
-                restaurante_id=restaurante_id
-            )
+        # Iterar sobre las páginas
+        for i in range(1, 8):
+            file = request.FILES.get(f'pagina_{i}')
+            if file:
+                # Asigna el archivo en lugar de la URL
+                setattr(menu, f'pagina_{i}', file)
         
-        return Response({"message": "Imágenes agregadas exitosamente"}, status=status.HTTP_201_CREATED)
+        menu.save()  # Guarda los cambios en el menú
+        return JsonResponse({'message': 'Imágenes guardadas exitosamente'}, status=200)
     
-    except Exception as e:
-        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+    return JsonResponse({'error': 'Método no permitido'}, status=405)
     
 class calendarioView(ModelViewSet):
     queryset=calendario.objects.all()

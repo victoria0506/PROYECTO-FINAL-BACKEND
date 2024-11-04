@@ -44,13 +44,14 @@ const CardsRestaurantes = ({ especialidadSeleccionada }) => {
 
   return (
     <div className="maincontainer">
-      <h1>{t('Discover your next favorite restaurant.')}</h1>
+      <h1 className="titulocards">{t('Discover your next favorite restaurant.')}</h1>
       <div className="container-cards">
         {restaurantesFiltrados.map((restau, index) => {
           const disponible = verificarDisponibilidad(restau.horarioApertura, restau.horarioCierre);
 
           return (
             <div key={index}>
+              <Link to={`/Restaurant/${restau.restaurante_id}`}>
               <article className="card">
                 <img
                   className="card__background"
@@ -74,11 +75,12 @@ const CardsRestaurantes = ({ especialidadSeleccionada }) => {
                       </strong>
                     </p>
                   </div>
-                  <button className="card__button">
-                    <Link to={`/Restaurant/${restau.restaurante_id}`}>{t('See more')}</Link>
-                  </button>
+                
+                    <Link to={`/Restaurant/${restau.restaurante_id}`}></Link>
+                
                 </div>
               </article>
+              </Link>
             </div>
           );
         })}

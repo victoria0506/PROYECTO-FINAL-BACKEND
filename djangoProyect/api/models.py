@@ -39,8 +39,8 @@ class restaurantes(models.Model):
     horario_apertura = models.TimeField(null=True, blank=True) 
     horario_cierre = models.TimeField(null=True, blank=True) 
     activo = models.BooleanField(default=True)
-<<<<<<< HEAD
-    coordenadas = models.JSONField(null=True, blank=True)
+    latitud_map = models.FloatField(null=True, blank=True) 
+    longitud_map = models.FloatField(null=True, blank=True) 
     
     def actualizar_promedio(self):
         """Actualiza la calificación promedio del restaurante."""
@@ -53,11 +53,6 @@ class restaurantes(models.Model):
             self.save()  # Guardar el nuevo promedio en el restaurante
         else:
             print(f"No se encontraron calificaciones para el restaurante_id {self.restaurante_id}")
-=======
-    latitud_map = models.FloatField(null=True, blank=True) 
-    longitud_map = models.FloatField(null=True, blank=True) 
-
->>>>>>> d93d726f8212100b6f3f9d956933f604ce52983a
 
 class Imagenes(models.Model):
     id_imagen = models.AutoField(primary_key=True)

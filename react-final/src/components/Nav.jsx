@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import '../style/nav.css';
 import ToggleSwitch from './ToggleSwitch';
 import { useTranslation } from 'react-i18next';
@@ -6,45 +6,52 @@ import BusquedaRes from './BusquedaRes';
 
 function Nav() {
   const { t } = useTranslation();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isWhitePage, setIsWhitePage] = useState(false); 
 
-  useEffect(() => {
-    const backgroundColor = window.getComputedStyle(document.body).backgroundColor;
-    if (backgroundColor === 'rgb(255, 255, 255)') {
-      setIsWhitePage(true);
-    }
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    }; 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${isWhitePage ? 'white-page' : ''}`}>
-      <div className="navbar-brand">
-        <img className="logonav" src="/src/img/logonav.png" alt="Logo" />
-      </div>
-      <div className="menu">
-        <a href="/home" className="menu-item">{t('home')}</a>
-        <a href="/descubre" className="menu-item">{t('discover')}</a>
-        <a href="/about" className="menu-item">{t('About Us')}</a>
-        <a href="/contacto" className="menu-item">{t('contact')}</a>
-      </div>
-        <BusquedaRes />
-      <div className="actions">
-        <ToggleSwitch />
+    <nav className="navbar navbar-expand-lg">
+      <div className="container-fluid">
+        <a className="navbar-brand">
+          <img className="logonav" src="/src/img/logonav.png" alt="Logo" />
+        </a>
+        <button 
+          className="navbar-toggler" 
+          type="button" 
+          data-bs-toggle="collapse" 
+          data-bs-target="#navbarContent" 
+          aria-controls="navbarContent" 
+          aria-expanded="false" 
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarContent">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0 menu">
+            <li className="nav-item">
+              <a className="nav-link menu-item" href="/home">{t('home')}</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link menu-item" href="/descubre">{t('discover')}</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link menu-item" href="/about">{t('About Us')}</a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link menu-item" href="/contacto">{t('contact')}</a>
+            </li>
+          </ul>
+          <div className="d-flex align-items-center">
+            <BusquedaRes />
+            <div className="actions ms-3">
+              <ToggleSwitch />
+            </div>
+          </div>
+        </div>
       </div>
     </nav>
   );
 }
 
 export default Nav;
+
+

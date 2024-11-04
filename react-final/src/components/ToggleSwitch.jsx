@@ -42,7 +42,6 @@ const ToggleSwitch = () => {
 
   return (
     <div className="toggleContainer">
-      <button className="btn">{i18n.t('help')}</button>
       {usuario ? (
         <div className="user-container">
           <a className='btnlogincuenta' href={`/Perfilusuario/${usuario}`}>
